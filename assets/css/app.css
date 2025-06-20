@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+    themes: kira;
+
+    logs: true;
+}
+
+/* Define your branding fonts here*/
+@theme {
+    --font-mono: "Heming Variable";
+        --font-display: "Rota";
+    --font-body: "Poppins";
+    --font-sans: "Poppins";
+}
+
+/* Replace with your theme generated from https: //daisyui.com/theme-generator/ */
+@plugin "daisyui/theme" {
+    name: "kira";
+    default: true;
+    prefersdark: false;
+    color-scheme: "dark";
+    --color-base-100: oklch(97% 0.014 308.299);
+    --color-base-200: oklch(94% 0.033 307.174);
+    --color-base-300: oklch(90% 0.063 306.703);
+    --color-base-content: oklch(29% 0.149 302.717);
+    --color-primary: oklch(62% 0.265 303.9);
+    --color-primary-content: oklch(92% 0.12 95.746);
+    --color-secondary: oklch(12% 0.042 264.695);
+    --color-secondary-content: oklch(98% 0 0);
+    --color-accent: oklch(29% 0.149 302.717);
+    --color-accent-content: oklch(98% 0.022 95.277);
+    --color-neutral: oklch(94% 0.033 307.174);
+    --color-neutral-content: oklch(62% 0.265 303.9);
+    --color-info: oklch(58% 0.158 241.966);
+    --color-info-content: oklch(97% 0.013 236.62);
+    --color-success: oklch(64% 0.2 131.684);
+    --color-success-content: oklch(97% 0.021 166.113);
+    --color-warning: oklch(66% 0.179 58.318);
+    --color-warning-content: oklch(98% 0.022 95.277);
+    --color-error: oklch(57% 0.245 27.325);
+    --color-error-content: oklch(96% 0.015 12.422);
+    --radius-selector: 2rem;
+    --radius-field: 2rem;
+    --radius-box: 1rem;
+    --size-selector: 0.3125rem;
+    --size-field: 0.25rem;
+    --border: 0.5px;
+    --depth: 1;
+    --noise: 1;
+}

@@ -1,0 +1,40 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/fonts": "0.11.0",
+    "@nuxt/icon": "1.11.0",
+    "@nuxt/image": "1.10.0",
+    "@nuxt/scripts": "0.11.2",
+    "@nuxt/test-utils": "3.17.2",
+    "@nuxtjs/tailwindcss": "6.13.2",
+    "@pinia/nuxt": "^0.10.1",
+    "@tailwindcss/vite": "^4.1.4",
+    "@unhead/vue": "^2.0.8",
+    "@unocss/reset": "^66.1.0-beta.12",
+    "@vueuse/nuxt": "13.0.0",
+    "daisyui": "^5.0.28",
+    "nuxt": "^3.16.2",
+    "pinia": "^3.0.2",
+    "tailwindcss": "^4.1.4",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@iconify-json/solar": "^1.2.2",
+    "@unocss/nuxt": "^66.1.0-beta.12",
+    "@unocss/preset-rem-to-px": "^66.1.0-beta.12",
+    "@unocss/preset-wind4": "^66.1.0-beta.12",
+    "@unocss/transformer-compile-class": "^66.1.0-beta.12",
+    "@unocss/transformer-variant-group": "^66.1.0-beta.12"
+  }
+}
