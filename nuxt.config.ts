@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     // '@unocss/nuxt',
+    '@formkit/auto-animate/nuxt',
   ],
   icon: {
     customCollections: [

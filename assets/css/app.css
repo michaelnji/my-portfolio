@@ -10,8 +10,8 @@
 @theme {
     --font-mono: "Space Grotesk";
         --font-display: "Formula Condensed";
-        --font-body: "Canava Grotesk";
-        --font-sans: "Canava Grotesk";
+        --font-body: "Product Sans";
+            --font-sans: "Product Sans";
 }
 
 /* Replace with your theme generated from https: //daisyui.com/theme-generator/ */
