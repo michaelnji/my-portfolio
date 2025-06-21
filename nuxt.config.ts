@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     // '@unocss/nuxt',
-    // '@formkit/auto-animate/nuxt',
+    '@formkit/auto-animate/nuxt',
   ],
   icon: {
     customCollections: [
@@ -44,6 +44,14 @@ export default defineNuxtConfig({
           format: 'jpg',
           width: 50,
           height: 50
+        }
+      },
+      rect: {
+        modifiers: {
+          format: 'png',
+          height: 250,
+          fit: "cover",
+          quality: 100
         }
       }
     }

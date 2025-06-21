@@ -17,13 +17,13 @@ const currentSection = computed(() => {
 
 </script>
 <template>
-    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-6  ">
+    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-6 md:p-6  ">
         <div class="h-max w-1/3 md:sticky md:top-12">
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 text-xs text-base border-base-content/30 font-mono flex items-center gap-2 ">
-                        Hire me 🚀
+                        class="!p-2 rounded-full bg-base-200  inline-flex shadow-xl border-1 text-xs text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        🚀
                     </span>
                 </div>
                 <div class="avatar">
@@ -213,7 +213,7 @@ const currentSection = computed(() => {
                             </p>
                         </div>
                     </NuxtLink>
-                    <NuxtLink to="/blog">
+                    <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req">
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
