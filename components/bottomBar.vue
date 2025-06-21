@@ -27,8 +27,8 @@ const route = useRoute()
         <NuxtLink to="/blog"
             class="flex items-center rounded-full group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
             :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/blog' }">
-            <Icon name="ph:pencil-circle-duotone" size="28" class="!hidden md:!inline" />
-            <Icon name="ph:pencil-circle-duotone" size="24" class=" md:!hidden" />
+            <Icon name="ph:book-bookmark-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="ph:book-bookmark-duotone" size="24" class=" md:!hidden" />
             <p class="text-lg font-mono hidden md:inline">Blog</p>
 
 
@@ -36,8 +36,8 @@ const route = useRoute()
         <NuxtLink to="/games"
             class="flex items-center rounded-full group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
             :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/games' }">
-            <Icon name="ph:game-controller-duotone" size="28" class="!hidden md:!inline" />
-            <Icon name="ph:game-controller-duotone" size="24" class=" md:!hidden" />
+            <Icon name="solar:gameboy-line-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="solar:gameboy-line-duotone" size="24" class=" md:!hidden" />
             <p class="text-lg font-mono hidden md:inline">Games</p>
 
 

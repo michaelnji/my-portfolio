@@ -1,14 +1,29 @@
 <script lang="ts" setup>
 import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
+const intro = useTemplateRef('intro')
+const project = useTemplateRef('project')
+const tech = useTemplateRef('tech')
+const { top: introTop }
+    = useElementBounding(intro)
+const { top: techTop }
+    = useElementBounding(tech)
+const { top: projectTop }
+    = useElementBounding(project)
+const currentSection = computed(() => {
+    if (introTop.value <= 200 && techTop.value > 400 && projectTop.value > 400) return 1
+    if (projectTop.value <= 400 && techTop.value < 400) return 3
+    if (techTop.value <= 400) return 2
+})
+
 </script>
 <template>
-    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-6 md:py-12 ">
+    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-6  ">
         <div class="h-max w-1/3 md:sticky md:top-12">
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 text-xs text-base border-base-content/30 font-mono flex items-center gap-2 ">
-                        Hire me
+                        Hire me 🚀
                     </span>
                 </div>
                 <div class="avatar">
@@ -20,13 +35,16 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
             </div>
             <div class="mt-12 hidden md:flex">
                 <ul class="space-y-4">
-                    <li class="text-base lg:text-lg  flex text-primary gap-x-3 items-center font-bold ">
+                    <li class="text-base opacity-40 lg:text-lg  flex  gap-x-3 items-center font-bold "
+                        :class="{ 'text-primary !opacity-100': currentSection === 1 }">
                         <Icon name="solar:hand-shake-broken" size="28" class="!hidden lg:!inline" /> Hello there
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40">
+                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40"
+                        :class="{ 'text-primary !opacity-100': currentSection === 2 }">
                         <Icon name="solar:code-broken" size="28" class="!hidden lg:!inline" /> Tech background
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40">
+                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40"
+                        :class="{ 'text-primary !opacity-100': currentSection === 3 }">
                         <Icon name="solar:bookmark-square-minimalistic-broken" size="28" class="!hidden lg:!inline" />
                         Currently working on
                     </li>
@@ -34,50 +52,64 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
             </div>
         </div>
         <div class="w-2/2">
-            <h1 class="font-semibold text-pretty text-6xl xl:text-8xl font-display">Hi, I'm <span
-                    class="text-primary font-medium italic">Michael</span>
+            <h1 ref='intro' class="font-semibold text-pretty text-6xl xl:text-8xl font-display">Hi, I'm <span
+                    class="text-primary underline font-medium italic">Michael</span>
                 A Frontend Web
                 developer & Blogger.
             </h1>
 
 
 
-            <p class="text-xl leading-8 mt-6 opacity-70">I am the creator of
+            <p class="text-xl leading-8 mt-6 opacity-70">I am the
+                creator
+                of
+                <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req"
+                    target="_blank">
 
-                <span
-                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                    <span
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
-                    nexus-req
-                </span> , A simple library for formulating consistent response objects.Iam the
+                        nexus-req
+                    </span>
+                </NuxtLink> , A simple library for formulating consistent response objects. I am the
                 main developer @
-                <span
-                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                <NuxtLink to="https://hcsshuttleandtourservices.com" target="_blank">
+                    <span
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
-                    HCS shuttles & Tours
-                </span> . I work
+                        HCS shuttles & Tours
+                    </span>
+                </NuxtLink> . I work
                 as a
                 freelance web developer in Cameroon and also run a forex trading blog called
-                <span
-                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
-                    Gemma Fx
-                </span> . as a side hobby during my spare time. Here are quick links to my Github &
+                <NuxtLink to="https://gemmafx.vercel.app" target="_blank">
+
+                    <span
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        Gemma Fx
+                    </span>
+                </NuxtLink>
+                as a hobby during my spare time. Here are quick links to my Github &
                 social media
             </p>
+
             <div class="mt-6 flex !gap-3">
 
-                <div
-                    class="py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                <NuxtLink to="https://github.com/michaelnji" target="_blank">
+                    <div
+                        class="py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:github" class="text-white" size="36" />
-                </div>
+                        <Icon name="simple-icons:github" class="text-white" size="36" />
+                    </div>
+                </NuxtLink>
 
                 <div
-                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:discord" size="36" class="" />
                 </div>
                 <div
-                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:gmail" size="36" class="" />
                 </div>
@@ -86,11 +118,12 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
 
-                    <h2 class="font-display font-bold text-4xl">I started coding in <span class="font-bold ">2022</span>
+                    <h2 ref='tech' class=" font-medium text-3xl">I started coding in <span
+                            class="font-bold ">2022</span>
                     </h2>
 
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-70">I have been building projects with web technologies foe
+                <p class="text-xl leading-8 mt-6 opacity-70">I have been building projects with web technologies for
                     over 3 years now, gaining valuable experience through practice & consistent learning. I have
                     experience with technologies like:
 
@@ -137,7 +170,7 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
 
-                    <h2 class="font-display font-bold text-4xl">I'm currently working on <span
+                    <h2 ref='project' class=" font-medium text-3xl">I'm currently working on <span
                             class="font-bold text-primary">Gemma Fx</span></h2>
 
                 </div>
@@ -149,6 +182,64 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
 
                 </p>
 
+            </div>
+            <div class="mt-16">
+                <h3 class="font-bold text-2xl">Quick links</h3>
+                <div class="grid mt-8 md:grid-cols-2 gap-3">
+                    <NuxtLink to="/projects">
+                        <div
+                            class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
+                            <h3
+                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                My Projects
+                                <Icon name="simple-icons:git" />
+                            </h3>
+                            <p class="mt-1  opacity-80">
+                                Open source, personal and closed source projects I've worked on over the years
+                            </p>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/blog">
+                        <div
+                            class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
+                            <h3
+                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                Blog
+                                <Icon name="ph:book-bookmark-duotone" />
+
+                            </h3>
+                            <p class="mt-1  opacity-80">
+                                I occasionally write technical articles about technologies I use & my experiences.
+                            </p>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/blog">
+                        <div
+                            class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
+                            <h3
+                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                Documentation
+                                <Icon name="simple-icons:gitbook" />
+                            </h3>
+                            <p class="mt-1  opacity-80">
+                                This hosts documentation for all libraries I have created.
+                            </p>
+                        </div>
+                    </NuxtLink>
+                    <NuxtLink to="/games">
+                        <div
+                            class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
+                            <h3
+                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                Games
+                                <Icon name="solar:gameboy-line-duotone" />
+                            </h3>
+                            <p class="mt-1  opacity-80">
+                                This is a collection of fun little arcade games I have created.
+                            </p>
+                        </div>
+                    </NuxtLink>
+                </div>
             </div>
         </div>
 
