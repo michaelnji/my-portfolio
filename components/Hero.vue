@@ -5,7 +5,7 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
     <div class="flex gap-12 py-12 ">
         <div class="h-max w-1/3 sticky top-12">
             <div class="avatar">
-                <div class="w-48 rounded-full border-6 border-secondary outline-6 outline-primary">
+                <div class="w-48 rounded-full ring border-6 border-secondary outline-6 outline-primary">
                     <img :src="img" alt="">
                 </div>
 
