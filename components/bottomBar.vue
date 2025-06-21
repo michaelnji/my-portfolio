@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { UseMouseInElement } from '@vueuse/components'
 const route = useRoute()
 </script>
 <template>

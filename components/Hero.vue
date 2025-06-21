@@ -43,12 +43,24 @@ import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
 
 
             <p class="text-xl leading-8 mt-6 opacity-70">I am the creator of
-                <HeroLink text="nexus-req" /> , A simple library for formulating consistent response objects.Iam the
+
+                <span
+                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+
+                    nexus-req
+                </span> , A simple library for formulating consistent response objects.Iam the
                 main developer @
-                <HeroLink text="HCS shuttles & Tours" /> . I work
+                <span
+                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+
+                    HCS shuttles & Tours
+                </span> . I work
                 as a
                 freelance web developer in Cameroon and also run a forex trading blog called
-                <HeroLink text="gemma-fx" /> as a side hobby during my spare time. Here are quick links to my Github &
+                <span
+                    class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono">
+                    Gemma Fx
+                </span> . as a side hobby during my spare time. Here are quick links to my Github &
                 social media
             </p>
             <div class="mt-6 flex !gap-3">
