@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-    themes: kira;
+    themes: mine;
 
     logs: true;
 }
@@ -49,6 +49,7 @@
             --depth: 1;
             --noise: 1;
 }
+
 @custom-variant hover (&:hover);
 
 .btn {

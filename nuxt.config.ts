@@ -12,12 +12,12 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxt/scripts',
-    '@nuxt/test-utils',
+    // '@nuxt/scripts',
+    // '@nuxt/test-utils',
     '@pinia/nuxt',
     '@vueuse/nuxt',
     // '@unocss/nuxt',
-    '@formkit/auto-animate/nuxt',
+    // '@formkit/auto-animate/nuxt',
   ],
   icon: {
     customCollections: [
