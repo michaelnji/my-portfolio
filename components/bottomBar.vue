@@ -1,40 +1,50 @@
 <script lang="ts" setup>
 import { UseMouseInElement } from '@vueuse/components'
+const route = useRoute()
 </script>
 <template>
     <div
-        class="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-base-200 border border-base-300 p-3 px-6 flex gap-x-4">
+        class="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-base-200 border border-base-300 rounded-full p-3 px-6 flex gap-x-4">
 
-        <div
-            class="flex items-center group transition-all transition-all text-primary-content bg-primary rounded-box p-3 gap-x-2">
-            <Icon name="solar:home-2-bold-duotone" size="28" />
-            <p class="text-lg font-mono">Home</p>
+        <NuxtLink to="/" class="flex items-center group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
+            :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/' }">
 
-        </div>
-
-
-        <div class="flex items-center group transition-all  hover:bg-base-100 rounded-full transition-all p-3 gap-x-2">
-            <Icon name="ph:laptop-duotone" size="28" />
-            <p class="text-lg font-mono">Projects</p>
-
-        </div>
-        <div class="flex items-center group transition-all  hover:bg-base-100 rounded-full transition-all p-3 gap-x-2">
-            <Icon name="ph:pencil-circle-duotone" size="28" />
-            <p class="text-lg font-mono">Blog</p>
+            <Icon name="solar:home-2-bold-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="solar:home-2-bold-duotone" size="24" class=" md:!hidden" />
+            <p class="text-lg font-mono hidden md:inline">Home</p>
 
 
-        </div>
-        <div class="flex items-center group transition-all  hover:bg-base-100 rounded-full transition-all p-3 gap-x-2">
-            <Icon name="ph:wrench-duotone" size="28" />
-            <p class="text-lg font-mono">Tools</p>
+        </NuxtLink>
+        <NuxtLink to="/projects"
+            class="flex items-center rounded-full group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
+            :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/projects' }">
+            <Icon name="ph:laptop-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="ph:laptop-duotone" size="24" class=" md:!hidden" />
+            <p class="text-lg font-mono hidden md:inline">Projects</p>
 
 
-        </div>
-        <div class="flex items-center group transition-all  hover:bg-base-100 rounded-full transition-all p-3 gap-x-2">
-            <Icon name="ph:game-controller-duotone" size="28" />
-            <p class="text-lg font-mono">Games</p>
+        </NuxtLink>
+
+        <NuxtLink to="/blog"
+            class="flex items-center rounded-full group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
+            :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/blog' }">
+            <Icon name="ph:pencil-circle-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="ph:pencil-circle-duotone" size="24" class=" md:!hidden" />
+            <p class="text-lg font-mono hidden md:inline">Blog</p>
 
 
-        </div>
+        </NuxtLink>
+        <NuxtLink to="/games"
+            class="flex items-center rounded-full group transition-all transition-all  p-3 gap-x-2 hover:bg-base-100"
+            :class="{ '!text-primary-content !bg-primary rounded-box': route.fullPath === '/games' }">
+            <Icon name="ph:game-controller-duotone" size="28" class="!hidden md:!inline" />
+            <Icon name="ph:game-controller-duotone" size="24" class=" md:!hidden" />
+            <p class="text-lg font-mono hidden md:inline">Games</p>
+
+
+        </NuxtLink>
+
+
+
     </div>
 </template>
