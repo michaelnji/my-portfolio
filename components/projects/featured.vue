@@ -18,6 +18,15 @@ const projects = [
         duration: 'May 2025 - now',
         status: "wip" as const
     },
+    {
+        image: 'atud.png',
+        title: 'ATUD & Sons',
+        link: 'https://atuds-and-sons.vercel.app',
+        type: 'closed source',
+        description: 'A website for a small tire repair shop in the US. Built this for a friend of mine.',
+        duration: 'June 2024 - August 2024',
+        status: "complete" as const
+    },
 ]
 </script>
 <template>
@@ -26,7 +35,7 @@ const projects = [
             Featured
         </h2>
         <div class="md:mt-12 grid lg:grid-cols-2 gap-8">
-            <ProjectsCard v-for="project in projects" :details="project" />
+            <LazyProjectsCard v-for="project in projects" :details="project" />
         </div>
     </div>
 </template>

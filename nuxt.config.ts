@@ -50,6 +50,7 @@ export default defineNuxtConfig({
         modifiers: {
           format: 'png',
           height: 250,
+          width: 500,
           fit: "cover",
           quality: 100
         }

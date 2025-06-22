@@ -8,7 +8,8 @@
             type: string,
             description: string,
             duration: string
-            status: "complete" | "wip" | "abandoned"
+            status: "complete" | "wip" | "abandoned",
+            note?: string
         }
 
     }>()
@@ -26,7 +27,7 @@
                     <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">
 
                     <!-- Show a placeholder while loading -->
-                    <div class="skeleton  bg-base-300 lg:bg-base-200 w-full h-[15rem]" v-if="!isLoaded"></div>
+                    <div class="skeleton  bg-base-300 lg:bg-base-200 w-full h-[10.3rem]" v-if="!isLoaded"></div>
                 </NuxtImg>
             </div>
             <div class="flex gap-3 items-center my-4">
@@ -45,6 +46,10 @@
                         <Icon size="24" name="solar:sad-circle-bold" v-if="details.status === 'abandoned'" /> -->
                 </span>
             </div>
+            <p v-if="details.note" class="my-2  flex gap-x-2 items-center text-primary text-sm">
+                <Icon name="solar:info-circle-broken" />
+                {{ details.note }}
+            </p>
             <h2 class="font-bold transition-all group-hover:text-primary text-2xl">
                 {{ details.title }}
             </h2>
