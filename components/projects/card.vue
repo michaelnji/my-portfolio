@@ -15,13 +15,13 @@
     }>()
 </script>
 <template>
-    <NuxtLink :to="details.link" class="w-full">
+    <NuxtLink :to="details.link" target="_blank" class="w-full">
         <div v-auto-animate
             class="bg-base-200 shadow-xl hover:shadow-primary/10 w-full rounded-box hover:border-primary transition-all group border border-base-300 p-3">
             <div class="mb-2">
 
-                <NuxtImg preset="rect" :src="`/images/${details.image}`" :alt="details.title" :custom="true"
-                    class="rounded-box border border-base-300" v-slot="{ src, isLoaded, imgAttrs }">
+                <NuxtImg loading="lazy" preset="rect" :src="`/images/${details.image}`" :alt="details.title"
+                    :custom="true" class="rounded-box border border-base-300" v-slot="{ src, isLoaded, imgAttrs }">
 
                     <!-- Show the actual image when loaded -->
                     <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">

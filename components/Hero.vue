@@ -28,8 +28,9 @@ const currentSection = computed(() => {
                 <div class="avatar">
                     <div
                         class="lg:w-48 w-36 rounded-full ring border-6 border-base-200 outline-6 shadow-xl hover:shadow-primary/60 transition duration-700 hover:border-primary outline-base-300">
-                        <NuxtImg format="webp" src="/images/me.png" alt="A portrait of Michael Nji" :custom="true"
-                            class="rounded-box border border-base-300" v-slot="{ src, isLoaded, imgAttrs }">
+                        <NuxtImg format="webp" src="/images/me.png" preload alt="A portrait of Michael Nji"
+                            :custom="true" class="rounded-box border border-base-300"
+                            v-slot="{ src, isLoaded, imgAttrs }">
 
                             <!-- Show the actual image when loaded -->
                             <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">

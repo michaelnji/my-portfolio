@@ -4,10 +4,10 @@
 <template>
     <div class="w-full ">
 
-        <div class="min-h-screen pb-24">
+        <div class=" ">
             <slot />
         </div>
-        <Footer />
+        <!-- <Footer /> -->
         <BottomBar />
     </div>
 </template>

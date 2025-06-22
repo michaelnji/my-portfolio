@@ -1,17 +1,20 @@
-// Define your types here (return types from API calls)
+export interface Post {
 
-export type StatusCode = 200 | 400 | 404 | 403 | 500 | 401;
-export type ErrorCodes = 400 | 404 | 403 | 500 | 401;
+    _updatedAt: string;
+    authorInfo: {
+        imageUrl: string;
+        name: string;
+    };
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    body: any[];
+    title: string;
+    excerpt: string;
+    imgUrl: string;
+    publishedAt: string;
+    slug: string;
+    tags: Array<{
+        title: string;
+    }>;
 
-//make sure to add your defined types to ServerData
-export type ServerData = null // | YourTYpe
-export interface ServerResponse<
-    Status extends StatusCode,
-    Data extends ServerData,
-> {
-    status: Status;
-    message?: string;
-    ok: Status extends 200 ? true : false;
-    data?: Status extends 200 ? Data : null;
-    error?: Status extends 200 ? null : string;
+
 }

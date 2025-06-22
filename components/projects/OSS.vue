@@ -25,10 +25,8 @@ const projects = [
 </script>
 <template>
     <div class="">
-        <h2 class="font-bold text-4xl hidden md:block font-display">
-            Open Source
-        </h2>
-        <div class="md:mt-12 grid lg:grid-cols-2 gap-8">
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <LazyProjectsCard v-for="project in projects" :details="project" />
         </div>
     </div>
