@@ -48,8 +48,9 @@ export default defineNuxtConfig({
       },
       rect: {
         modifiers: {
-          format: 'png',
+          format: 'webp',
           height: 250,
+          width: 500,
           fit: "cover",
           quality: 100
         }
