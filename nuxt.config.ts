@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     // '@unocss/nuxt',
     '@formkit/auto-animate/nuxt',
+    '@nuxtjs/sanity',
   ],
   icon: {
     customCollections: [
@@ -78,10 +79,7 @@ export default defineNuxtConfig({
       rect: {
         modifiers: {
           format: 'webp',
-          height: 250,
-          width: 550,
-          fit: "cover",
-          quality: 100
+          quality: 80
         }
       }
     }
@@ -94,5 +92,19 @@ export default defineNuxtConfig({
     },
     // use ~public/fonts for your font files
     provider: 'local'
-  }
+  },
+  runtimeConfig: {
+    sanityToken: '',
+    public: {
+      sanityProjectId: process.env.NUXT_SANITY_ID
+    }
+  },
+  sanity: {
+    projectId: process.env.NUXT_SANITY_ID,
+    dataset: 'production',
+    useCdn: false,
+    apiVersion: '2025-05-23',
+    token: process.env.NUXT_SANITY_TOKEN,
+    perspective: 'published'
+  },
 })

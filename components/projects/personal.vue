@@ -5,7 +5,7 @@ const projects = [
         title: 'My old Portfolio',
         link: 'https://mykenji-v2.vercel.app',
         type: 'open source',
-        description: 'The second iteration of my personal website & blog',
+        description: 'The second iteration of my personal portfolio website & blog',
         duration: 'March 2024 - April 2024',
         status: "complete" as const,
     },
@@ -43,10 +43,8 @@ const projects = [
 </script>
 <template>
     <div class="">
-        <h2 class="font-bold text-4xl hidden md:block font-display">
-            Personal
-        </h2>
-        <div class="md:mt-12 grid lg:grid-cols-2 gap-8">
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <LazyProjectsCard v-for="project in projects" :details="project" />
         </div>
     </div>

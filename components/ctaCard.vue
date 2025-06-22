@@ -2,7 +2,7 @@
 
 </script>
 <template>
-    <div class="bg-base-200 w-full rounded-2xl  transition-all group border border-base-300 p-6">
+    <div class="bg-base-200 w-max  rounded-2xl  transition-all group border border-base-300 p-6">
         <div class="flex gap-4 ">
             <!-- <Icon name="ph:briefcase-duotone" size="64" /> -->
             <div>
