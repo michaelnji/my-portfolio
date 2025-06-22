@@ -16,7 +16,7 @@
 </script>
 <template>
     <NuxtLink :to="details.link" target="_blank" class="w-full">
-        <div v-auto-animate
+        <div
             class="bg-base-200 shadow-xl hover:shadow-primary/10 w-full rounded-box hover:border-primary transition-all group border border-base-300 p-3">
             <div class="mb-2">
 
@@ -24,10 +24,11 @@
                     :custom="true" class="rounded-box border border-base-300" v-slot="{ src, isLoaded, imgAttrs }">
 
                     <!-- Show the actual image when loaded -->
-                    <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">
+                    <img height="200" width="400" v-if="isLoaded" v-bind="imgAttrs" :src="src"
+                        class="w-full !object-cover !h-[200px]">
 
                     <!-- Show a placeholder while loading -->
-                    <div class="skeleton  bg-base-300 lg:bg-base-200 w-full h-[135px]" v-if="!isLoaded"></div>
+                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[200px]" v-if="!isLoaded"></div>
                 </NuxtImg>
             </div>
             <div class="flex gap-3 items-center my-4">

@@ -64,7 +64,7 @@ const currentSection = computed(() => {
             </div>
         </div>
         <div class="w-2/2">
-            <h1 ref='intro' class="font-semibold  text-6xl xl:text-8xl font-display">Hi, I'm <span
+            <h1 ref='intro' class="font-semibold  text-6xl xl:text-7xl font-display">Hi, I'm <span
                     class="text-primary underline font-medium ">Michael</span>
                 A Frontend Web
                 developer.
@@ -79,15 +79,15 @@ const currentSection = computed(() => {
                     target="_blank">
 
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
                         nexus-req
                     </span>
-                </NuxtLink> , A simple library for formulating consistent response objects. I am the
+                </NuxtLink> , a simple library for formulating consistent response objects. I am the
                 main developer @
                 <NuxtLink to="https://hcsshuttleandtourservices.com" target="_blank">
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
                         HCS shuttles & Tours
                     </span>
@@ -97,7 +97,7 @@ const currentSection = computed(() => {
                 <NuxtLink to="https://gemmafx.vercel.app" target="_blank">
 
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
                         Gemma Fx
                     </span>
                 </NuxtLink>
@@ -109,28 +109,28 @@ const currentSection = computed(() => {
 
                 <NuxtLink to="https://github.com/michaelnji" target="_blank">
                     <div
-                        class="py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                        <Icon name="simple-icons:github" class="text-white" size="36" />
+                        <Icon name="simple-icons:github" class="text-white" size="32" />
                     </div>
                 </NuxtLink>
                 <NuxtLink to="https://github.com/michaelnji" target="_blank">
                     <div
-                        class="py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                        <Icon name="simple-icons:whatsapp" class="text-white" size="36" />
+                        <Icon name="simple-icons:whatsapp" class="text-white" size="32" />
                     </div>
                 </NuxtLink>
 
                 <div
-                    class="!py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:discord" size="36" class="" />
+                    <Icon name="simple-icons:discord" size="32" class="" />
                 </div>
                 <div
-                    class="!py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:gmail" size="36" class="" />
+                    <Icon name="simple-icons:gmail" size="32" class="" />
                 </div>
             </div>
 

@@ -9,7 +9,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
 
 <template>
     <div class="container mx-auto px-6 xl:max-w-7xl">
-        <div class=" space-y-8 py-6  ">
+        <div class=" space-y-12 py-6  ">
             <div class=" p-3 rounded-box max-w-xl bg-base-200 w-full  ">
 
                 <div class=" flex gap-4 w-full">
@@ -46,9 +46,9 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                 <ProjectsPersonal v-if="activeTab === 'personal'" />
                 <ProjectsOSS v-if="activeTab === 'oss'" />
 
-                <div class="mt-28">
+                <!-- <div class="mt-16">
                     <CtaCard />
-                </div>
+                </div> -->
             </div>
 
         </div>
