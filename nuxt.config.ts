@@ -29,6 +29,35 @@ export default defineNuxtConfig({
     clientBundle: {
       // list of icons to include in the client bundle
       icons: [
+        'solar:info-circle-broken',
+        'solar:hand-shake-broken',
+        'solar:code-broken',
+        'solar:bookmark-square-minimalistic-broken',
+        'simple-icons:github',
+        'simple-icons:whatsapp',
+        'simple-icons:gmail',
+        'simple-icons:discord',
+        'logos:vue',
+        'logos:typescript-icon',
+        'logos:nuxt-icon',
+        'logos:supabase-icon',
+        'logos:tailwindcss-icon',
+        'logos:bun',
+        'logos:nodejs-icon-alt',
+        'logos:git-icon',
+        'simple-icons:git',
+        'ph:book-bookmark-duotone',
+        'simple-icons:gitbook',
+        'solar:gameboy-line-duotone',
+        'solar:verified-check-bold-duotone',
+        'solar:star-fall-minimalistic-bold-duotone',
+        'ph:git-branch-duotone',
+        'ph:share',
+        'solar:calendar-add-line-duotone',
+        'solar:home-2-bold-duotone',
+        'ph:laptop-duotone',
+        // ''
+
 
       ],
       // include all custom collections in the client bundle

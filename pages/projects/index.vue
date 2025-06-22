@@ -59,7 +59,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                     <ProjectsPersonal />
                     <ProjectsOSS />
                 </div>
-                <div class="hidden md:block">
+                <div v-auto-animate class="hidden md:block">
                     <ProjectsFeatured v-if="activeTab === 'featured'" />
                     <ProjectsPersonal v-if="activeTab === 'personal'" />
                     <ProjectsOSS v-if="activeTab === 'oss'" />

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import img from '../assets/images/me.png'
 const intro = useTemplateRef('intro')
 const project = useTemplateRef('project')
 const tech = useTemplateRef('tech')
@@ -17,7 +16,7 @@ const currentSection = computed(() => {
 
 </script>
 <template>
-    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-6 md:p-6  ">
+    <div class="flex flex-col md:flex-row gap-8  py-6 md:p-6  ">
         <div class="h-max w-1/3 md:sticky md:top-12">
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
@@ -27,8 +26,20 @@ const currentSection = computed(() => {
                     </span>
                 </div>
                 <div class="avatar">
-                    <div class="lg:w-48 w-36 rounded-full ring border-6 border-base-200 outline-6 outline-base-300">
-                        <img :src="img" alt="">
+                    <div
+                        class="lg:w-48 w-36 rounded-full ring border-6 border-base-200 outline-6 shadow-xl hover:shadow-primary/60 transition duration-700 hover:border-primary outline-base-300">
+                        <NuxtImg format="webp" src="/images/me.png" alt="A portrait of Michael Nji" :custom="true"
+                            class="rounded-box border border-base-300" v-slot="{ src, isLoaded, imgAttrs }">
+
+                            <!-- Show the actual image when loaded -->
+                            <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">
+
+                            <!-- Show a placeholder while loading -->
+                            <div class="skeleton  bg-base-300 lg:bg-base-200 w-full lg:size-48 size-36"
+                                v-if="!isLoaded">
+                            </div>
+                        </NuxtImg>
+
                     </div>
                 </div>
 
@@ -52,10 +63,10 @@ const currentSection = computed(() => {
             </div>
         </div>
         <div class="w-2/2">
-            <h1 ref='intro' class="font-semibold text-pretty text-6xl xl:text-8xl font-display">Hi, I'm <span
-                    class="text-primary underline font-medium italic">Michael</span>
+            <h1 ref='intro' class="font-semibold  text-6xl xl:text-8xl font-display">Hi, I'm <span
+                    class="text-primary underline font-medium ">Michael</span>
                 A Frontend Web
-                developer & Blogger.
+                developer.
             </h1>
 
 
@@ -97,19 +108,26 @@ const currentSection = computed(() => {
 
                 <NuxtLink to="https://github.com/michaelnji" target="_blank">
                     <div
-                        class="py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                         <Icon name="simple-icons:github" class="text-white" size="36" />
                     </div>
                 </NuxtLink>
+                <NuxtLink to="https://github.com/michaelnji" target="_blank">
+                    <div
+                        class="py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+
+                        <Icon name="simple-icons:whatsapp" class="text-white" size="36" />
+                    </div>
+                </NuxtLink>
 
                 <div
-                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:discord" size="36" class="" />
                 </div>
                 <div
-                    class="!py-2 px-2 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!py-2 px-2 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:gmail" size="36" class="" />
                 </div>
@@ -132,6 +150,10 @@ const currentSection = computed(() => {
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:vue" /> Vue.js
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        <Icon name="logos:nuxt-icon" /> nuxt.js
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
