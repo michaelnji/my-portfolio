@@ -50,7 +50,7 @@ export default defineNuxtConfig({
         modifiers: {
           format: 'webp',
           height: 250,
-          width: 500,
+          width: 550,
           fit: "cover",
           quality: 100
         }

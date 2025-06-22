@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import img from '../assets/images/file_00000000121462308afdcbf5e05b88cc.png'
+import img from '../assets/images/me.png'
 const intro = useTemplateRef('intro')
 const project = useTemplateRef('project')
 const tech = useTemplateRef('tech')
