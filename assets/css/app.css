@@ -140,3 +140,6 @@
     padding: 1em;
     @apply bg-base-300/10 border border-base-300 rounded-3xl
 }
+* {
+    scroll-behavior: smooth;
+}

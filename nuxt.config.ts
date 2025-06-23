@@ -68,6 +68,11 @@ export default defineNuxtConfig({
       includeCustomCollections: true,
     },
   },
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' }
+
+  },
   image: {
     format: ['webp', 'png', 'jpeg'],
     // define your own presets
