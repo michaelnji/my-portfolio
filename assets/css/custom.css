@@ -12,13 +12,7 @@
     }
 }
 
-* {
-    scroll-behavior: smooth !important;
-}
 
-[v-cloak] {
-    display: none;
-}
 
 .page-enter-active,
 .page-leave-active {
