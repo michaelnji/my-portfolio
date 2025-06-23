@@ -57,13 +57,21 @@ export default defineNuxtConfig({
         'solar:calendar-add-line-duotone',
         'solar:home-2-bold-duotone',
         'ph:laptop-duotone',
-        // ''
+        'solar:user-circle-bold',
+        'ph:warning-fill',
+        'ph:lightbulb-filament-fill',
+        'ph:quotes-fill'
 
 
       ],
       // include all custom collections in the client bundle
       includeCustomCollections: true,
     },
+  },
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' }
+
   },
   image: {
     format: ['webp', 'png', 'jpeg'],

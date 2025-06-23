@@ -82,7 +82,7 @@
     }
 }
 .glass {
-    background: rgba(231, 231, 231, 0.103);
+    background: rgba(0, 0, 0, 0.459);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(3.7px);
 }
@@ -139,4 +139,7 @@
     overflow-x: auto;
     padding: 1em;
     @apply bg-base-300/10 border border-base-300 rounded-3xl
+}
+* {
+    scroll-behavior: smooth;
 }

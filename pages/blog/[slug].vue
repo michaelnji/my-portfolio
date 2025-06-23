@@ -42,49 +42,40 @@ onMounted(async () => {
             </div>
 
             <div v-if="!isLoading && postsStore.posts">
-                <div class="flex gap-8">
+                <div class="flex flex-col lg:flex-row gap-8">
                     <div class="lg:w-2/3">
-                        <div class="mx-6 mt-6 md:m-0">
-                            <NuxtImg loading="lazy" :src="$urlFor(selectedPost?.imgUrl).format('webp').url()"
-                                :alt="selectedPost?.title" :custom="true"
-                                class="!rounded-box  border border-base-300 max-w-full"
-                                v-slot="{ src, isLoaded, imgAttrs }">
+                        <div class="px-6 md:px-0 mt-6        lg:mt-12">
+                            <div class="">
+                                <NuxtImg loading="lazy" :src="$urlFor(selectedPost?.imgUrl).format('webp').url()"
+                                    :alt="selectedPost?.title" :custom="true"
+                                    class="!rounded-box  border border-base-300 max-w-full"
+                                    v-slot="{ src, isLoaded, imgAttrs }">
 
-                                <img height="700" width="1400" v-if="isLoaded" v-bind="imgAttrs" :src="src"
-                                    class="w-full object-cover">
+                                    <img height="700" width="1400" v-if="isLoaded" v-bind="imgAttrs" :src="src"
+                                        class="w-full object-cover">
 
-                                <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[400px] rounded-box border border-base-300"
-                                    v-if="!isLoaded">
-                                </div>
-                            </NuxtImg>
+                                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[400px] rounded-box border border-base-300"
+                                        v-if="!isLoaded">
+                                    </div>
+                                </NuxtImg>
+                            </div>
+                            <p class="mt-6 md:mt-12 text-lg md:text-2xl opacity-80 flex items-center gap-2">
+                                <span>
+                                    {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
+                                </span>
+                            </p>
+                            <h1 class="font-bold mt-4  font-display text-5xl md:text-6xl text-pretty lg:text-7xl">
+                                {{ selectedPost?.title }}
+                            </h1>
+
+
+                            <p class="mt-4 md:text-xl flex items-center gap-2">
+                                <Icon name="solar:user-circle-bold" />
+                                <span>
+                                    Posted by <span class="text-primary">{{ selectedPost?.authorInfo.name }}</span>
+                                </span>
+                            </p>
                         </div>
-                        <p class="mt-6 px-6 md:px-0 md:mt-12 text-lg md:text-2xl opacity-80 flex items-center gap-2">
-                            <span>
-                                {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
-                            </span>
-                        </p>
-                        <h1
-                            class="font-bold px-6 md:px-0 mt-4  font-display text-5xl md:text-6xl text-pretty lg:text-7xl">
-                            {{ selectedPost?.title }}
-                        </h1>
-
-                        <!-- <div class="flex px-6 md:px-0 justify-center mt-4 gap-2 items-center">
-                        <div v-for="(tag, i) in selectedPost?.tags" :key="i">
-                            <span v-if="i < 2"
-                                class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl  border line-clamp-1  font-medium capitalize    border-base-content/20 font-mono flex items-center gap-2 ">
-
-                                {{ tag.title.replaceAll('-', ' ') }}
-                            </span>
-
-
-                        </div>
-                    </div> -->
-                        <p class="mt-4 px-6 md:px-0 md:text-xl flex items-center gap-2">
-                            <Icon name="solar:user-circle-bold" />
-                            <span>
-                                Posted by <span class="text-primary">{{ selectedPost?.authorInfo.name }}</span>
-                            </span>
-                        </p>
                         <div v-if="!isLoading && selectedPost"
                             class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30 md:border border-base-300 rounded-t-2xl md:rounded-3xl">
                             <div
@@ -118,6 +109,14 @@ onMounted(async () => {
                                     }" />
 
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="lg:w-1/3">
+                        <div class="md:sticky md:top-12 space-y-12 px-6 md:px-0">
+
+                            <BlogStats />
+                            <CtaCard />
 
                         </div>
                     </div>

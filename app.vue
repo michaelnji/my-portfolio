@@ -18,7 +18,9 @@ onMounted(async () => {
     <NuxtLayout>
       <div data-theme="mine">
         <NuxtPage />
+
       </div>
     </NuxtLayout>
+    <BottomBar />
   </div>
 </template>

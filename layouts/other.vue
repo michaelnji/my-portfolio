@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-
+onMounted(() => {
+    window.scroll({ behavior: 'instant', top: 0 })
+})
 </script>
 <template>
     <div class="w-full ">
@@ -8,6 +10,5 @@
             <slot />
         </div>
         <!-- <Footer /> -->
-        <BottomBar />
     </div>
 </template>
