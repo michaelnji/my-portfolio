@@ -57,7 +57,10 @@ export default defineNuxtConfig({
         'solar:calendar-add-line-duotone',
         'solar:home-2-bold-duotone',
         'ph:laptop-duotone',
-        // ''
+        'solar:user-circle-bold',
+        'ph:warning-fill',
+        'ph:lightbulb-filament-fill',
+        'ph:quotes-fill'
 
 
       ],

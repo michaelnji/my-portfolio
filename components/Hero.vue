@@ -21,7 +21,7 @@ const currentSection = computed(() => {
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
                     <span
-                        class="!p-2 rounded-full bg-base-200  inline-flex shadow-xl border-1 text-xs text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!p-2 rounded-full bg-base-200  inline-flex shadow-xl border-1 text-xs text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         🚀
                     </span>
                 </div>
@@ -47,15 +47,15 @@ const currentSection = computed(() => {
             </div>
             <div class="mt-12 hidden md:flex">
                 <ul class="space-y-4">
-                    <li class="text-base opacity-75 lg:text-lg  flex  gap-x-3 items-center font-bold "
+                    <li class="text-sm opacity-75 lg:text-lg  flex  gap-x-3 items-center font-bold "
                         :class="{ 'text-primary !opacity-100': currentSection === 1 }">
                         <Icon name="solar:hand-shake-broken" size="28" class="!hidden lg:!inline" /> Hello there
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
+                    <li class="text-sm lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 2 }">
                         <Icon name="solar:code-broken" size="28" class="!hidden lg:!inline" /> Tech background
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
+                    <li class="text-sm lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 3 }">
                         <Icon name="solar:bookmark-square-minimalistic-broken" size="28" class="!hidden lg:!inline" />
                         Currently working on
@@ -72,14 +72,14 @@ const currentSection = computed(() => {
 
 
 
-            <p class="text-xl leading-8 mt-6 opacity-75">I am the
+            <p class="text-lg leading-8 mt-6 opacity-75">I am the
                 creator
                 of
                 <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req"
                     target="_blank">
 
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
                         nexus-req
                     </span>
@@ -87,7 +87,7 @@ const currentSection = computed(() => {
                 main developer @
                 <NuxtLink to="https://hcsshuttleandtourservices.com" target="_blank">
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
                         HCS shuttles & Tours
                     </span>
@@ -97,7 +97,7 @@ const currentSection = computed(() => {
                 <NuxtLink to="https://gemmafx.vercel.app" target="_blank">
 
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
                         Gemma Fx
                     </span>
                 </NuxtLink>
@@ -109,79 +109,79 @@ const currentSection = computed(() => {
 
                 <NuxtLink to="https://github.com/michaelnji" target="_blank">
                     <div
-                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                        <Icon name="simple-icons:github" class="text-white" size="32" />
+                        <Icon name="simple-icons:github" class="text-white" size="24" />
                     </div>
                 </NuxtLink>
-                <NuxtLink to="https://github.com/michaelnji" target="_blank">
+                <NuxtLink to="https://wa.link/j63c5d" target="_blank">
                     <div
-                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                        <Icon name="simple-icons:whatsapp" class="text-white" size="32" />
+                        <Icon name="simple-icons:whatsapp" class="text-white" size="24" />
                     </div>
                 </NuxtLink>
 
                 <div
-                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:discord" size="32" class="" />
+                    <Icon name="simple-icons:discord" size="24" class="" />
                 </div>
                 <div
-                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:gmail" size="32" class="" />
+                    <Icon name="simple-icons:gmail" size="24" class="" />
                 </div>
             </div>
 
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
 
-                    <h2 ref='tech' class=" font-medium text-3xl">I started coding in <span
+                    <h2 ref='tech' class=" font-medium text-2xl">I started coding in <span
                             class="font-bold ">2022</span>
                     </h2>
 
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-75">I have been building projects with web technologies for
+                <p class="text-lg leading-8 mt-6 opacity-75">I have been building projects with web technologies for
                     over 3 years now, gaining valuable experience through practice & consistent learning. I have
                     experience with technologies like:
 
                 </p>
                 <div class="mt-2 flex flex-wrap gap-3">
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:vue" /> Vue.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:nuxt-icon" /> nuxt.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:typescript-icon" />Typescript
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:supabase-icon" />Supaase
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:tailwindcss-icon" />TailwindCSS
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:bun" />bunjs
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:nodejs-icon-alt" />nodejs
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:git-icon" />git
                     </span>
                 </div>
-                <!-- <p class="text-xl leading-8 mt-6 opacity-75">I also have some experience in design and backend web
+                <!-- <p class="text-lg leading-8 mt-6 opacity-75">I also have some experience in design and backend web
                     development, and I have built fully functional full stack projects in the past.
 
                 </p> -->
@@ -189,11 +189,11 @@ const currentSection = computed(() => {
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
 
-                    <h2 ref='project' class=" font-medium text-3xl">I'm currently working on <span
+                    <h2 ref='project' class=" font-medium text-2xl">I'm currently working on <span
                             class="font-bold text-primary">Gemma Fx</span></h2>
 
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-75">I am developing my forex trading website, which will launch
+                <p class="text-lg leading-8 mt-6 opacity-75">I am developing my forex trading website, which will launch
                     later this year and will be phenomenal! <NuxtLink to="https://gemmafx.vercel.app" target="_blank"
                         class="underline text-primary">
                         Check it out here
@@ -209,7 +209,7 @@ const currentSection = computed(() => {
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
-                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                class="font-medium transition-all group-hover:text-primary text-lg flex items-center gap-x-2">
                                 My Projects
                                 <Icon name="simple-icons:git" />
                             </h3>
@@ -222,7 +222,7 @@ const currentSection = computed(() => {
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
-                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                class="font-medium transition-all group-hover:text-primary text-lg flex items-center gap-x-2">
                                 Blog
                                 <Icon name="ph:book-bookmark-duotone" />
 
@@ -236,7 +236,7 @@ const currentSection = computed(() => {
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
-                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                class="font-medium transition-all group-hover:text-primary text-lg flex items-center gap-x-2">
                                 Documentation
                                 <Icon name="simple-icons:gitbook" />
                             </h3>
@@ -249,7 +249,7 @@ const currentSection = computed(() => {
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
-                                class="font-medium transition-all group-hover:text-primary text-xl flex items-center gap-x-2">
+                                class="font-medium transition-all group-hover:text-primary text-lg flex items-center gap-x-2">
                                 Games
                                 <Icon name="solar:gameboy-line-duotone" />
                             </h3>
