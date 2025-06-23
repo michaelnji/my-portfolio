@@ -113,10 +113,11 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="lg:w-1/3">
-                        <div class="md:sticky md:top-12 space-y-4 px-6">
-                            <div class="">
-                                <CtaCard />
-                            </div>
+                        <div class="md:sticky md:top-12 space-y-12 px-6 md:px-0">
+
+                            <BlogStats />
+                            <CtaCard />
+
                         </div>
                     </div>
                 </div>
