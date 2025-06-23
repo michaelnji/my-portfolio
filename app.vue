@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import '~/assets/css/custom.css';
+import '~/assets/css/dracula.css';
 const postsStore = usePostsStore()
 onMounted(async () => {
   await callOnce(async () => {
