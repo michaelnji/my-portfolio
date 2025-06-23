@@ -41,6 +41,6 @@
 .layout-enter-from,
 .layout-leave-to {
     opacity: 0;
-    transform: translateY(10px);
+    transform: scale(0.97);
 
 }
