@@ -2,7 +2,7 @@
 const route = useRoute()
 </script>
 <template>
-    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 !rounded-full glass !border-none p-3 px-6 flex gap-x-4">
+    <div class="fixed z-1 bottom-4 left-1/2 -translate-x-1/2 !rounded-full glass !border-none p-3 px-6 flex gap-x-4">
 
         <NuxtLink to="/">
             <div class="flex items-center  rounded-full group transition-all  p-2 md:p-3 gap-x-2 hover:bg-base-100"
@@ -25,7 +25,7 @@ const route = useRoute()
 
         <NuxtLink to="/blog"
             class="flex items-center  rounded-full group transition-all  p-2 md:p-3 gap-x-2 hover:bg-base-100"
-            :class="{ '!text-primary-content !bg-primary !rounded-box': route.fullPath === '/blog' }">
+            :class="{ '!text-primary-content !bg-primary !rounded-box': route.fullPath === '/blog' || route.fullPath.includes('/blog') }">
             <Icon name="ph:book-bookmark-duotone" size="28" />
 
             <p class="text-lg  hidden md:inline">Blog</p>

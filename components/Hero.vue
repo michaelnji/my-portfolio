@@ -28,8 +28,8 @@ const currentSection = computed(() => {
                 <div class="avatar">
                     <div
                         class="lg:w-48 w-36 rounded-full ring border-6 border-base-200 outline-6 shadow-xl hover:shadow-primary/60 transition duration-700 hover:border-primary outline-base-300">
-                        <NuxtImg format="webp" src="/images/me.png" preload alt="A portrait of Michael Nji"
-                            :custom="true" class="rounded-box border border-base-300"
+                        <NuxtImg height="100" width="100" format="webp" src="/images/me.png" preload
+                            alt="A portrait of Michael Nji" :custom="true" class="rounded-box border border-base-300"
                             v-slot="{ src, isLoaded, imgAttrs }">
 
                             <!-- Show the actual image when loaded -->
@@ -47,15 +47,15 @@ const currentSection = computed(() => {
             </div>
             <div class="mt-12 hidden md:flex">
                 <ul class="space-y-4">
-                    <li class="text-base opacity-40 lg:text-lg  flex  gap-x-3 items-center font-bold "
+                    <li class="text-base opacity-75 lg:text-lg  flex  gap-x-3 items-center font-bold "
                         :class="{ 'text-primary !opacity-100': currentSection === 1 }">
                         <Icon name="solar:hand-shake-broken" size="28" class="!hidden lg:!inline" /> Hello there
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40"
+                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 2 }">
                         <Icon name="solar:code-broken" size="28" class="!hidden lg:!inline" /> Tech background
                     </li>
-                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-40"
+                    <li class="text-base lg:text-lg  flex  gap-x-3 items-center font-bold opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 3 }">
                         <Icon name="solar:bookmark-square-minimalistic-broken" size="28" class="!hidden lg:!inline" />
                         Currently working on
@@ -72,7 +72,7 @@ const currentSection = computed(() => {
 
 
 
-            <p class="text-xl leading-8 mt-6 opacity-70">I am the
+            <p class="text-xl leading-8 mt-6 opacity-75">I am the
                 creator
                 of
                 <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req"
@@ -142,7 +142,7 @@ const currentSection = computed(() => {
                     </h2>
 
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-70">I have been building projects with web technologies for
+                <p class="text-xl leading-8 mt-6 opacity-75">I have been building projects with web technologies for
                     over 3 years now, gaining valuable experience through practice & consistent learning. I have
                     experience with technologies like:
 
@@ -180,15 +180,11 @@ const currentSection = computed(() => {
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:git-icon" />git
                     </span>
-                    <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-base border-base-content/30 font-mono flex items-center gap-2 ">
-                        <Icon name="simple-icons:github" />Github
-                    </span>
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-70">I also have some experience in design and backend web
+                <!-- <p class="text-xl leading-8 mt-6 opacity-75">I also have some experience in design and backend web
                     development, and I have built fully functional full stack projects in the past.
 
-                </p>
+                </p> -->
             </div>
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
@@ -197,7 +193,7 @@ const currentSection = computed(() => {
                             class="font-bold text-primary">Gemma Fx</span></h2>
 
                 </div>
-                <p class="text-xl leading-8 mt-6 opacity-70">I am developing my forex trading website, which will launch
+                <p class="text-xl leading-8 mt-6 opacity-75">I am developing my forex trading website, which will launch
                     later this year and will be phenomenal! <NuxtLink to="https://gemmafx.vercel.app" target="_blank"
                         class="underline text-primary">
                         Check it out here

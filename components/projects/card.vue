@@ -28,7 +28,8 @@
                         class="w-full !object-cover !h-[200px]">
 
                     <!-- Show a placeholder while loading -->
-                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[200px]" v-if="!isLoaded"></div>
+                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[200px] rounded-box border border-base-300"
+                        v-if="!isLoaded"></div>
                 </NuxtImg>
             </div>
             <div class="flex gap-3 items-center my-4">

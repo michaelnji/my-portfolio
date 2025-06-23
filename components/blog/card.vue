@@ -1,6 +1,6 @@
     <script lang="ts" setup>
-    import type { Post } from '~/server/types/index.types';
     import { formatDate } from 'date-fns';
+    import type { Post } from '~/server/types/index.types';
 
     const props = defineProps<{
         post: Post
@@ -18,7 +18,8 @@
                     <img height="150" width="300" v-if="isLoaded" v-bind="imgAttrs" :src="src"
                         class="w-full object-cover !h-[150px]">
 
-                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[150px]" v-if="!isLoaded">
+                    <div class="skeleton p-1  bg-base-300 lg:bg-base-200 w-full h-[150px] rounded-box border border-base-300"
+                        v-if="!isLoaded">
                     </div>
                 </NuxtImg>
             </div>
