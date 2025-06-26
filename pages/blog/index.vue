@@ -1,18 +1,38 @@
 <script lang="ts" setup>
+import { generateHumanMessage } from 'nexus-req'
+import { toast } from 'vue-sonner'
+
 
 const postsStore = usePostsStore()
 const isLoading = ref(false)
 definePageMeta({
     layout: 'other'
 })
+async function retry() {
+
+    await postsStore.fetchPosts()
+
+}
 onMounted(async () => {
-    if (!postsStore.posts) {
+    if (!postsStore.posts && !postsStore.loading) {
         try {
             isLoading.value = true
             await postsStore.fetchPosts()
             isLoading.value = false
         } catch (error) {
+            toast.error(generateHumanMessage(`${error}`), {
+                duration: 5000, action: {
+                    label: 'Retry',
+                    onClick: () => toast.promise(retry, {
+                        loading: 'Fetching...',
+                        success: 'Data has been loaded successfully',
+                        error: 'An error has occured, please reload this page'
 
+
+
+                    })
+                },
+            })
         }
     }
 
@@ -22,7 +42,7 @@ onMounted(async () => {
 <template>
     <div class=" w-full p-6 md:p-12">
         <div class="container max-w-7xl mx-auto">
-            <div v-if="isLoading" class="grid w-full h-screen place-items-center">
+            <div v-if="isLoading || postsStore.loading" class="grid w-full h-screen place-items-center">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
                     <span class="opacity-60">Loading</span>

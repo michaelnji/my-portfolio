@@ -5,7 +5,7 @@
 
     <div class="bg-success/10 p-6 pt-16 my-12 rounded-box   relative">
         <div
-            class="absolute size-16 grid place-items-center rounded-full border-6 border-base-100 -top-4 -left-4 !bg-success">
+            class="absolute size-16 grid place-items-center rounded-full border-6 border-base-300/30 -top-4 -left-4 !bg-success">
             <Icon name="ph:lightbulb-filament-fill" size="30" class="!text-base-100" />
         </div>
         <!-- <div class="font-bold mt-6 text-3xl">Hint</div> -->
