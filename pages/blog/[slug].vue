@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { PortableText } from '@portabletext/vue';
 import { formatDate } from 'date-fns';
+import { generateHumanMessage } from 'nexus-req';
+import { toast } from 'vue-sonner';
 import BlogImage from '~/components/BlogImage.vue';
 import BlogLink from '~/components/BlogLink.vue';
 import CustomHeading from '~/components/CustomHeading.vue';
@@ -17,14 +19,29 @@ const isLoading = ref(false)
 definePageMeta({
     layout: 'other'
 })
+async function retry() {
+    await postsStore.fetchPosts()
+
+}
 onMounted(async () => {
-    if (!postsStore.posts) {
+    if (!postsStore.posts && !postsStore.loading) {
         try {
             isLoading.value = true
             await postsStore.fetchPosts()
             isLoading.value = false
         } catch (error) {
+            toast.error(generateHumanMessage(`${error}`), {
+                duration: 5000, action: {
+                    label: 'Retry',
+                    onClick: () => toast.promise(retry, {
+                        loading: 'Fetching...',
+                        success: 'Data has been loaded successfully',
+                        error: 'An error has occured, please reload this page'
 
+
+                    })
+                },
+            })
         }
     }
 
@@ -32,8 +49,8 @@ onMounted(async () => {
 </script>
 <template>
     <div>
-        <div class=" continer max-w-[100rem] md:p-8 xl:p-0 !pb-48 mx-auto">
-            <div v-if="isLoading" class="grid w-full h-screen place-items-center">
+        <div class=" continer max-w-[105rem] md:p-8 xl:p-0 !pb-48 mx-auto">
+            <div v-if="isLoading || postsStore.loading" class="grid w-full h-screen place-items-center">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
                     <span class="opacity-60">Loading</span>
@@ -42,7 +59,7 @@ onMounted(async () => {
             </div>
 
             <div v-if="!isLoading && postsStore.posts">
-                <div class="flex flex-col lg:flex-row gap-8">
+                <div class="flex flex-col lg:flex-row gap-12">
                     <div class="lg:w-2/3">
                         <div class="px-6 md:px-0 mt-6        lg:mt-12">
                             <div class="">
@@ -79,7 +96,7 @@ onMounted(async () => {
                         <div v-if="!isLoading && selectedPost"
                             class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30 md:border border-base-300 rounded-t-2xl md:rounded-3xl">
                             <div
-                                class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl prose-img:!my-0  prose-invert prose-headings:font-extrabold prose-headings prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">
+                                class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl prose-img:!my-0  prose-invert prose-headings:font-extrabold  prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">
                                 <PortableText v-if="selectedPost && selectedPost.body"
                                     :value="selectedPost?.body as any[]" :components="{
                                         types: {
@@ -116,6 +133,7 @@ onMounted(async () => {
                         <div class="md:sticky md:top-12 space-y-12 px-6 md:px-0">
 
                             <BlogStats />
+                            <BlogCategories v-if="selectedPost" :categories="selectedPost.tags" />
                             <CtaCard />
 
                         </div>

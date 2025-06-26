@@ -28,7 +28,7 @@ const currentSection = computed(() => {
                 <div class="avatar">
                     <div
                         class="lg:w-48 w-36 rounded-full ring border-6 border-base-200 outline-6 shadow-xl hover:shadow-primary/60 transition duration-700 hover:border-primary outline-base-300">
-                        <NuxtImg height="1000" width="1000" format="webp" src="/images/me.png" preload
+                        <NuxtImg height="500" width="500" format="webp" src="/images/me.png" preload
                             alt="A portrait of Michael Nji" :custom="true" class="rounded-box border border-base-300"
                             v-slot="{ src, isLoaded, imgAttrs }">
 
@@ -84,7 +84,7 @@ const currentSection = computed(() => {
                         nexus-req
                     </span>
                 </NuxtLink> , a simple library for formulating consistent response objects. I am the
-                main developer @
+                main dev at
                 <NuxtLink to="https://hcsshuttleandtourservices.com" target="_blank">
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
