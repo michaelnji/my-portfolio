@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     const sanity = useSanity()
     const resp: Post[] = await sanity.fetch(query)
     setResponseStatus(event, 200)
-    return sendServerResponse(200, 'sucess', resp)
+    return sendServerResponse(200, 'success', resp)
   } catch (error) {
     if (error instanceof Error) {
       setResponseStatus(event, 500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
