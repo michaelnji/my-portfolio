@@ -1,12 +1,12 @@
     <script lang="ts" setup>
-    import powerUp from '../assets/sounds/power-up.mp3'
     import powerDown from '../assets/sounds/power-down.mp3'
+    import powerUp from '../assets/sounds/power-up.mp3'
     const playSounds = usePlaySound()
     const { play } = useSound(powerUp, {
-        volume: 0.2
+        volume: 0.7
     })
     const { play: play2 } = useSound(powerDown, {
-        volume: 0.2
+        volume: 0.7
     })
     const toggleSound = () => {
         playSounds.value = !playSounds.value

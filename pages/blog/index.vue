@@ -1,8 +1,50 @@
 <script lang="ts" setup>
 import { generateHumanMessage } from 'nexus-req'
 import { toast } from 'vue-sonner'
+import { defaultSiteSettings } from '~/data/siteSettings'
 
+useHead({
+    htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+    link: [{
+        rel: 'canonical',
+        href: `${defaultSiteSettings.siteUrl}/blog`,
+        // content: `${defaultSiteSettings.siteUrl}/blog`
+    }]
+})
 
+useSeoMeta({
+    title: 'My Blog',
+    titleTemplate: '%s',
+    description: 'My blog posts and tech experiences',
+    ogType: 'website',
+    ogUrl: `${defaultSiteSettings.siteUrl}/blog`,
+    ogLocale: 'en_US',
+    ogSiteName: defaultSiteSettings.siteName,
+    twitterTitle: 'Michael Nji - Blog',
+    twitterDescription: 'My blog posts and tech experiences',
+
+    // no longer explicitly used by X but may be useful for SEO
+    // twitterSite: '@example',
+    // twitterCreator: '@example',
+
+    // og image
+    ogImage: {
+        url: `${defaultSiteSettings.siteUrl}/seo/og-image-blog.png`,
+        width: 1200,
+        height: 800,
+        alt: `Blog page of ${defaultSiteSettings.siteName}`,
+        type: 'image/png'
+    },
+    twitterImage: {
+        url: `${defaultSiteSettings.siteUrl}/seo/og-image-blog.png`,
+        width: 1200,
+        height: 800,
+        alt: `Blog page of ${defaultSiteSettings.siteName}`,
+        type: 'image/png'
+    },
+    // twitter image (note: ogImage is used as a fallback so this is optional)
+    twitterCard: 'summary_large_image', // or summary
+})
 const postsStore = usePostsStore()
 const isLoading = ref(false)
 definePageMeta({
