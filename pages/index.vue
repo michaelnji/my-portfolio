@@ -51,22 +51,9 @@ definePageMeta({
 </script>
 
 <template>
-
-    <div>
-        <Html>
-
-        <Head>
-            <meta name="google-site-verification" content="ZoD1rFqAexQv0QD2t3sFmuEVhribl2Mj02YnsCJ8VeI" />
-        </Head>
-
-        <Body>
-            <div class=" w-full p-6">
-                <div class="container max-w-6xl mx-auto">
-                    <Hero />
-                </div>
-            </div>
-        </Body>
-
-        </Html>
+    <div class=" w-full p-6">
+        <div class="container max-w-6xl mx-auto">
+            <Hero />
+        </div>
     </div>
 </template>
