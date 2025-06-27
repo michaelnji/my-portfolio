@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { PortableText } from '@portabletext/vue';
 import { formatDate } from 'date-fns';
-import { generateHumanMessage } from 'nexus-req';
-import { toast } from 'vue-sonner';
 import BlogImage from '~/components/BlogImage.vue';
 import BlogLink from '~/components/BlogLink.vue';
 import CustomHeading from '~/components/CustomHeading.vue';
@@ -34,85 +32,113 @@ async function retry() {
 
 }
 
-onBeforeMount(async () => {
+onMounted(() => {
+    useHead({
+        htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+        link: [{
+            rel: 'canonical',
+            href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+            // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
+        }]
+    })
 
-    try {
-        isLoading.value = true
-        await postsStore.fetchPosts()
-        isLoading.value = false
-        useHead({
-            htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
-            link: [{
-                rel: 'canonical',
-                href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-                content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
-            }]
-        })
+    useSeoMeta({
+        title: selectedPost.value?.title,
+        // titleTemplate: '%s',
+        description: selectedPost.value?.excerpt,
+        ogType: 'article',
+        articlePublishedTime: selectedPost.value?.publishedAt,
+        articleModifiedTime: selectedPost.value?._updatedAt,
+        // articleAuthor: selectedPost.value?.authorInfo.name,
+        // articleSection: 'Technology', // category
+        articleTag: tags.value,
+        twitterLabel1: 'Author',
+        twitterData1: selectedPost.value?.authorInfo.name,
+        ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+        ogLocale: 'en_US',
+        ogSiteName: defaultSiteSettings.siteName,
+        twitterTitle: selectedPost.value?.title,
+        twitterDescription: selectedPost.value?.excerpt,
 
-        useSeoMeta({
-            title: selectedPost.value?.title,
-            // titleTemplate: '%s',
-            description: selectedPost.value?.excerpt,
-            ogType: 'article',
-            articlePublishedTime: selectedPost.value?.publishedAt,
-            articleModifiedTime: selectedPost.value?._updatedAt,
-            articleAuthor: selectedPost.value?.authorInfo.name,
-            // articleSection: 'Technology', // category
-            articleTag: tags.value,
-            twitterLabel1: 'Author',
-            twitterData1: selectedPost.value?.authorInfo.name,
-            ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-            ogLocale: 'en_US',
-            ogSiteName: defaultSiteSettings.siteName,
-            twitterTitle: selectedPost.value?.title,
-            twitterDescription: selectedPost.value?.excerpt,
+        // no longer explicitly used by X but may be useful for SEO
+        // twitterSite: '@example',
+        // twitterCreator: '@example',
 
-            // no longer explicitly used by X but may be useful for SEO
-            // twitterSite: '@example',
-            // twitterCreator: '@example',
-
-            // og image
-            ogImage: {
-                url: selectedPost.value?.imgUrl,
-                width: 1400,
-                height: 750,
-                alt: selectedPost.value?.title,
-                type: 'image/png'
-            },
-            twitterImage: {
-                url: selectedPost.value?.imgUrl,
-                width: 1400,
-                height: 750,
-                alt: selectedPost.value?.title,
-                type: 'image/png'
-            },
-            // twitter image (note: ogImage is used as a fallback so this is optional)
-            twitterCard: 'summary_large_image', // or summary
-        })
-    } catch (error) {
-        toast.error(generateHumanMessage(`${error}`), {
-            duration: 5000, action: {
-                label: 'Retry',
-                onClick: () => toast.promise(retry, {
-                    loading: 'Fetching...',
-                    success: 'Data has been loaded successfully',
-                    error: 'An error has occured, please reload this page'
-
-
-                })
-            },
-        })
-    }
-
-
+        // og image
+        ogImage: {
+            url: selectedPost.value?.imgUrl,
+            width: 1400,
+            height: 750,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        twitterImage: {
+            url: selectedPost.value?.imgUrl,
+            width: 1400,
+            height: 750,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        // twitter image (note: ogImage is used as a fallback so this is optional)
+        twitterCard: 'summary_large_image', // or summary
+    })
 })
+whenever(() => selectedPost.value, () => {
+    useHead({
+        htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+        link: [{
+            rel: 'canonical',
+            href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+            // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
+        }]
+    })
 
+    useSeoMeta({
+        title: selectedPost.value?.title,
+        // titleTemplate: '%s',
+        description: selectedPost.value?.excerpt,
+        ogType: 'article',
+        articlePublishedTime: selectedPost.value?.publishedAt,
+        articleModifiedTime: selectedPost.value?._updatedAt,
+        // articleAuthor: selectedPost.value?.authorInfo.name,
+        // articleSection: 'Technology', // category
+        articleTag: tags.value,
+        twitterLabel1: 'Author',
+        twitterData1: selectedPost.value?.authorInfo.name,
+        ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+        ogLocale: 'en_US',
+        ogSiteName: defaultSiteSettings.siteName,
+        twitterTitle: selectedPost.value?.title,
+        twitterDescription: selectedPost.value?.excerpt,
 
+        // no longer explicitly used by X but may be useful for SEO
+        // twitterSite: '@example',
+        // twitterCreator: '@example',
+
+        // og image
+        ogImage: {
+            url: selectedPost.value?.imgUrl,
+            width: 1400,
+            height: 750,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        twitterImage: {
+            url: selectedPost.value?.imgUrl,
+            width: 1400,
+            height: 750,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        // twitter image (note: ogImage is used as a fallback so this is optional)
+        twitterCard: 'summary_large_image', // or summary
+    })
+})
 </script>
 <template>
     <div>
-        <div class=" continer max-w-[105rem] md:p-8 xl:p-0 !pb-48 md:pt-12 mx-auto">
-            <div v-if="isLoading || postsStore.loading" class="grid w-full h-screen place-items-center">
+        <div class=" continer max-w-[105rem] md:px-8  pb-24 md:pb-32 lg:pb-48 min-h-screen mx-auto">
+            <div v-if="postsStore.loading" class="grid w-full place-items-center my-auto h-[70dvh]">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
                     <span class="opacity-60">Loading</span>
@@ -120,7 +146,7 @@ onBeforeMount(async () => {
 
             </div>
 
-            <div v-if="!isLoading && postsStore.posts">
+            <div v-if="!postsStore.loading && postsStore.posts">
                 <div class="flex flex-col lg:flex-row gap-12">
                     <div class="lg:w-2/3">
                         <div class="px-6 md:px-0 mt-6        lg:mt-12">

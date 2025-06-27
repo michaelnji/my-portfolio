@@ -25,12 +25,19 @@ const online = useOnline()
 const postsStore = usePostsStore()
 const categoriesStore = useCategoriesStore()
 async function retry() {
-  await $fetch('/api/neondb/stats/setup')
+  try {
+    await Promise.all([await postsStore.fetchPosts(),
+    await $fetch('/api/neondb/stats/setup')])
+  } catch (error) {
+    reloadNuxtApp()
+  }
 }
 onMounted(async () => {
   await callOnce(async () => {
     try {
-      await $fetch('/api/neondb/stats/setup')
+      await Promise.all([await postsStore.fetchPosts(),
+      await $fetch('/api/neondb/stats/setup')])
+
     } catch (error) {
       toast.error(generateHumanMessage(`${error}`), {
         duration: 7000,
