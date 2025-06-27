@@ -54,8 +54,6 @@ onMounted(async () => {
 <template>
   <div class="
   ">
-
-
     <Toaster position="bottom-right" theme="dark" richColors :toastOptions="{
 
       class: '!p-3 !rounded-box  !items-start  ',
