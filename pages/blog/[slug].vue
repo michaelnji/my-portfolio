@@ -70,14 +70,14 @@ useHead({
 
 useSeoMeta({
     title: selectedPost.value?.title,
-    titleTemplate: '%s',
+    // titleTemplate: '%s',
     description: selectedPost.value?.excerpt,
     ogType: 'article',
     articlePublishedTime: selectedPost.value?.publishedAt,
     articleModifiedTime: selectedPost.value?._updatedAt,
     // articleAuthor: selectedPost.value?.authorInfo.name,
     // articleSection: 'Technology', // category
-    articleTag: tags.value,
+    // articleTag: tags.value,
     twitterLabel1: 'Author',
     twitterData1: selectedPost.value?.authorInfo.name,
     ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
