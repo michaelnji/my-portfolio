@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import '~/assets/css/custom.css';
 // import '~/assets/css/dracula.css';
-import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
-import { toast, Toaster } from 'vue-sonner'
-import 'vue-sonner/style.css'
+import { useHead } from '#imports';
+import '@catppuccin/highlightjs/css/catppuccin-mocha.css';
 import { generateHumanMessage } from 'nexus-req';
-import { useHead } from '#imports'
+import { Toaster, toast } from 'vue-sonner';
+import 'vue-sonner/style.css';
 
 useHead({
   link: [
@@ -25,18 +25,12 @@ const online = useOnline()
 const postsStore = usePostsStore()
 const categoriesStore = useCategoriesStore()
 async function retry() {
-
   await $fetch('/api/neondb/stats/setup')
-  await postsStore.fetchPosts()
-  await categoriesStore.fetchCategories()
-
 }
 onMounted(async () => {
   await callOnce(async () => {
     try {
       await $fetch('/api/neondb/stats/setup')
-      await postsStore.fetchPosts()
-      await categoriesStore.fetchCategories()
     } catch (error) {
       toast.error(generateHumanMessage(`${error}`), {
         duration: 7000,

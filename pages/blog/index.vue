@@ -56,27 +56,27 @@ async function retry() {
 
 }
 onMounted(async () => {
-    if (!postsStore.posts && !postsStore.loading) {
-        try {
-            isLoading.value = true
-            await postsStore.fetchPosts()
-            isLoading.value = false
-        } catch (error) {
-            toast.error(generateHumanMessage(`${error}`), {
-                duration: 5000, action: {
-                    label: 'Retry',
-                    onClick: () => toast.promise(retry, {
-                        loading: 'Fetching...',
-                        success: 'Data has been loaded successfully',
-                        error: 'An error has occured, please reload this page'
+
+    try {
+        isLoading.value = true
+        await postsStore.fetchPosts()
+        isLoading.value = false
+    } catch (error) {
+        toast.error(generateHumanMessage(`${error}`), {
+            duration: 5000, action: {
+                label: 'Retry',
+                onClick: () => toast.promise(retry, {
+                    loading: 'Fetching...',
+                    success: 'Data has been loaded successfully',
+                    error: 'An error has occured, please reload this page'
 
 
 
-                    })
-                },
-            })
-        }
+                })
+            },
+        })
     }
+
 
 })
 </script>
@@ -84,7 +84,7 @@ onMounted(async () => {
 <template>
     <div class=" w-full p-6 md:p-12">
         <div class="container max-w-7xl mx-auto">
-            <div v-if="isLoading || postsStore.loading" class="grid w-full h-screen place-items-center">
+            <div v-if="isLoading" class="grid w-full h-screen place-items-center">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
                     <span class="opacity-60">Loading</span>
