@@ -81,7 +81,7 @@ onMounted(async () => {
                                     {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
                                 </span>
                             </p>
-                            <h1 class="font-bold mt-4  font-display text-5xl md:text-6xl text-pretty lg:text-7xl">
+                            <h1 class="font-bold mt-4  font-display text-5xl md:text-6xl  lg:text-7xl">
                                 {{ selectedPost?.title }}
                             </h1>
 
@@ -132,7 +132,7 @@ onMounted(async () => {
                     <div class="lg:w-1/3">
                         <div class="md:sticky md:top-24 space-y-12 px-6 md:px-0">
 
-                            <BlogStats />
+                            <BlogStats v-if="selectedPost" :id="selectedPost._id" />
                             <BlogCategories v-if="selectedPost" :categories="selectedPost.tags" />
                             <CtaCard />
 

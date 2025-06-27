@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
   try {
     const query = `*[_type == "post"]{
         "imgUrl": mainImage.asset->url,
+        _id,
          body,
          "tags": categories[]->{
         title

@@ -2,8 +2,8 @@
 
 </script>
 <template>
-    <div class="font-display font-black text-3xl">
-        nji.<span class="text-primary">codes
+    <div class=" font-black text-xl">
+        nji.<span class="text-primary font-display text-2xl">codes
         </span>
     </div>
 </template>

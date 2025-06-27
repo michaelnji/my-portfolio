@@ -15,12 +15,12 @@ export const usePostsStore = defineStore('Posts', () => {
         const response = await $fetch<ServerResponse<StatusCodes, Post[]>>('/api/sanity/posts/', {
             retry: 0, retryDelay: 0,
             onResponseError({ response }) {
-                loading.value = false
+
             }
         });
 
         if (!response.ok) {
-            loading.value = false
+
             throw new Error(response.message);
         }
         if (response.data) {
