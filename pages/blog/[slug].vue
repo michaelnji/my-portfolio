@@ -75,7 +75,7 @@ useSeoMeta({
     ogType: 'article',
     articlePublishedTime: selectedPost.value?.publishedAt,
     articleModifiedTime: selectedPost.value?._updatedAt,
-    articleAuthor: selectedPost.value?.authorInfo.name,
+    // articleAuthor: selectedPost.value?.authorInfo.name,
     // articleSection: 'Technology', // category
     articleTag: tags.value,
     twitterLabel1: 'Author',
