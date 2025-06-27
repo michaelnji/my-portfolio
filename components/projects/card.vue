@@ -1,8 +1,9 @@
     <script lang="ts" setup>
-    import { useSound } from '@vueuse/sound'
     import click from '../assets/sounds/button-click.mp3'
     const playSounds = usePlaySound()
-    const { play } = useSound(click)
+    const { play } = useSound(click, {
+        volume: 0.2
+    })
     const playSound = () => {
         if (playSounds.value) play()
     }
