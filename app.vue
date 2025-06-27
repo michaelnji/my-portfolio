@@ -45,6 +45,16 @@ onMounted(async () => {
       class: '!p-3 !rounded-box  !items-start  ',
       descriptionClass: 'text-sm '
     }" />
+    <div class="w-full px-6 py-3 border-b border-base-300 flex justify-between items-center gap-x-4 bg-base-200 ">
+      <Logo />
+      <div class="flex  gap-x-4">
+        <NuxtLink to="https://github.com/michaelnji" target="_blank">
+          <Icon name="simple-icons:github" size="18" />
+        </NuxtLink>
+        <Sound />
+
+      </div>
+    </div>
     <NuxtLayout>
       <div data-theme="mine">
         <NuxtPage />
