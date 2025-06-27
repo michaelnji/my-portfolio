@@ -11,10 +11,20 @@ import Hint from '~/components/Hint.vue';
 import Quote from '~/components/Quote.vue';
 import SoftwareBlock from '~/components/SoftwareBlock.vue';
 import CodeBlock from '~/components/codeBlock.vue';
+import { defaultSiteSettings } from '~/data/siteSettings';
+const tags = ref<string[]>([])
 
 const route = useRoute()
 const postsStore = usePostsStore()
-const selectedPost = computed(() => postsStore.posts?.find((x) => x.slug === route.params.slug))
+const selectedPost = computed(() => {
+    const x = postsStore.posts?.find((x) => x.slug === route.params.slug)
+    if (x) {
+        for (const tag of x.tags) {
+            tags.value = [...tags.value, tag.title]
+        }
+    }
+    return x
+})
 const isLoading = ref(false)
 definePageMeta({
     layout: 'other'
@@ -28,6 +38,8 @@ onMounted(async () => {
         try {
             isLoading.value = true
             await postsStore.fetchPosts()
+            console.log(selectedPost.value?.imgUrl)
+
             isLoading.value = false
         } catch (error) {
             toast.error(generateHumanMessage(`${error}`), {
@@ -45,6 +57,56 @@ onMounted(async () => {
         }
     }
 
+})
+
+useHead({
+    htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+    link: [{
+        rel: 'canonical',
+        href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+        // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
+    }]
+})
+
+useSeoMeta({
+    title: selectedPost.value?.title,
+    titleTemplate: '%s',
+    description: selectedPost.value?.excerpt,
+    ogType: 'article',
+    articlePublishedTime: selectedPost.value?.publishedAt,
+    articleModifiedTime: selectedPost.value?._updatedAt,
+    articleAuthor: selectedPost.value?.authorInfo.name,
+    // articleSection: 'Technology', // category
+    articleTag: tags.value,
+    twitterLabel1: 'Author',
+    twitterData1: selectedPost.value?.authorInfo.name,
+    ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+    ogLocale: 'en_US',
+    ogSiteName: defaultSiteSettings.siteName,
+    twitterTitle: selectedPost.value?.title,
+    twitterDescription: selectedPost.value?.excerpt,
+
+    // no longer explicitly used by X but may be useful for SEO
+    // twitterSite: '@example',
+    // twitterCreator: '@example',
+
+    // og image
+    ogImage: {
+        url: `${selectedPost.value?.imgUrl}`,
+        width: 1400,
+        height: 750,
+        alt: selectedPost.value?.title,
+        type: 'image/png'
+    },
+    twitterImage: {
+        url: `${selectedPost.value?.imgUrl}`,
+        width: 1200,
+        height: 800,
+        alt: selectedPost.value?.title,
+        type: 'image/png'
+    },
+    // twitter image (note: ogImage is used as a fallback so this is optional)
+    twitterCard: 'summary_large_image', // or summary
 })
 </script>
 <template>

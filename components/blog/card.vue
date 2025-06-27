@@ -1,11 +1,11 @@
     <script lang="ts" setup>
+    import { useSound } from '@vueuse/sound';
     import { formatDate } from 'date-fns';
     import type { Post } from '~/server/types/index.types';
-    import { useSound } from '@vueuse/sound'
-    import click from '../assets/sounds/button-click.mp3'
+    import click from '../assets/sounds/button-click.mp3';
     const playSounds = usePlaySound()
     const { play } = useSound(click, {
-        volume: 0.2
+        volume: 0.7
     })
     const playSound = () => {
         if (playSounds.value) play()

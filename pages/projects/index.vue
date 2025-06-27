@@ -1,6 +1,50 @@
 <script lang="ts" setup>
 import { ProjectsOSS } from '#components';
+import { defaultSiteSettings } from '~/data/siteSettings';
 
+
+useHead({
+    htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+    link: [{
+        rel: 'canonical',
+        href: `${defaultSiteSettings.siteUrl}/projects`,
+        // content: `${defaultSiteSettings.siteUrl}/projects`
+    }]
+})
+
+useSeoMeta({
+    title: 'My Projects',
+    titleTemplate: '%s',
+    description: 'Projects I have built over the years',
+    ogType: 'website',
+    ogUrl: `${defaultSiteSettings.siteUrl}/projects`,
+    ogLocale: 'en_US',
+    ogSiteName: defaultSiteSettings.siteName,
+    twitterTitle: 'Michael Nji - Projects',
+    twitterDescription: 'Projects I have built over the years',
+
+    // no longer explicitly used by X but may be useful for SEO
+    // twitterSite: '@example',
+    // twitterCreator: '@example',
+
+    // og image
+    ogImage: {
+        url: `${defaultSiteSettings.siteUrl}/seo/og-image-projects.png`,
+        width: 1200,
+        height: 800,
+        alt: `Projects page of ${defaultSiteSettings.siteName}`,
+        type: 'image/png'
+    },
+    twitterImage: {
+        url: `${defaultSiteSettings.siteUrl}/seo/og-image-projects.png`,
+        width: 1200,
+        height: 800,
+        alt: `Projects page of ${defaultSiteSettings.siteName}`,
+        type: 'image/png'
+    },
+    // twitter image (note: ogImage is used as a fallback so this is optional)
+    twitterCard: 'summary_large_image', // or summary
+})
 definePageMeta({
     layout: 'other'
 })

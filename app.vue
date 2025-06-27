@@ -5,11 +5,28 @@ import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 import { toast, Toaster } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { generateHumanMessage } from 'nexus-req';
+import { useHead } from '#imports'
+
+useHead({
+  link: [
+    { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+    { rel: 'icon', href: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+  ],
+  meta: [
+    // used on some mobile browsers
+    { name: 'theme-color', content: '#b4ff22' },
+    // choose light or dark (or both, see Light + Dark Mode)
+    { name: 'color-scheme', content: 'dark' },
+  ]
+})
+
 const online = useOnline()
 const postsStore = usePostsStore()
 const categoriesStore = useCategoriesStore()
 async function retry() {
 
+  await $fetch('/api/neondb/stats/setup')
   await postsStore.fetchPosts()
   await categoriesStore.fetchCategories()
 
@@ -17,6 +34,7 @@ async function retry() {
 onMounted(async () => {
   await callOnce(async () => {
     try {
+      await $fetch('/api/neondb/stats/setup')
       await postsStore.fetchPosts()
       await categoriesStore.fetchCategories()
     } catch (error) {

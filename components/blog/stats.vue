@@ -10,14 +10,14 @@ const props = defineProps<{
 const stats = ref<StatTable | null>(null)
 const playSounds = usePlaySound()
 const { play } = useSound(click, {
-    volume: 0.2
+    volume: 0.7
 })
 const target = ref('')
 const { play: playSuccess } = useSound(successSound, {
-    volume: 0.2
+    volume: 0.7
 })
 const { play: playError } = useSound(errorSound, {
-    volume: 0.2
+    volume: 0.7
 })
 const isLoading = ref(true)
 const isLoading2 = ref(false)

@@ -2,7 +2,7 @@
     import click from '../assets/sounds/button-click.mp3'
     const playSounds = usePlaySound()
     const { play } = useSound(click, {
-        volume: 0.2
+        volume: 0.7
     })
     const playSound = () => {
         if (playSounds.value) play()
