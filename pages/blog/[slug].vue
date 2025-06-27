@@ -56,58 +56,58 @@ onMounted(async () => {
             })
         }
     }
+    useHead({
+        htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+        link: [{
+            rel: 'canonical',
+            href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+            // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
+        }]
+    })
 
+    useSeoMeta({
+        title: selectedPost.value?.title,
+        // titleTemplate: '%s',
+        description: selectedPost.value?.excerpt,
+        ogType: 'article',
+        articlePublishedTime: selectedPost.value?.publishedAt,
+        articleModifiedTime: selectedPost.value?._updatedAt,
+        // articleAuthor: selectedPost.value?.authorInfo.name,
+        // articleSection: 'Technology', // category
+        // articleTag: tags.value,
+        twitterLabel1: 'Author',
+        twitterData1: selectedPost.value?.authorInfo.name,
+        ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+        ogLocale: 'en_US',
+        ogSiteName: defaultSiteSettings.siteName,
+        twitterTitle: selectedPost.value?.title,
+        twitterDescription: selectedPost.value?.excerpt,
+
+        // no longer explicitly used by X but may be useful for SEO
+        // twitterSite: '@example',
+        // twitterCreator: '@example',
+
+        // og image
+        ogImage: {
+            url: `${selectedPost.value?.imgUrl}`,
+            width: 1400,
+            height: 750,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        twitterImage: {
+            url: `${selectedPost.value?.imgUrl}`,
+            width: 1200,
+            height: 800,
+            alt: selectedPost.value?.title,
+            type: 'image/png'
+        },
+        // twitter image (note: ogImage is used as a fallback so this is optional)
+        twitterCard: 'summary_large_image', // or summary
+    })
 })
 
-useHead({
-    htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
-    link: [{
-        rel: 'canonical',
-        href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-        // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
-    }]
-})
 
-useSeoMeta({
-    title: selectedPost.value?.title,
-    // titleTemplate: '%s',
-    description: selectedPost.value?.excerpt,
-    ogType: 'article',
-    articlePublishedTime: selectedPost.value?.publishedAt,
-    articleModifiedTime: selectedPost.value?._updatedAt,
-    // articleAuthor: selectedPost.value?.authorInfo.name,
-    // articleSection: 'Technology', // category
-    // articleTag: tags.value,
-    twitterLabel1: 'Author',
-    twitterData1: selectedPost.value?.authorInfo.name,
-    ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-    ogLocale: 'en_US',
-    ogSiteName: defaultSiteSettings.siteName,
-    twitterTitle: selectedPost.value?.title,
-    twitterDescription: selectedPost.value?.excerpt,
-
-    // no longer explicitly used by X but may be useful for SEO
-    // twitterSite: '@example',
-    // twitterCreator: '@example',
-
-    // og image
-    ogImage: {
-        url: `${selectedPost.value?.imgUrl}`,
-        width: 1400,
-        height: 750,
-        alt: selectedPost.value?.title,
-        type: 'image/png'
-    },
-    twitterImage: {
-        url: `${selectedPost.value?.imgUrl}`,
-        width: 1200,
-        height: 800,
-        alt: selectedPost.value?.title,
-        type: 'image/png'
-    },
-    // twitter image (note: ogImage is used as a fallback so this is optional)
-    twitterCard: 'summary_large_image', // or summary
-})
 </script>
 <template>
     <div>
