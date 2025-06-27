@@ -49,7 +49,7 @@ onMounted(async () => {
 </script>
 <template>
     <div>
-        <div class=" continer max-w-[105rem] md:p-8 xl:p-0 !pb-48 mx-auto">
+        <div class=" continer max-w-[105rem] md:p-8 xl:p-0 !pb-48 md:pt-12 mx-auto">
             <div v-if="isLoading || postsStore.loading" class="grid w-full h-screen place-items-center">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
@@ -130,7 +130,7 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="lg:w-1/3">
-                        <div class="md:sticky md:top-12 space-y-12 px-6 md:px-0">
+                        <div class="md:sticky md:top-24 space-y-12 px-6 md:px-0">
 
                             <BlogStats />
                             <BlogCategories v-if="selectedPost" :categories="selectedPost.tags" />

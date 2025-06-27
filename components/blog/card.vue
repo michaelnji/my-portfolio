@@ -1,13 +1,19 @@
     <script lang="ts" setup>
     import { formatDate } from 'date-fns';
     import type { Post } from '~/server/types/index.types';
-
+    import { useSound } from '@vueuse/sound'
+    import click from '../assets/sounds/button-click.mp3'
+    const playSounds = usePlaySound()
+    const { play } = useSound(click)
+    const playSound = () => {
+        if (playSounds.value) play()
+    }
     const props = defineProps<{
         post: Post
     }>()
 </script>
 <template>
-    <NuxtLink :to="`/blog/${post.slug}`" class="w-full">
+    <NuxtLink @click="playSound" :to="`/blog/${post.slug}`" class="w-full">
         <div
             class="bg-base-200 shadow-xl hover:shadow-primary/10 w-full rounded-box hover:border-primary transition-all group border border-base-300 p-3">
             <div class="mb-2">

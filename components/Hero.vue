@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+import click from '../assets/sounds/button-click.mp3'
+const playSounds = usePlaySound()
+const { play } = useSound(click)
+const playSound = () => {
+    if (playSounds.value) play()
+}
 const intro = useTemplateRef('intro')
 const project = useTemplateRef('project')
 const tech = useTemplateRef('tech')
@@ -75,8 +81,8 @@ const currentSection = computed(() => {
             <p class="text-lg leading-8 mt-6 opacity-75">I am the
                 creator
                 of
-                <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req"
-                    target="_blank">
+                <NuxtLink @click="playSound"
+                    to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req" target="_blank">
 
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
@@ -85,7 +91,7 @@ const currentSection = computed(() => {
                     </span>
                 </NuxtLink> , a simple library for formulating consistent response objects. I am the
                 main dev at
-                <NuxtLink to="https://hcsshuttleandtourservices.com" target="_blank">
+                <NuxtLink @click="playSound" to="https://hcsshuttleandtourservices.com" target="_blank">
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
@@ -94,7 +100,7 @@ const currentSection = computed(() => {
                 </NuxtLink> . I work
                 as a
                 freelance web developer in Cameroon and also run a forex trading blog called
-                <NuxtLink to="https://gemmafx.vercel.app" target="_blank">
+                <NuxtLink @click="playSound" to="https://gemmafx.vercel.app" target="_blank">
 
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
@@ -107,14 +113,14 @@ const currentSection = computed(() => {
 
             <div class="mt-6 flex !gap-3">
 
-                <NuxtLink to="https://github.com/michaelnji" target="_blank">
+                <NuxtLink @click="playSound" to="https://github.com/michaelnji" target="_blank">
                     <div
                         class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                         <Icon name="simple-icons:github" class="text-white" size="24" />
                     </div>
                 </NuxtLink>
-                <NuxtLink to="https://wa.link/j63c5d" target="_blank">
+                <NuxtLink @click="playSound" to="https://wa.link/j63c5d" target="_blank">
                     <div
                         class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
@@ -194,8 +200,8 @@ const currentSection = computed(() => {
 
                 </div>
                 <p class="text-lg leading-8 mt-6 opacity-75">I am developing my forex trading website, which will launch
-                    later this year and will be phenomenal! <NuxtLink to="https://gemmafx.vercel.app" target="_blank"
-                        class="underline text-primary">
+                    later this year and will be phenomenal! <NuxtLink @click="playSound" to="https://gemmafx.vercel.app"
+                        target="_blank" class="underline text-primary">
                         Check it out here
                     </NuxtLink>
 
@@ -205,7 +211,7 @@ const currentSection = computed(() => {
             <div class="mt-16">
                 <h3 class="font-bold text-2xl">Quick links</h3>
                 <div class="grid mt-8 md:grid-cols-2 gap-3">
-                    <NuxtLink to="/projects">
+                    <NuxtLink @click="playSound" to="/projects">
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
@@ -218,7 +224,7 @@ const currentSection = computed(() => {
                             </p>
                         </div>
                     </NuxtLink>
-                    <NuxtLink to="/blog">
+                    <NuxtLink @click="playSound" to="/blog">
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
@@ -232,7 +238,8 @@ const currentSection = computed(() => {
                             </p>
                         </div>
                     </NuxtLink>
-                    <NuxtLink to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req">
+                    <NuxtLink @click="playSound"
+                        to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req">
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
@@ -245,7 +252,7 @@ const currentSection = computed(() => {
                             </p>
                         </div>
                     </NuxtLink>
-                    <NuxtLink to="/games">
+                    <NuxtLink @click="playSound" to="/games">
                         <div
                             class="!py-2 transition-all group hover:border-primary px-3 rounded-box bg-base-200   shadow-xl border-1  border-base-content/30">
                             <h3
