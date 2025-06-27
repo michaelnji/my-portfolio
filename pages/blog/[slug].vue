@@ -34,7 +34,7 @@ async function retry() {
 
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
 
     try {
         isLoading.value = true
