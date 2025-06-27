@@ -55,9 +55,7 @@ onMounted(async () => {
   <div class="
   ">
 
-    <Head>
-      <meta name="google-site-verification" content="ZoD1rFqAexQv0QD2t3sFmuEVhribl2Mj02YnsCJ8VeI" />
-    </Head>
+
     <Toaster position="bottom-right" theme="dark" richColors :toastOptions="{
 
       class: '!p-3 !rounded-box  !items-start  ',
