@@ -17,7 +17,7 @@ useSeoMeta({
     titleTemplate: '%s',
     description: 'My blog posts and tech experiences',
     ogType: 'website',
-    ogUrl: `${defaultSiteSettings.siteUrl}/blog`,
+    ogUrl: defaultSiteSettings.siteUrl,
     ogLocale: 'en_US',
     ogSiteName: defaultSiteSettings.siteName,
     twitterTitle: 'Michael Nji - Blog',
@@ -29,14 +29,14 @@ useSeoMeta({
 
     // og image
     ogImage: {
-        url: `${defaultSiteSettings.siteUrl}/seo/og-image-blog.png`,
+        url: '/seo/og-image-blog.png',
         width: 1200,
         height: 800,
         alt: `Blog page of ${defaultSiteSettings.siteName}`,
         type: 'image/png'
     },
     twitterImage: {
-        url: `${defaultSiteSettings.siteUrl}/seo/og-image-blog.png`,
+        url: '/seo/og-image-blog.png',
         width: 1200,
         height: 800,
         alt: `Blog page of ${defaultSiteSettings.siteName}`,
