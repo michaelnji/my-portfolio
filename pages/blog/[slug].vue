@@ -105,7 +105,7 @@ whenever(() => selectedPost.value, () => {
         articleTag: tags.value,
         twitterLabel1: 'Author',
         twitterData1: selectedPost.value?.authorInfo.name,
-        ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
+        ogUrl: defaultSiteSettings.siteUrl,
         ogLocale: 'en_US',
         ogSiteName: defaultSiteSettings.siteName,
         twitterTitle: selectedPost.value?.title,
@@ -119,14 +119,14 @@ whenever(() => selectedPost.value, () => {
         ogImage: {
             url: selectedPost.value?.imgUrl,
             width: 1400,
-            height: 750,
+            height: 700,
             alt: selectedPost.value?.title,
             type: 'image/png'
         },
         twitterImage: {
             url: selectedPost.value?.imgUrl,
             width: 1400,
-            height: 750,
+            height: 700,
             alt: selectedPost.value?.title,
             type: 'image/png'
         },
