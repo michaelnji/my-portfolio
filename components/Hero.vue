@@ -168,7 +168,7 @@ const currentSection = computed(() => {
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
-                        <Icon name="logos:supabase-icon" />Supaase
+                        <Icon name="logos:supabase-icon" />Supabase
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
