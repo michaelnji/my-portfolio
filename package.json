@@ -33,6 +33,8 @@
     "@vueuse/nuxt": "13.0.0",
     "@vueuse/sound": "^2.1.3",
     "@wdns/vue-code-block": "^2.3.5",
+    "baseline-browser-mapping": "^2.9.14",
+    "caniuse-lite": "^1.0.30001764",
     "daisyui": "^5.0.28",
     "date-fns": "^4.1.0",
     "nexus-req": "^3.1.7",
@@ -53,5 +55,8 @@
     "@unocss/preset-wind4": "^66.1.0-beta.12",
     "@unocss/transformer-compile-class": "^66.1.0-beta.12",
     "@unocss/transformer-variant-group": "^66.1.0-beta.12"
+  },
+  "overrides": {
+    "@vue/devtools-kit": ">=8.0.3"
   }
 }

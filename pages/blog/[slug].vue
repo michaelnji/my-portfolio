@@ -141,7 +141,7 @@ whenever(() => selectedPost.value, () => {
             <div v-if="postsStore.loading" class="grid w-full place-items-center my-auto h-[70dvh]">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
-                    <span class="opacity-60">Loading</span>
+                    <span class="opacity-60 font-normal-weight">Loading</span>
                 </div>
 
             </div>
@@ -164,7 +164,8 @@ whenever(() => selectedPost.value, () => {
                                     </div>
                                 </NuxtImg>
                             </div>
-                            <p class="mt-6 md:mt-12 text-lg md:text-2xl opacity-80 flex items-center gap-2">
+                            <p
+                                class="mt-6 md:mt-12 text-lg md:text-2xl opacity-80 font-normal-weight flex items-center gap-2">
                                 <span>
                                     {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
                                 </span>
@@ -174,7 +175,7 @@ whenever(() => selectedPost.value, () => {
                             </h1>
 
 
-                            <p class="mt-4 md:text-xl flex items-center gap-2">
+                            <p class="mt-4 font-normal-weight md:text-xl flex items-center gap-2">
                                 <Icon name="solar:user-circle-bold" />
                                 <span>
                                     Posted by <span class="text-primary">{{ selectedPost?.authorInfo.name }}</span>
@@ -184,7 +185,7 @@ whenever(() => selectedPost.value, () => {
                         <div v-if="!isLoading && selectedPost"
                             class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30 md:border border-base-300 rounded-t-2xl md:rounded-3xl">
                             <div
-                                class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl prose-img:!my-0  prose-invert prose-headings:font-extrabold  prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">
+                                class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl font-normal-weight prose-img:!my-0  prose-invert prose-headings:font-extrabold  prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">
                                 <PortableText v-if="selectedPost && selectedPost.body"
                                     :value="selectedPost?.body as any[]" :components="{
                                         types: {

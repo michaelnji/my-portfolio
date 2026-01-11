@@ -63,7 +63,7 @@
             <h2 class="font-bold transition-all group-hover:text-primary text-2xl">
                 {{ details.title }}
             </h2>
-            <p class="mt-2">
+            <p class="mt-2 font-normal-weight">
                 {{ details.description }}
             </p>
             <p class="mt-4 flex items-center gap-2">
