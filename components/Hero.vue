@@ -27,7 +27,7 @@ const currentSection = computed(() => {
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
                     <span
-                        class="!p-2 rounded-full bg-base-200  inline-flex shadow-xl border-1 text-xs text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!p-2 rounded-full bg-base-200  shadow-xl border-1 text-xs border-base-content/30 font-mono flex items-center gap-2 ">
                         🚀
                     </span>
                 </div>
