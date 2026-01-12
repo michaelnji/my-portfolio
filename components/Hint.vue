@@ -10,7 +10,7 @@
         </div>
         <!-- <div class="font-bold mt-6 text-3xl">Hint</div> -->
         <div
-            class="bg-gradient-to-tl !p-0 !leading-normal !m-0 from-success via-green-200 to-green-300 text-transparent bg-clip-text font-semibold ">
+            class="bg-gradient-to-tl !p-0 !leading-normal !m-0 from-success via-green-200 to-green-300 text-transparent bg-clip-text font-normal-weight ">
             <slot></slot>
         </div>
 

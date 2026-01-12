@@ -11,7 +11,7 @@ defineProps<{
         </h3>
         <div class="flex gap-2 flex-wrap ">
             <div v-for="category in categories"
-                class="flex items-center  py-1 px-3   rounded-box bg-base-200 border border-base-300 font-bold   gap-x-2 group">
+                class="flex items-center  py-1 px-3   rounded-box bg-base-200 border border-base-300 font-normal-weight   gap-x-2 group">
                 {{ category.title }}
             </div>
 

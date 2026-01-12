@@ -97,7 +97,7 @@ onMounted(async () => {
                     target = 'hearts'
                 }
             }"
-                class="flex disabled:pointer-events-none disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:shadow-error/30 hover:border-error rounded-box bg-base-300/50 gap-x-2 group">
+                class="flex disabled:pointer-events-none disabled:opacity-90 items-center min-w-22  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:shadow-error/30 hover:border-error rounded-box bg-base-300/50 gap-x-2 group">
                 <Icon :class="{ 'jello-horizontal': target === 'hearts' }" name="solar:heart-angle-bold" size="28"
                     class="transition-all group-hover:rotate-12 text-error" />
                 {{ stats?.hearts }}
@@ -113,7 +113,7 @@ onMounted(async () => {
                     target = 'claps'
                 }
             }"
-                class="flex disabled:pointer-events-none disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:border-secondary hover:shadow-secondary/30 rounded-box bg-base-300/50 gap-x-2 group">
+                class="flex disabled:pointer-events-none min-w-22 disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:border-secondary hover:shadow-secondary/30 rounded-box bg-base-300/50 gap-x-2 group">
                 <Icon :class="{ 'jello-horizontal': target === 'claps' }" name="ph:hands-clapping-fill" size="28"
                     class="transition-all group-hover:rotate-12 text-secondary" /> {{ stats?.claps }}
             </button>
@@ -127,7 +127,7 @@ onMounted(async () => {
                     target = 'stars'
                 }
             }"
-                class="flex disabled:pointer-events-none disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:border-warning hover:shadow-warning/30 rounded-box bg-base-300/50 gap-x-2 group">
+                class="flex disabled:pointer-events-none min-w-22 disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all cursor-pointer active:scale-95 hover:shadow-lg hover:border-warning hover:shadow-warning/30 rounded-box bg-base-300/50 gap-x-2 group">
                 <Icon :class="{ 'jello-horizontal': target === 'stars' }" name="ph:star-fill" size="28"
                     class="transition-all group-hover:rotate-12 text-warning" /> {{
                         stats?.stars }}
@@ -142,7 +142,7 @@ onMounted(async () => {
                     target = 'dislikes'
                 }
             }"
-                class="flex disabled:pointer-events-none disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all hover:shadow-info/30 cursor-pointer active:scale-95 hover:shadow-lg hover:border-info rounded-box bg-base-300/50 gap-x-2 group">
+                class="flex disabled:pointer-events-none min-w-22 disabled:opacity-90 items-center  py-1 px-3 border border-transparent transition-all hover:shadow-info/30 cursor-pointer active:scale-95 hover:shadow-lg hover:border-info rounded-box bg-base-300/50 gap-x-2 group">
                 <Icon :class="{ 'jello-horizontal': target === 'dislikes' }" name="ph:thumbs-down-fill" size="28"
                     class="transition-all group-hover:rotate-12 text-info" />
                 {{ stats?.dislikes }}

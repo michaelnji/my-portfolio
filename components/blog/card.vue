@@ -45,7 +45,7 @@
             <h2 class="font-bold transition-all group-hover:text-primary text-xl">
                 {{ post.title }}
             </h2>
-            <p class="mt-2 text-sm md:text-base opacity-80 line-clamp-2 text-pretty">
+            <p class="mt-2 text-sm md:text-base opacity-80 line-clamp-2 text-pretty font-normal-weight">
                 {{ post.excerpt }}
             </p>
             <p class="mt-4 flex items-center gap-2">
