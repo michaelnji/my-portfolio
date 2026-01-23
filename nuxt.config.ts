@@ -22,7 +22,32 @@ export default defineNuxtConfig({
     // '@unocss/nuxt',
     '@formkit/auto-animate/nuxt',
     '@nuxtjs/sanity',
+    '@pinia/colada-nuxt',
   ],
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' }
+    
+  },
+  image: {
+    format: ['webp', 'png', 'jpeg'],
+    // define your own presets
+    presets: {
+      avatar: {
+        modifiers: {
+          format: 'jpg',
+          width: 50,
+          height: 50
+        }
+      },
+      rect: {
+        modifiers: {
+          format: 'webp',
+          quality: 80
+        }
+      }
+    }
+  },
   icon: {
     customCollections: [
       {
@@ -73,30 +98,6 @@ export default defineNuxtConfig({
       // include all custom collections in the client bundle
       includeCustomCollections: true,
     },
-  },
-  app: {
-    layoutTransition: { name: 'layout', mode: 'out-in' },
-    pageTransition: { name: 'page', mode: 'out-in' }
-
-  },
-  image: {
-    format: ['webp', 'png', 'jpeg'],
-    // define your own presets
-    presets: {
-      avatar: {
-        modifiers: {
-          format: 'jpg',
-          width: 50,
-          height: 50
-        }
-      },
-      rect: {
-        modifiers: {
-          format: 'webp',
-          quality: 80
-        }
-      }
-    }
   },
   fonts: {
     defaults: {
