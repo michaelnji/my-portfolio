@@ -55,15 +55,15 @@ const currentSection = computed(() => {
                 <ul class="space-y-4">
                     <li class="text-sm opacity-75 lg:text-lg  flex  gap-x-3 items-center font-normal-weight "
                         :class="{ 'text-primary !opacity-100': currentSection === 1 }">
-                        <Icon name="solar:hand-shake-broken" size="28" class="!hidden lg:!inline" /> Hello there
+                        <span class="!hidden lg:!inline">👋🏽</span> Hello there
                     </li>
                     <li class="text-sm lg:text-lg  flex  gap-x-3 items-center font-normal-weight opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 2 }">
-                        <Icon name="solar:code-broken" size="28" class="!hidden lg:!inline" /> Tech background
+                        <span class="!hidden lg:!inline">👨🏽‍💻</span> Tech background
                     </li>
                     <li class="text-sm lg:text-lg  flex  gap-x-3 items-center font-normal-weight opacity-75"
                         :class="{ 'text-primary !opacity-100': currentSection === 3 }">
-                        <Icon name="solar:bookmark-square-minimalistic-broken" size="28" class="!hidden lg:!inline" />
+                        <span class="!hidden lg:!inline">👀</span>
                         Currently working on
                     </li>
                 </ul>
@@ -78,32 +78,27 @@ const currentSection = computed(() => {
 
 
 
-            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am the
-                creator
-                of
+            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a Full stack web developer at
                 <NuxtLink @click="playSound"
-                    to="https://cod3vils-organization.gitbook.io/michaelnji/small-libraries/nexus-req" target="_blank">
+to="https://mihma.com" target="_blank">
 
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl  border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
 
-                        nexus-req
+                        MIHMA
                     </span>
-                </NuxtLink> , a simple library for formulating consistent response objects. I am the
-                main dev at
-                <NuxtLink @click="playSound" to="https://hcsshuttleandtourservices.com" target="_blank">
-                    <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                </NuxtLink> and <NuxtLink @click="playSound" to="https://newvcreatives.com" target="_blank">
 
-                        HCS shuttles & Tours
+                    <span
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl  border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+
+                        New Vision Creatives
                     </span>
-                </NuxtLink> . I work
-                as a
-                freelance web developer in Cameroon and also run a forex trading blog called
+                </NuxtLink>. I also run a forex trading blog called
                 <NuxtLink @click="playSound" to="https://gemmafx.vercel.app" target="_blank">
 
                     <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
+                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
                         Gemma Fx
                     </span>
                 </NuxtLink>
@@ -115,26 +110,26 @@ const currentSection = computed(() => {
 
                 <NuxtLink @click="playSound" to="https://github.com/michaelnji" target="_blank">
                     <div
-                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                         <Icon name="simple-icons:github" class="text-white" size="24" />
                     </div>
                 </NuxtLink>
                 <NuxtLink @click="playSound" to="https://wa.link/j63c5d" target="_blank">
                     <div
-                        class="p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                        class="p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                         <Icon name="simple-icons:whatsapp" class="text-white" size="24" />
                     </div>
                 </NuxtLink>
 
                 <div
-                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:discord" size="24" class="" />
                 </div>
                 <div
-                    class="!p-3 shadow-md hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                    class="!p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
                     <Icon name="simple-icons:gmail" size="24" class="" />
                 </div>
@@ -161,6 +156,14 @@ const currentSection = computed(() => {
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        <Icon name="logos:react" /> react.js
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        <Icon name="logos:nextjs-icon" size="20" /> next.js
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:nuxt-icon" /> nuxt.js
                     </span>
                     <span
@@ -173,7 +176,15 @@ const currentSection = computed(() => {
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        <Icon name="logos:sanity" />Sanity.io
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
                         <Icon name="logos:tailwindcss-icon" />TailwindCSS
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        <Icon name="logos:daisyui-icon" />DaisyUI
                     </span>
                     <span
                         class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
