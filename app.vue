@@ -67,7 +67,8 @@ onMounted(async () => {
       class: '!p-3 !rounded-box  !items-start  ',
       descriptionClass: 'text-sm '
     }" />
-    <div class="w-full px-6 py-3 border-b border-base-300 flex justify-between items-center gap-x-4 bg-base-200 ">
+    <div
+      class="w-full px-6 py-3 border-b border-base-300 flex justify-between sticky top-0 z-1000 items-center gap-x-4 bg-base-200 ">
       <Logo />
 
       <div class="flex items-center gap-x-4">

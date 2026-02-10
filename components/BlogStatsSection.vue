@@ -88,97 +88,112 @@ const loadingCards = [1, 2, 3, 4, 5]
              <div class="h-px bg-base-content/20 flex-1"></div>
         </div>
 
-        <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-             <div v-for="i in loadingCards" :key="i" class="skeleton h-48 rounded-3xl"></div>
+        <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div v-for="i in loadingCards" :key="i" class="skeleton h-40 rounded-3xl"></div>
         </div>
 
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Total Stats -->
             <div
-                class="p-8 md:col-span-2 lg:col-span-3 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 md:col-span-2 lg:col-span-3 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
                 <div
-                    class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-secondary/10 text-secondary">
-                    <Icon name="solar:chart-square-bold" size="32" />
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-secondary/10 text-secondary">
+                    <Icon name="solar:chart-square-bold" size="24" />
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">All Time Stats</h3>
-                    <div class="text-3xl font-bold mt-2">{{ totalStats.views }} Total Views</div>
-                    <div class="mt-4 flex items-center gap-2">
-                        <Icon name="solar:star-bold-duotone" class="text-warning" size="24" />
-                        <span class="text-xl font-bold">{{ totalStats.totalReactions }}</span>
-                        <span class="text-sm font-medium opacity-60 uppercase tracking-wider">Reactions</span>
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">All Time Stats</h3>
+                    <div class="text-2xl font-bold mt-1">{{ totalStats.views }} Total Views</div>
+                    <div class="mt-2 flex items-center gap-2">
+                        <Icon name="solar:star-bold-duotone" class="text-warning" size="20" />
+                        <span class="text-lg font-bold">{{ totalStats.totalReactions }}</span>
+                        <span class="text-xs font-medium opacity-60 uppercase tracking-wider">Reactions</span>
                     </div>
                 </div>
             </div>
             <!-- Most Popular -->
-            <NuxtLink v-if="mostPopular?.post" :to="`/blog/${mostPopular.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-primary/10 text-primary">
-                    <Icon name="solar:eye-bold" size="32" />
+            <NuxtLink v-if="mostPopular?.post" :to="`/blog/${mostPopular.post.slug}`"
+                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-primary/10 text-primary">
+                    <Icon name="solar:eye-bold" size="24" />
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">Most Popular</h3>
-                    <div class="text-3xl font-bold mt-2">{{ mostPopular.stat?.views ?? 0 }} Views</div>
-                    <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ mostPopular.post.title }}</p>
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Popular</h3>
+                    <div class="text-2xl font-bold mt-1">{{ mostPopular.stat?.views ?? 0 }} Views</div>
+                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
+                        mostPopular.post.title }}</p>
                 </div>
             </NuxtLink>
 
              <!-- Most Liked -->
-            <NuxtLink v-if="mostLiked?.post" :to="`/blog/${mostLiked.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-error/10 text-error">
-                    <Icon name="solar:heart-bold" size="32" />
+            <NuxtLink v-if="mostLiked?.post" :to="`/blog/${mostLiked.post.slug}`"
+                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-error/10 text-error">
+                    <Icon name="solar:heart-bold" size="24" />
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">Most Liked</h3>
-                    <div class="text-3xl font-bold mt-2">{{ mostLiked.stat?.hearts ?? 0 }} Hearts</div>
-                    <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ mostLiked.post.title }}</p>
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Liked</h3>
+                    <div class="text-2xl font-bold mt-1">{{ mostLiked.stat?.hearts ?? 0 }} Hearts</div>
+                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
+                        mostLiked.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Most Disliked -->
-            <NuxtLink v-if="mostDisliked?.post" :to="`/blog/${mostDisliked.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-base-content/10 text-base-content/70">
-                    <Icon name="solar:like-bold" class="transform rotate-180" size="32" />
+            <NuxtLink v-if="mostDisliked?.post" :to="`/blog/${mostDisliked.post.slug}`"
+                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-base-content/10 text-base-content/70">
+                    <Icon name="solar:like-bold" class="transform rotate-180" size="24" />
                 </div>
-                <div class="mt-4">
-                     <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">Most Disliked</h3>
-                    <div class="text-3xl font-bold mt-2">{{ mostDisliked.stat?.dislikes ?? 0 }} Dislikes</div>
-                    <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ mostDisliked.post.title }}</p>
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Disliked</h3>
+                    <div class="text-2xl font-bold mt-1">{{ mostDisliked.stat?.dislikes ?? 0 }} Dislikes</div>
+                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
+                        mostDisliked.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Oldest Post -->
-            <NuxtLink v-if="oldestPost?.post" :to="`/blog/${oldestPost.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
-                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-warning/10 text-warning">
-                    <Icon name="solar:history-bold" size="32" />
+            <NuxtLink v-if="oldestPost?.post" :to="`/blog/${oldestPost.post.slug}`"
+                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-warning/10 text-warning">
+                    <Icon name="solar:history-bold" size="24" />
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">Oldest Post</h3>
-                     <div class="text-xl font-bold mt-2 line-clamp-1">
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Oldest Post</h3>
+                    <div class="text-base font-bold mt-1 line-clamp-1">
                         {{ new Date(oldestPost.post.publishedAt).toLocaleDateString('en-GB',{
                             day: 'numeric',
                             month: 'short',
                             year: 'numeric'
                         }) }}
                     </div>
-                     <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ oldestPost.post.title }}</p>
+                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
+                        oldestPost.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Youngest Post -->
-            <NuxtLink v-if="youngestPost?.post" :to="`/blog/${youngestPost.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
-                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-success/10 text-success">
-                    <Icon name="solar:calendar-add-bold" size="32" />
+            <NuxtLink v-if="youngestPost?.post" :to="`/blog/${youngestPost.post.slug}`"
+                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-success/10 text-success">
+                    <Icon name="solar:calendar-add-bold" size="24" />
                 </div>
-                <div class="mt-4">
-                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">Newest Post</h3>
-                    <div class="text-xl font-bold mt-2 line-clamp-1">
+                <div class="mt-2">
+                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Newest Post</h3>
+                    <div class="text-base font-bold mt-1 line-clamp-1">
                         {{ new Date(youngestPost.post.publishedAt).toLocaleDateString('en-GB',{
                             day: 'numeric',
                             month: 'short',
                             year: 'numeric'
                         }) }}
                     </div>
-                    <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ youngestPost.post.title }}</p>
+                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
+                        youngestPost.post.title }}</p>
                 </div>
             </NuxtLink>
 
