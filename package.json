@@ -58,8 +58,5 @@
     "@unocss/preset-wind4": "^66.1.0-beta.12",
     "@unocss/transformer-compile-class": "^66.1.0-beta.12",
     "@unocss/transformer-variant-group": "^66.1.0-beta.12"
-  },
-  "overrides": {
-    "@vue/devtools-kit": ">=8.0.3"
   }
 }
