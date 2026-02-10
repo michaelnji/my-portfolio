@@ -23,7 +23,7 @@ const currentSection = computed(() => {
 </script>
 <template>
     <div class="flex flex-col md:flex-row gap-8  py-6 md:p-6  ">
-        <div class="h-max w-1/3 md:sticky md:top-12">
+        <div class="h-max w-1/3 md:sticky md:top-28">
             <div class="relative">
                 <div class="absolute  z-1 -bottom-0">
                     <span
@@ -70,30 +70,17 @@ const currentSection = computed(() => {
             </div>
         </div>
         <div class="w-2/2">
-            <h1 ref='intro' class="font-semibold  text-6xl xl:text-7xl font-display">Hi, I'm <span
+            <h1 ref='intro' class="font-semibold  text-6xl xl:text-7xl font-display">Hello, I'm <span
                     class="text-primary underline font-medium ">Michael</span>
-                A Frontend Web
+                A Web
                 developer.
             </h1>
 
 
 
-            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a Full stack web developer at
-                <NuxtLink @click="playSound" to="https://mihma.com" target="_blank">
-
-                    <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl  border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
-
-                        MIHMA
-                    </span>
-                </NuxtLink> and <NuxtLink @click="playSound" to="https://newvcreatives.com" target="_blank">
-
-                    <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl  border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
-
-                        New Vision Creatives
-                    </span>
-                </NuxtLink>. <br> Over the years I have contributed to open source, including <NuxtLink
+            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a <b>Full stack web developer</b> with
+                a passion for building beautiful and robust web projects. <br> Over the years I have contributed to open
+                source, including <NuxtLink
                     @click="playSound" to="https://github.com/biomejs/biome/pull/2230" target="_blank">
 
                     <span class="  inline-flex gap-x-2 items-center">
@@ -125,7 +112,7 @@ const currentSection = computed(() => {
                         </span>
 
                     </span>
-                </NuxtLink> on how it is done.. Here are quick links to my Github &
+                </NuxtLink> on how it is done. <br> Here are quick links to my Github &
                 social media
             </p>
 
@@ -151,11 +138,13 @@ const currentSection = computed(() => {
 
                     <Icon name="simple-icons:discord" size="24" class="" />
                 </div>
-                <div
-                    class="!p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
+                <NuxtLink to="mailto:hello@michaelnji.codes">
+                    <div
+                        class="!p-3  hover:shadow-primary/30 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
 
-                    <Icon name="simple-icons:gmail" size="24" class="" />
-                </div>
+                        <Icon name="simple-icons:gmail" size="24" class="" />
+                    </div>
+                </NuxtLink>
             </div>
 
             <div class="mt-16">
