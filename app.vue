@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import '~/assets/css/custom.css';
-// import '~/assets/css/dracula.css';
+import { Analytics } from '@vercel/analytics/nuxt'
 import { useHead } from '#imports';
 import '@catppuccin/highlightjs/css/catppuccin-mocha.css';
 import { generateHumanMessage } from 'nexus-req';
@@ -61,6 +61,7 @@ onMounted(async () => {
 <template>
   <div class="
   ">
+    <Analytics />
     <Toaster position="bottom-right" theme="dark" richColors :toastOptions="{
 
       class: '!p-3 !rounded-box  !items-start  ',

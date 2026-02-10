@@ -3,9 +3,6 @@
 import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: false, timeline:{
-    enabled: false
-  } },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -123,4 +120,5 @@ export default defineNuxtConfig({
     token: process.env.NUXT_SANITY_TOKEN,
     perspective: 'published'
   },
+
 })
