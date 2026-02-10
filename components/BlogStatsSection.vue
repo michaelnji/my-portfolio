@@ -62,6 +62,21 @@ const youngestPost = computed(() => {
     return { post, stat }
 })
 
+const totalStats = computed(() => {
+    const stats = allStats.value.reduce((acc, curr) => {
+        acc.views += curr.views || 0
+        acc.hearts += curr.hearts || 0
+        acc.claps += curr.claps || 0
+        acc.stars += curr.stars || 0
+        acc.dislikes += curr.dislikes || 0
+        return acc
+    }, { views: 0, hearts: 0, claps: 0, stars: 0, dislikes: 0 })
+    return {
+        ...stats,
+        totalReactions: stats.hearts + stats.claps + stats.stars + stats.dislikes
+    }
+})
+
 const loadingCards = [1, 2, 3, 4, 5]
 
 </script>
@@ -78,7 +93,23 @@ const loadingCards = [1, 2, 3, 4, 5]
         </div>
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
+            <!-- Total Stats -->
+            <div
+                class="p-8 md:col-span-2 lg:col-span-3 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                <div
+                    class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-secondary/10 text-secondary">
+                    <Icon name="solar:chart-square-bold" size="32" />
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-sm font-medium uppercase tracking-wider opacity-60">All Time Stats</h3>
+                    <div class="text-3xl font-bold mt-2">{{ totalStats.views }} Total Views</div>
+                    <div class="mt-4 flex items-center gap-2">
+                        <Icon name="solar:star-bold-duotone" class="text-warning" size="24" />
+                        <span class="text-xl font-bold">{{ totalStats.totalReactions }}</span>
+                        <span class="text-sm font-medium opacity-60 uppercase tracking-wider">Reactions</span>
+                    </div>
+                </div>
+            </div>
             <!-- Most Popular -->
             <NuxtLink v-if="mostPopular?.post" :to="`/blog/${mostPopular.post.slug}`" class="p-8 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-primary/10 text-primary">
@@ -150,6 +181,8 @@ const loadingCards = [1, 2, 3, 4, 5]
                     <p class="mt-2 text-lg font-medium group-hover:text-primary transition-colors line-clamp-2">{{ youngestPost.post.title }}</p>
                 </div>
             </NuxtLink>
+
+
 
         </div>
     </section>
