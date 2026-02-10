@@ -79,8 +79,7 @@ const currentSection = computed(() => {
 
 
             <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a Full stack web developer at
-                <NuxtLink @click="playSound"
-to="https://mihma.com" target="_blank">
+                <NuxtLink @click="playSound" to="https://mihma.com" target="_blank">
 
                     <span
                         class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl  border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all !opacity-100">
@@ -94,15 +93,39 @@ to="https://mihma.com" target="_blank">
 
                         New Vision Creatives
                     </span>
-                </NuxtLink>. I also run a forex trading blog called
-                <NuxtLink @click="playSound" to="https://gemmafx.vercel.app" target="_blank">
+                </NuxtLink>. <br> Over the years I have contributed to open source, including <NuxtLink
+                    @click="playSound" to="https://github.com/biomejs/biome/pull/2230" target="_blank">
 
-                    <span
-                        class="py-0 px-2 rounded-lg bg-base-200  inline-flex shadow-xl !opacity-100 border-1 border-dashed text-sm border-base-content/30 font-mono hover:border-solid hover:border-primary transition-all">
-                        Gemma Fx
+                    <span class="  inline-flex gap-x-2 items-center">
+                        <span class="underline text-primary">
+                            the documentation of
+                        </span>
+                        <span
+                            class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                            <Icon name="logos:biomejs-icon" /> Biome
+                        </span>
                     </span>
-                </NuxtLink>
-                as a hobby during my spare time. Here are quick links to my Github &
+                </NuxtLink> ,
+                a fast javascript linter and formatter, and <NuxtLink @click="playSound"
+                    to="https://github.com/michaelnji/test-stepci-and-circleci-integration" target="_blank">
+
+                    <span class="  inline-flex gap-x-2 items-center">
+                        <span class="underline text-primary">
+                            coding and testing
+                        </span>
+
+                    </span>
+                </NuxtLink> the integration of StepCI with
+                CircleCI, and then <NuxtLink @click="playSound" to="https://github.com/stepci/stepci/pull/231"
+                    target="_blank">
+
+                    <span class="  inline-flex gap-x-2 items-center">
+                        <span class="underline text-primary">
+                            providing documentation
+                        </span>
+
+                    </span>
+                </NuxtLink> on how it is done.. Here are quick links to my Github &
                 social media
             </p>
 
@@ -280,6 +303,9 @@ to="https://mihma.com" target="_blank">
                         </div>
                     </NuxtLink>
                 </div>
+            </div>
+            <div class="">
+                <BlogStatsSection />
             </div>
         </div>
 

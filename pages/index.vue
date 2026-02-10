@@ -54,6 +54,7 @@ definePageMeta({
     <div class=" w-full p-6">
         <div class="container max-w-6xl mx-auto">
             <Hero />
+
         </div>
     </div>
 </template>

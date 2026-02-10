@@ -82,6 +82,22 @@ onMounted(() => {
         // twitter image (note: ogImage is used as a fallback so this is optional)
         twitterCard: 'summary_large_image', // or summary
     })
+
+    // ... existing onMounted code ...
+    const timer = setTimeout(async () => {
+        if (selectedPost.value?._id) {
+             await $fetch('/api/neondb/stats/increment-view', {
+                method: 'POST',
+                body: {
+                    id: selectedPost.value._id
+                }
+            })
+        }
+    }, 10000)
+
+    onUnmounted(() => {
+        clearTimeout(timer)
+    })
 })
 whenever(() => selectedPost.value, () => {
     useHead({
