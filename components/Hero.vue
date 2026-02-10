@@ -100,12 +100,12 @@ const currentSection = computed(() => {
                         <span class="underline text-primary">
                             the documentation of
                         </span>
-                        <span
-                            class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
-                            <Icon name="logos:biomejs-icon" /> Biome
-                        </span>
+
                     </span>
-                </NuxtLink> ,
+                </NuxtLink> <span
+                    class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
+                    <Icon name="logos:biomejs-icon" /> Biome
+                </span> ,
                 a fast javascript linter and formatter, and <NuxtLink @click="playSound"
                     to="https://github.com/michaelnji/test-stepci-and-circleci-integration" target="_blank">
 
