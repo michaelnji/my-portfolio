@@ -123,4 +123,9 @@ export default defineNuxtConfig({
     token: process.env.NUXT_SANITY_TOKEN,
     perspective: 'published'
   },
+  nitro: {
+    rollupConfig: {
+      external: ['@vue/devtools-kit', 'perfect-debounce']
+    }
+  },
 })
