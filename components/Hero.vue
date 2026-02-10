@@ -281,6 +281,9 @@ to="https://mihma.com" target="_blank">
                     </NuxtLink>
                 </div>
             </div>
+            <div class="">
+                <BlogStatsSection />
+            </div>
         </div>
 
     </div>
