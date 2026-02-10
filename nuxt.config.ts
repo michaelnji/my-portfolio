@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     // '@unocss/nuxt',
     '@formkit/auto-animate/nuxt',
     '@nuxtjs/sanity',
-    '@pinia/colada-nuxt',
+    // '@pinia/colada-nuxt',
   ],
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
