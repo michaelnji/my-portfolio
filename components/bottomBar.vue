@@ -40,7 +40,7 @@ const route = useRoute()
 
 
         </NuxtLink>
-        <NuxtLink @click="playSound" to="/games"
+        <!-- <NuxtLink @click="playSound" to="/games"
             class="flex items-center  rounded-full group transition-all  p-2 md:p-3 gap-x-2 font-normal-weight hover:bg-base-300"
             :class="{ '!text-primary-content !bg-primary !rounded-box': route.fullPath === '/games' }">
             <Icon name="solar:gameboy-line-duotone" size="28" />
@@ -48,7 +48,7 @@ const route = useRoute()
             <p class="text-lg  hidden md:inline">Games</p>
 
 
-        </NuxtLink>
+        </NuxtLink> -->
 
 
 

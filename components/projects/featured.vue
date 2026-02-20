@@ -10,23 +10,15 @@ const projects = [
         status: "complete" as const
     },
     {
-        image: 'gemmafx.png',
-        title: 'Gemma FX',
-        link: 'https://gemmafx.vercel.app',
-        type: 'open source',
-        description: 'A blog for aspiring forex traders in Cameroon, with reviews and coupons.',
-        duration: 'May 2025 - now',
+        image: 'hado.png',
+        title: 'Hado',
+        link: 'https://hado-website.vercel.app',
+        type: 'closed source',
+        description: 'Landing page for Hado, an Estate development project in Dubai',
+        duration: 'January 2026 - Present',
         status: "wip" as const
     },
-    {
-        image: 'atud.png',
-        title: 'ATUD & Sons',
-        link: 'https://atuds-and-sons.vercel.app',
-        type: 'closed source',
-        description: 'A website for a small tire repair shop in the US. Built this for a friend of mine.',
-        duration: 'June 2024 - August 2024',
-        status: "complete" as const
-    },
+
 ]
 </script>
 <template>
