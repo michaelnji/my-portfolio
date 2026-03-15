@@ -15,8 +15,8 @@ const projects = [
         link: 'https://hado-website.vercel.app',
         type: 'closed source',
         description: 'Landing page for Hado, an Estate development project in Dubai',
-        duration: 'January 2026 - Present',
-        status: "wip" as const
+        duration: 'January 2026',
+        status: "complete" as const
     },
 
 ]
