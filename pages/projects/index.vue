@@ -92,7 +92,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                 <ProjectsPersonal v-if="activeTab === 'personal'" />
                 <ProjectsOSS v-if="activeTab === 'oss'" />
 
-                <!-- <div class="mt-16">
+                <!-- <div class="mt-16 w-sm mx-auto">
                     <CtaCard />
                 </div> -->
             </div>

@@ -1,6 +1,15 @@
 <script lang="ts" setup>
 const projects = [
     {
+        image: 'kount.png',
+        title: 'kount-cli',
+        link: 'https://github.com/michaelnji/kount-cli',
+        type: 'open source',
+        description: 'A CLI tool for generating code stats for your projects, such as lines of code, file count, and more',
+        duration: 'Jan 2026 - present',
+        status: "wip" as const,
+    },
+    {
         image: 'kira.png',
         title: 'Kira Template',
         link: 'https://kira-template.vercel.app',
@@ -18,6 +27,7 @@ const projects = [
         duration: 'May 2025 - June 2025',
         status: "complete" as const,
     },
+
 
 
 

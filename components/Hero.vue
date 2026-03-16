@@ -78,7 +78,17 @@ const currentSection = computed(() => {
 
 
 
-            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a <b>Full stack web developer</b> with
+            <p class="text-lg leading-8 mt-6 font-normal-weight opacity-75">I am a <b>Full stack web developer</b> and
+                the creator of <NuxtLink @click="playSound" to="https://github.com/michaelnji/kount-cli"
+                    target="_blank">
+
+                    <span class="  inline-flex gap-x-2 items-center">
+                        <span class="underline text-primary">
+                            kount-cli
+                        </span>
+
+                    </span>
+                </NuxtLink>, a fun cli tool to get codebase stats. I am a developer with
                 a passion for building beautiful and robust web projects. <br> Over the years I have contributed to open
                 source, including <NuxtLink
                     @click="playSound" to="https://github.com/biomejs/biome/pull/2230" target="_blank">
@@ -163,51 +173,78 @@ const currentSection = computed(() => {
                 </p>
                 <div class="mt-2 flex flex-wrap gap-3">
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:vue" /> Vue.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:react" /> react.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:nextjs-icon" size="20" /> next.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:nuxt-icon" /> nuxt.js
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono capitalize  items-center gap-2 ">
+
+                        <Icon name="logos:claude-icon" />
+
+                        claude code
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono capitalize  items-center gap-2 ">
+
+                        <Icon name="logos:bash-icon" />
+
+                        bash
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono capitalize  items-center gap-2 ">
+
+                        <div class="px-1 pt-1 bg-white rounded">
+                            <Icon name="logos:github-copilot" />
+                        </div>
+
+                        Copilot
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
+                        <Icon name="logos:google-gemini" />Gemini-cli
+                    </span>
+                    <span
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:typescript-icon" />Typescript
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:supabase-icon" />Supabase
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:sanity" />Sanity.io
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:tailwindcss-icon" />TailwindCSS
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:daisyui-icon" />DaisyUI
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:bun" />bunjs
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:nodejs-icon-alt" />nodejs
                     </span>
                     <span
-                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono flex items-center gap-2 ">
+                        class="!py-1 px-3 rounded-lg bg-base-200  inline-flex shadow-xl border-1 border-dashed text-sm border-base-content/30 font-mono  items-center gap-2 ">
                         <Icon name="logos:git-icon" />git
                     </span>
                 </div>
@@ -221,15 +258,14 @@ const currentSection = computed(() => {
                 <div class="flex gap-x-2 items-center">
 
                     <h2 ref='project' class=" font-medium text-2xl">I'm currently working on <span
-                            class="font-bold text-primary">Gemma Fx</span></h2>
+                            class="font-bold text-primary">Ranked Choices</span></h2>
 
                 </div>
-                <p class="text-lg font-normal-weight leading-8 mt-6 opacity-75">I am developing my forex trading
-                    website, which will launch
-                    later this year and will be phenomenal! <NuxtLink @click="playSound" to="https://gemmafx.vercel.app"
+                <p class="text-lg font-normal-weight leading-8 mt-6 opacity-75">I am currently working on <NuxtLink
+                        @click="playSound" to="https://ranked-choices.vercel.app"
                         target="_blank" class="underline text-primary">
-                        Check it out here
-                    </NuxtLink>
+                        Ranked Choices
+                    </NuxtLink>, a side project to help me fix a financial bad habit that I have😅
 
                 </p>
 
