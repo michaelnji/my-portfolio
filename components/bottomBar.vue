@@ -4,8 +4,18 @@ const playSounds = usePlaySound()
 const { play } = useSound(click, {
     volume: 0.7
 })
+
+// Respect user's motion preference
+const prefersReducedMotion = () => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 const playSound = () => {
-    if (playSounds.value) play()
+    // Only play if sounds are enabled AND user hasn't disabled motion
+    if (playSounds.value && !prefersReducedMotion()) {
+        play()
+    }
 }
 const route = useRoute()
 </script>

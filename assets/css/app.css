@@ -51,6 +51,20 @@
             --noise: 1;
 }
 
+/* Text color hierarchy tokens */
+@layer components {
+    .text-content-primary {
+        @apply text-base-content;
+    }
+
+    .text-content-secondary {
+        @apply text-base-content/80;
+    }
+
+    .text-content-tertiary {
+        @apply text-base-content/60;
+    }
+}
 @custom-variant hover (&:hover);
 
 .btn {
@@ -143,5 +157,48 @@
 }
 * {
     scroll-behavior: smooth;
-    
+}
+
+/* Smooth transitions for interactive elements globally */
+@layer components {
+
+    a,
+    button,
+    [role="button"] {
+        @apply transition-all duration-200 ease-out;
+    }
+}
+
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Links and buttons should be visibly focusable */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    :focus-visible {
+        outline-width: 3px;
+    }
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
