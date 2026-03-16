@@ -95,108 +95,117 @@ const loadingCards = [1, 2, 3, 4, 5]
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Total Stats -->
             <div
-                class="p-5 md:col-span-2 lg:col-span-3 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 md:col-span-2 lg:col-span-3 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-secondary/10 text-secondary">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-secondary/10 text-secondary">
                     <Icon name="solar:chart-square-bold" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">All Time Stats</h3>
-                    <div class="text-2xl font-bold mt-1">{{ totalStats.views }} Total Views</div>
-                    <div class="mt-2 flex items-center gap-2">
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">All Time Stats
+                    </h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">{{ totalStats.views }} Total Views</div>
+                    <div class="mt-3 flex items-center gap-2">
                         <Icon name="solar:star-bold-duotone" class="text-warning" size="20" />
                         <span class="text-lg font-bold">{{ totalStats.totalReactions }}</span>
-                        <span class="text-xs font-medium opacity-60 uppercase tracking-wider">Reactions</span>
+                        <span
+                            class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Reactions</span>
                     </div>
                 </div>
             </div>
             <!-- Most Popular -->
             <NuxtLink v-if="mostPopular?.post" :to="`/blog/${mostPopular.post.slug}`"
-                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary hover:bg-base-100 group">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-primary/10 text-primary">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-primary/10 text-primary group-hover:scale-105">
                     <Icon name="solar:eye-bold" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Popular</h3>
-                    <div class="text-2xl font-bold mt-1">{{ mostPopular.stat?.views ?? 0 }} Views</div>
-                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
-                        mostPopular.post.title }}</p>
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Most Popular</h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">{{ mostPopular.stat?.views ?? 0 }} Views
+                    </div>
+                    <p
+                        class="mt-2 text-sm font-medium text-content-secondary line-clamp-2 transition-colors duration-200 group-hover:text-primary">
+                        {{ mostPopular.post.title }}</p>
                 </div>
             </NuxtLink>
 
              <!-- Most Liked -->
             <NuxtLink v-if="mostLiked?.post" :to="`/blog/${mostLiked.post.slug}`"
-                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-error/10 text-error">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-error/10 text-error group-hover:scale-105">
                     <Icon name="solar:heart-bold" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Liked</h3>
-                    <div class="text-2xl font-bold mt-1">{{ mostLiked.stat?.hearts ?? 0 }} Hearts</div>
-                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
-                        mostLiked.post.title }}</p>
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Most Liked</h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">{{ mostLiked.stat?.hearts ?? 0 }} Hearts
+                    </div>
+                    <p
+                        class="mt-2 text-sm font-medium text-content-secondary line-clamp-2 transition-colors duration-200 group-hover:text-primary">
+                        {{ mostLiked.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Most Disliked -->
             <NuxtLink v-if="mostDisliked?.post" :to="`/blog/${mostDisliked.post.slug}`"
-                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-base-content/10 text-base-content/70">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-base-content/10 text-base-content/70 group-hover:scale-105">
                     <Icon name="solar:like-bold" class="transform rotate-180" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Most Disliked</h3>
-                    <div class="text-2xl font-bold mt-1">{{ mostDisliked.stat?.dislikes ?? 0 }} Dislikes</div>
-                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
-                        mostDisliked.post.title }}</p>
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Most Disliked</h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">{{ mostDisliked.stat?.dislikes ?? 0 }}
+                        Dislikes</div>
+                    <p
+                        class="mt-2 text-sm font-medium text-content-secondary line-clamp-2 transition-colors duration-200 group-hover:text-primary">
+                        {{ mostDisliked.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Oldest Post -->
             <NuxtLink v-if="oldestPost?.post" :to="`/blog/${oldestPost.post.slug}`"
-                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-warning/10 text-warning">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-warning/10 text-warning group-hover:scale-105">
                     <Icon name="solar:history-bold" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Oldest Post</h3>
-                    <div class="text-base font-bold mt-1 line-clamp-1">
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Oldest Post</h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">
                         {{ new Date(oldestPost.post.publishedAt).toLocaleDateString('en-GB',{
                             day: 'numeric',
                             month: 'short',
                             year: 'numeric'
                         }) }}
                     </div>
-                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
-                        oldestPost.post.title }}</p>
+                    <p
+                        class="mt-2 text-sm font-medium text-content-secondary line-clamp-2 transition-colors duration-200 group-hover:text-primary">
+                        {{ oldestPost.post.title }}</p>
                 </div>
             </NuxtLink>
 
             <!-- Youngest Post -->
             <NuxtLink v-if="youngestPost?.post" :to="`/blog/${youngestPost.post.slug}`"
-                class="p-5 rounded-3xl bg-base-200 border border-base-200 hover:border-base-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full aspect-[4/3] md:aspect-auto group">
+                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
-                    class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 bg-success/10 text-success">
+                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-success/10 text-success group-hover:scale-105">
                     <Icon name="solar:calendar-add-bold" size="24" />
                 </div>
-                <div class="mt-2">
-                    <h3 class="text-xs font-medium uppercase tracking-wider opacity-60">Newest Post</h3>
-                    <div class="text-base font-bold mt-1 line-clamp-1">
+                <div class="mt-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-tertiary-content">Newest Post</h3>
+                    <div class="text-2xl font-bold mt-2 text-base-content">
                         {{ new Date(youngestPost.post.publishedAt).toLocaleDateString('en-GB',{
                             day: 'numeric',
                             month: 'short',
                             year: 'numeric'
                         }) }}
                     </div>
-                    <p class="mt-1 text-base font-medium group-hover:text-primary transition-colors line-clamp-2">{{
-                        youngestPost.post.title }}</p>
+                    <p
+                        class="mt-2 text-sm font-medium text-content-secondary line-clamp-2 transition-colors duration-200 group-hover:text-primary">
+                        {{ youngestPost.post.title }}</p>
                 </div>
             </NuxtLink>
-
 
 
         </div>
@@ -204,6 +213,3 @@ const loadingCards = [1, 2, 3, 4, 5]
 
 </template>
 
-<style scoped>
-
-</style>
