@@ -125,7 +125,7 @@ const technologies = [
 
             <p class="text-lg leading-8 mt-6 font-normal-weight text-content-secondary">I design user interfaces people
                 actually enjoy using, then build them with clean code and accessibility in mind. I create products that
-                feel premium—thoughtfully designed and robustly engineered. Over the past 3+ years, I've contributed to
+                feel premium, thoughtfully designed and robustly engineered. Over the past 3+ years, I've contributed to
                 open source and shipped full-stack projects with <b>Vue, React, Next, and Nuxt</b>. Let's work together.
             </p>
 
@@ -148,7 +148,7 @@ const technologies = [
                             class="font-bold text-primary">ship quickly</span></h2>
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">Here's my toolkit. I pick
-                    the right technology for each project—whether that's building fast frontends, full-stack
+                    the right technology for each project, whether that's building fast frontends, full-stack
                     applications, or developer tools. Every decision prioritizes user experience and code quality.</p>
 
                 <div class="mt-2 flex flex-wrap gap-3">
@@ -168,7 +168,7 @@ const technologies = [
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I'm currently building
                     <NuxtLink @click="playSound" to="https://ranked-choices.vercel.app" target="_blank"
-                        class="underline text-primary font-semibold">Ranked Choices</NuxtLink>—a decision-making tool
+                        class="underline text-primary font-semibold">Ranked Choices</NuxtLink>, a decision-making tool
                     with a beautiful interface and smooth interactions. It scratches my own itch and showcases how I
                     approach full-stack development.
                 </p>
@@ -177,7 +177,7 @@ const technologies = [
                 <h3 class="font-bold text-2xl">Let's work together</h3>
                 <p class="text-lg font-normal-weight leading-8 mt-4 text-content-secondary">Whether you need a developer
                     for your next project, want to collaborate on something interesting, or just want to chat about web
-                    development—I'd love to hear from you.</p>
+                    development, I'd love to hear from you.</p>
                 <div class="grid mt-8 md:grid-cols-2 gap-3">
                     <NuxtLink @click="playSound" to="/projects">
                         <LinkCard>
@@ -186,7 +186,7 @@ const technologies = [
                                 <Icon name="simple-icons:git" />
                             </template>
                             <template #description>
-                                See what I've built—from side projects to full-stack applications
+                                See what I've built, from side projects to full-stack applications
                             </template>
                         </LinkCard>
                     </NuxtLink>
