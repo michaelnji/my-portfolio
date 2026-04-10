@@ -10,8 +10,8 @@
 @theme {
     --font-mono: "Operator Mono Lig";
         --font-display: "Formula Condensed";
-        --font-body: "Product Sans";
-            --font-sans: "Product Sans";
+        --font-body: "DM Sans";
+            --font-sans: "DM Sans";
 }
 
 /* Replace with your theme generated from https: //daisyui.com/theme-generator/ */

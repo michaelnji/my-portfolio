@@ -14,13 +14,14 @@ defineEmits<{
   <div
     :class="{
       'py-3 px-4 rounded-box bg-base-200 shadow-md border border-base-300 transition-all duration-200 ease-out hover:border-primary hover:shadow-lg': true,
-      'bg-primary border-primary shadow-lg': highlight,
+  'bg-base-200  border-primary shadow-lg': highlight,
       'md:col-span-2': full
     }">
-    <h3 :class="{ 'font-semibold text-lg text-base-content transition-colors duration-200 flex items-center gap-2': true, 'text-primary-content': highlight }">
+    <h3
+      :class="{ 'font-semibold text-lg text-base-content transition-colors duration-200 flex items-center gap-2': true, 'text-primary': highlight }">
       <slot name="title" />
     </h3>
-    <p :class="{ 'mt-2 text-sm leading-relaxed text-content-secondary': true, 'text-primary-content': highlight }">
+    <p :class="{ 'mt-2 text-sm leading-relaxed text-content-secondary': true, 'text-base-content': highlight }">
       <slot name="description" />
     </p>
   </div>
