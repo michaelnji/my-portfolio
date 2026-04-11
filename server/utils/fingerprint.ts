@@ -1,5 +1,5 @@
-import { createHash } from 'node:crypto'
 import type { H3Event } from 'h3'
+import { createHash } from 'node:crypto'
 
 export function getUserFingerprint(event: H3Event): string {
     const forwarded = getRequestHeader(event, 'x-forwarded-for')
