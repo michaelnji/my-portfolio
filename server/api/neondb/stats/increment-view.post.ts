@@ -12,19 +12,20 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
-        const body = await readBody<{
-            id: string
-        }>(event)
+        const body = await readBody<{ id: string }>(event)
 
-        if (!body.id) {
-            throw new Error('Post ID is required')
+        if (!body.id) throw new Error('Post ID is required')
+
+        const userHash = getUserFingerprint(event)
+        const limited = await tryRateLimit(db, body.id, userHash, 'view')
+        if (limited) {
+            // silent — no UX disruption
+            return sendServerResponse(200, 'success', null)
         }
 
         const resp = await db
             .updateTable("stats")
-            .set((eb) => ({
-                views: sql`views + 1`
-            }))
+            .set(() => ({ views: sql`views + 1` }))
             .where("postId", "=", body.id)
             .returningAll()
             .executeTakeFirstOrThrow();
@@ -32,8 +33,9 @@ export default defineEventHandler(async (event) => {
         return sendServerResponse(200, 'success', resp)
     } catch (error) {
         if (error instanceof Error) {
-            setResponseStatus(event, 500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
-            return sendServerResponse(500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
+            const msg = error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message
+            setResponseStatus(event, 500, msg)
+            return sendServerResponse(500, msg)
         }
     }
 })

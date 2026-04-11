@@ -1,8 +1,11 @@
 
 import { createKysely } from "@vercel/postgres-kysely";
+import { sql } from 'kysely';
 import { sendServerResponse } from 'nexus-req';
 import type { Database } from "../../../types/index.types";
 
+const ALLOWED_FIELDS = ['hearts', 'claps', 'stars', 'dislikes'] as const
+type AllowedField = typeof ALLOWED_FIELDS[number]
 
 export default defineEventHandler(async (event) => {
 
@@ -11,29 +14,36 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
-        const body = await readBody<{
-            id: string, data: {
-                id: number;
-                postId: string;
-                views: number;
-                hearts: number;
-                claps: number;
-                stars: number;
-                dislikes: number;
+        const body = await readBody<{ id: string; data: Record<string, unknown> }>(event)
 
-            }
-        }>(event)
+        if (!body.id) throw new Error('Post ID is required')
+
+        const keys = Object.keys(body.data ?? {}).filter(
+            (k): k is AllowedField => ALLOWED_FIELDS.includes(k as AllowedField)
+        )
+        if (keys.length !== 1) throw new Error('Exactly one reaction field required')
+
+        const field = keys[0]
+
+        const userHash = getUserFingerprint(event)
+        const limited = await tryRateLimit(db, body.id, userHash, 'like', field)
+        if (limited) {
+            setResponseStatus(event, 429)
+            return sendServerResponse(429, 'Rate limit exceeded')
+        }
+
         const resp = await db
             .updateTable("stats")
-            .set(body.data)
+            .set({ [field]: sql`${sql.ref(field)} + 1` })
             .where("postId", "=", body.id)
             .returningAll()
             .executeTakeFirstOrThrow();
         return sendServerResponse(200, 'success', resp)
     } catch (error) {
         if (error instanceof Error) {
-            setResponseStatus(event, 500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
-            return sendServerResponse(500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
+            const msg = error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message
+            setResponseStatus(event, 500, msg)
+            return sendServerResponse(500, msg)
         }
     }
 })

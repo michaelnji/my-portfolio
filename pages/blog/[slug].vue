@@ -90,7 +90,8 @@ onMounted(() => {
                 method: 'POST',
                 body: {
                     id: selectedPost.value._id
-                }
+                },
+                headers: { 'x-api-key': useApiKey().value }
             })
         }
     }, 10000)

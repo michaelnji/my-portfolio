@@ -27,7 +27,7 @@ const categoriesStore = useCategoriesStore()
 async function retry() {
   try {
     await Promise.all([await postsStore.fetchPosts(),
-    await $fetch('/api/neondb/stats/setup')])
+    await $fetch('/api/neondb/stats/setup', { headers: { 'x-api-key': useApiKey().value } })])
   } catch (error) {
     reloadNuxtApp()
   }
@@ -36,7 +36,7 @@ onMounted(async () => {
   await callOnce(async () => {
     try {
       await Promise.all([await postsStore.fetchPosts(),
-      await $fetch('/api/neondb/stats/setup')])
+      await $fetch('/api/neondb/stats/setup', { headers: { 'x-api-key': useApiKey().value } })])
 
     } catch (error) {
       toast.error(generateHumanMessage(`${error}`), {

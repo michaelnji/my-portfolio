@@ -43,7 +43,8 @@ const updateStats = async (data: unknown) => {
                 data: data
             },
             retry: 0,
-            retryDelay: 0
+            retryDelay: 0,
+            headers: { 'x-api-key': useApiKey().value }
         })
         console.log(resp)
         if (resp.ok && resp.data) {
@@ -52,11 +53,17 @@ const updateStats = async (data: unknown) => {
             stats.value = resp.data
         }
     } catch (error) {
-        setTimeout(() => {
-            playErrorSound()
+        const status = (error as { response?: { status?: number } })?.response?.status
+        if (status === 429) {
             isLoading2.value = false
-            console.error('Failed to update stats:', error)
-        }, 1000)
+            playErrorSound()
+        } else {
+            setTimeout(() => {
+                playErrorSound()
+                isLoading2.value = false
+                console.error('Failed to update stats:', error)
+            }, 1000)
+        }
     }
 
 }
@@ -66,7 +73,8 @@ onMounted(async () => {
             method: "POST",
             body: {
                 id: props.id
-            }
+            },
+            headers: { 'x-api-key': useApiKey().value }
         })
         if (resp.ok && resp.data) {
             stats.value = resp.data

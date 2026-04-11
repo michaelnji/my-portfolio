@@ -108,6 +108,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     sanityToken: '',
     postgresUrl: '',
+    apiKey: '',
     public: {
       sanityProjectId: process.env.NUXT_SANITY_ID
     }

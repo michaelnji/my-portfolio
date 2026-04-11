@@ -1,5 +1,6 @@
 
 import { createKysely } from "@vercel/postgres-kysely";
+import { sql } from 'kysely';
 import { sendServerResponse } from 'nexus-req';
 import type { Database, Post } from "../../../types/index.types";
 
@@ -11,6 +12,19 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
+
+        await sql`
+            CREATE TABLE IF NOT EXISTS rate_limits (
+                id SERIAL PRIMARY KEY,
+                resource_type VARCHAR(10) NOT NULL,
+                post_id VARCHAR NOT NULL,
+                user_hash VARCHAR(64) NOT NULL,
+                field VARCHAR(10) NOT NULL DEFAULT '',
+                date DATE NOT NULL DEFAULT CURRENT_DATE,
+                UNIQUE (resource_type, post_id, user_hash, field, date)
+            )
+        `.execute(db)
+
         const query = `*[_type == "post"]{
         _id
         }`

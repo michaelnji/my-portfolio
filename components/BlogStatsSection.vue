@@ -14,7 +14,9 @@ onMounted(async () => {
             await postsStore.fetchPosts()
         }
         
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable[]>>('/api/neondb/stats/get-all')
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable[]>>('/api/neondb/stats/get-all', {
+            headers: { 'x-api-key': useApiKey().value }
+        })
         if (resp.ok && resp.data) {
             allStats.value = resp.data
         }
