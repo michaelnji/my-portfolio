@@ -10,151 +10,93 @@ import Quote from '~/components/Quote.vue';
 import SoftwareBlock from '~/components/SoftwareBlock.vue';
 import CodeBlock from '~/components/codeBlock.vue';
 import { defaultSiteSettings } from '~/data/siteSettings';
-const tags = ref<string[]>([])
 
 const route = useRoute()
 const postsStore = usePostsStore()
 const selectedPost = computed(() => {
-    const x = postsStore.posts?.find((x) => x.slug === route.params.slug)
-    if (x) {
-        for (const tag of x.tags) {
-            tags.value = [...tags.value, tag.title]
-        }
-    }
-    return x
+    return postsStore.posts?.find((post) => post.slug === String(route.params.slug)) ?? null
 })
-const isLoading = ref(false)
+
+const tags = computed(() => {
+    if (!selectedPost.value) return []
+    return Array.from(new Set(selectedPost.value.tags.map((tag) => tag.title)))
+})
+
+const canonicalUrl = computed(() => {
+    if (!selectedPost.value?.slug) return `${defaultSiteSettings.siteUrl}/blog`
+    return `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value.slug}`
+})
+
 definePageMeta({
     layout: 'other'
 })
-async function retry() {
-    await postsStore.fetchPosts()
 
-}
+useHead(computed(() => ({
+    htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
+    link: [{
+        rel: 'canonical',
+        href: canonicalUrl.value,
+    }]
+})))
 
-onMounted(() => {
-    useHead({
-        htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
-        link: [{
-            rel: 'canonical',
-            href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-            // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
-        }]
-    })
+useSeoMeta(computed(() => ({
+    title: selectedPost.value?.title,
+    description: selectedPost.value?.excerpt,
+    ogType: 'article',
+    articlePublishedTime: selectedPost.value?.publishedAt,
+    articleModifiedTime: selectedPost.value?._updatedAt,
+    articleTag: tags.value,
+    twitterLabel1: 'Author',
+    twitterData1: selectedPost.value?.authorInfo.name,
+    ogUrl: canonicalUrl.value,
+    ogLocale: 'en_US',
+    ogSiteName: defaultSiteSettings.siteName,
+    twitterTitle: selectedPost.value?.title,
+    twitterDescription: selectedPost.value?.excerpt,
+    ogImage: {
+        url: selectedPost.value?.imgUrl,
+        width: 1400,
+        height: 750,
+        alt: selectedPost.value?.title,
+        type: 'image/png'
+    },
+    twitterImage: {
+        url: selectedPost.value?.imgUrl,
+        width: 1400,
+        height: 750,
+        alt: selectedPost.value?.title,
+        type: 'image/png'
+    },
+    twitterCard: 'summary_large_image', // or summary
+})))
 
-    useSeoMeta({
-        title: selectedPost.value?.title,
-        // titleTemplate: '%s',
-        description: selectedPost.value?.excerpt,
-        ogType: 'article',
-        articlePublishedTime: selectedPost.value?.publishedAt,
-        articleModifiedTime: selectedPost.value?._updatedAt,
-        // articleAuthor: selectedPost.value?.authorInfo.name,
-        // articleSection: 'Technology', // category
-        articleTag: tags.value,
-        twitterLabel1: 'Author',
-        twitterData1: selectedPost.value?.authorInfo.name,
-        ogUrl: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-        ogLocale: 'en_US',
-        ogSiteName: defaultSiteSettings.siteName,
-        twitterTitle: selectedPost.value?.title,
-        twitterDescription: selectedPost.value?.excerpt,
+let viewTimer: ReturnType<typeof setTimeout> | null = null
+const trackedPostId = ref<string | null>(null)
 
-        // no longer explicitly used by X but may be useful for SEO
-        // twitterSite: '@example',
-        // twitterCreator: '@example',
+watch(() => selectedPost.value?._id, (postId) => {
+    if (!import.meta.client || !postId || trackedPostId.value === postId) return
 
-        // og image
-        ogImage: {
-            url: selectedPost.value?.imgUrl,
-            width: 1400,
-            height: 750,
-            alt: selectedPost.value?.title,
-            type: 'image/png'
-        },
-        twitterImage: {
-            url: selectedPost.value?.imgUrl,
-            width: 1400,
-            height: 750,
-            alt: selectedPost.value?.title,
-            type: 'image/png'
-        },
-        // twitter image (note: ogImage is used as a fallback so this is optional)
-        twitterCard: 'summary_large_image', // or summary
-    })
-
-    // ... existing onMounted code ...
-    const timer = setTimeout(async () => {
-        if (selectedPost.value?._id) {
-             await $fetch('/api/neondb/stats/increment-view', {
+    if (viewTimer) clearTimeout(viewTimer)
+    viewTimer = setTimeout(async () => {
+        try {
+            await $fetch('/api/neondb/stats/increment-view', {
                 method: 'POST',
-                body: {
-                    id: selectedPost.value._id
-                },
+                body: { id: postId },
                 headers: { 'x-api-key': useApiKey().value }
             })
+        } finally {
+            trackedPostId.value = postId
         }
     }, 10000)
+}, { immediate: true })
 
-    onUnmounted(() => {
-        clearTimeout(timer)
-    })
-})
-whenever(() => selectedPost.value, () => {
-    useHead({
-        htmlAttrs: { lang: 'en-US' }, // BCP 47 language code
-        link: [{
-            rel: 'canonical',
-            href: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`,
-            // content: `${defaultSiteSettings.siteUrl}/blog/${selectedPost.value?.slug}`
-        }]
-    })
-
-    useSeoMeta({
-        title: selectedPost.value?.title,
-        // titleTemplate: '%s',
-        description: selectedPost.value?.excerpt,
-        ogType: 'article',
-        articlePublishedTime: selectedPost.value?.publishedAt,
-        articleModifiedTime: selectedPost.value?._updatedAt,
-        // articleAuthor: selectedPost.value?.authorInfo.name,
-        // articleSection: 'Technology', // category
-        articleTag: tags.value,
-        twitterLabel1: 'Author',
-        twitterData1: selectedPost.value?.authorInfo.name,
-        ogUrl: defaultSiteSettings.siteUrl,
-        ogLocale: 'en_US',
-        ogSiteName: defaultSiteSettings.siteName,
-        twitterTitle: selectedPost.value?.title,
-        twitterDescription: selectedPost.value?.excerpt,
-
-        // no longer explicitly used by X but may be useful for SEO
-        // twitterSite: '@example',
-        // twitterCreator: '@example',
-
-        // og image
-        ogImage: {
-            url: selectedPost.value?.imgUrl,
-            width: 1400,
-            height: 700,
-            alt: selectedPost.value?.title,
-            type: 'image/png'
-        },
-        twitterImage: {
-            url: selectedPost.value?.imgUrl,
-            width: 1400,
-            height: 700,
-            alt: selectedPost.value?.title,
-            type: 'image/png'
-        },
-        // twitter image (note: ogImage is used as a fallback so this is optional)
-        twitterCard: 'summary_large_image', // or summary
-    })
+onUnmounted(() => {
+    if (viewTimer) clearTimeout(viewTimer)
 })
 </script>
 <template>
     <div>
-        <div class=" continer max-w-[105rem] md:px-8  pb-24 md:pb-32 lg:pb-48 min-h-screen mx-auto">
+        <div class="container max-w-[105rem] md:px-8  pb-24 md:pb-32 lg:pb-48 min-h-screen mx-auto">
             <div v-if="postsStore.loading" class="grid w-full place-items-center my-auto h-[70dvh]">
                 <div class="flex items-center gap-x-6">
                     <div class="loader"></div>
@@ -199,7 +141,7 @@ whenever(() => selectedPost.value, () => {
                                 </span>
                             </p>
                         </div>
-                        <div v-if="!isLoading && selectedPost"
+                        <div v-if="selectedPost"
                             class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30 md:border border-base-300 rounded-t-2xl md:rounded-3xl">
                             <div
                                 class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl font-normal-weight prose-img:!my-0  prose-invert prose-headings:font-extrabold  prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">

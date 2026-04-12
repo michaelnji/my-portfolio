@@ -120,7 +120,7 @@ const technologies = [
                     class="text-primary underline font-medium ">Michael</span>
             </h1>
             <p class="text-lg md:text-xl leading-relaxed mt-4 font-medium text-base-content">
-                I love building cool stuf with programming.
+                I love building cool stuff with programming.
             </p>
 
 

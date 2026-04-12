@@ -1,6 +1,15 @@
 <script lang="ts" setup>
 const projects = [
     {
+        image: 'kairos.png',
+        title: 'Kairos',
+        link: 'https://kairos.michaelnji.codes',
+        type: 'open source',
+        description: 'A Desktop +  Vscode extension for code time metrics and insights',
+        duration: 'March 2026 - April 2026',
+        status: "wip" as const
+    },
+    {
         image: 'hcs.png',
         title: 'HCS Tours & Services',
         link: 'https://hcsshuttleandtourservices.com',
