@@ -79,10 +79,9 @@ watch(() => selectedPost.value?._id, (postId) => {
     if (viewTimer) clearTimeout(viewTimer)
     viewTimer = setTimeout(async () => {
         try {
-            await $fetch('/api/neondb/stats/increment-view', {
+            await $fetch('/api/public/stats/increment-view', {
                 method: 'POST',
-                body: { id: postId },
-                headers: { 'x-api-key': useApiKey().value }
+                body: { id: postId }
             })
         } finally {
             trackedPostId.value = postId

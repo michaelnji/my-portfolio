@@ -14,9 +14,7 @@ onMounted(async () => {
             await postsStore.fetchPosts()
         }
         
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable[]>>('/api/neondb/stats/get-all', {
-            headers: { 'x-api-key': useApiKey().value }
-        })
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable[]>>('/api/public/stats/get-all')
         if (resp.ok && resp.data) {
             allStats.value = resp.data
         }
@@ -214,4 +212,3 @@ const loadingCards = [1, 2, 3, 4, 5]
     </section>
 
 </template>
-

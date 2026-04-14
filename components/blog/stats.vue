@@ -36,15 +36,14 @@ const updateStats = async (data: unknown) => {
         target.value = ''
         playSound()
         isLoading2.value = true
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/neondb/stats/update-by-id', {
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/public/stats/update-by-id', {
             method: "POST",
             body: {
                 id: props.id,
                 data: data
             },
             retry: 0,
-            retryDelay: 0,
-            headers: { 'x-api-key': useApiKey().value }
+            retryDelay: 0
         })
         console.log(resp)
         if (resp.ok && resp.data) {
@@ -69,12 +68,11 @@ const updateStats = async (data: unknown) => {
 }
 onMounted(async () => {
     try {
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/neondb/stats/fetch-by-id', {
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/public/stats/fetch-by-id', {
             method: "POST",
             body: {
                 id: props.id
-            },
-            headers: { 'x-api-key': useApiKey().value }
+            }
         })
         if (resp.ok && resp.data) {
             stats.value = resp.data
