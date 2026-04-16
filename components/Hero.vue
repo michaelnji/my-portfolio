@@ -84,10 +84,10 @@ const technologies = [
                             alt="A portrait of Michael Nji" :custom="true" class="rounded-box border border-base-300"
                             v-slot="{ src, isLoaded, imgAttrs }">
 
-                            <!-- Show the actual image when loaded -->
+                          
                             <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">
 
-                            <!-- Show a placeholder while loading -->
+                        <!-- Placeholder -->
                             <div class="skeleton  bg-base-300 lg:bg-base-200 w-full lg:size-48 size-36"
                                 v-if="!isLoaded">
                             </div>
@@ -152,7 +152,7 @@ const technologies = [
                             class="font-bold text-primary">ship quickly</span></h2>
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">It's not just about writing
-                    code. I love trying out new technologies, especially now with the advent of AI. Here are some tools
+                    code, to me it is about building scalable and beautiful software. I love trying out new technologies, especially now with the advent of AI. Here are some tools
                     I work with:</p>
 
                 <div class="mt-2 flex flex-wrap gap-3">
@@ -163,7 +163,7 @@ const technologies = [
                     open-source projects like <NuxtLink @click="playSound" to="https://github.com/biomejs/biome"
                         target="_blank" class="underline text-primary">Biome</NuxtLink> and built tools like my
                     <NuxtLink @click="playSound" to="https://github.com/michaelnji/kount-cli" target="_blank"
-                        class="underline text-primary">kount-cli</NuxtLink>.
+                        class="underline text-primary">kount-cli</NuxtLink> which is used for getting code metrics.
                 </p>
             </div>
             <div class="mt-16">
@@ -174,7 +174,7 @@ const technologies = [
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I'm currently building
                     <NuxtLink @click="playSound" to="https://kairos.michaelnji.codes" target="_blank"
                         class="underline text-primary font-semibold">Kairos</NuxtLink>, a macOS/Linux app + Vscode
-                    extension to replace wakatime in my dev environment. Totally open source and works offline too..
+                    extension to help developers see coding time metrics and see what part of programming they spend the most of their time on. Totally open source and works offline too..
                 </p>
             </div>
             <div class="mt-16">
