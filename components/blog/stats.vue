@@ -76,10 +76,12 @@ onMounted(async () => {
         })
         if (resp.ok && resp.data) {
             stats.value = resp.data
-            isLoading.value = false
         }
     } catch (error) {
-        console.log(error)
+        console.error('Failed to fetch stats:', error)
+        stats.value = null
+    } finally {
+        isLoading.value = false
     }
 })
 </script>

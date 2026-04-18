@@ -173,8 +173,8 @@ const technologies = [
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I'm currently building
                     <NuxtLink @click="playSound" to="https://kairos.michaelnji.codes" target="_blank"
-                        class="underline text-primary font-semibold">Kairos</NuxtLink>, a macOS/Linux app + Vscode
-                    extension to help developers see coding time metrics and see what part of programming they spend the most of their time on. Totally open source and works offline too..
+                        class="underline text-primary font-semibold">Kairos</NuxtLink>, a macOS/Linux app + VS Code
+                    extension to help developers see coding time metrics and see what part of programming they spend the most of their time on. Totally open source and works offline too.
                 </p>
             </div>
             <div class="mt-16">

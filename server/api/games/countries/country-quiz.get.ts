@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
         const payload = await $fetch<unknown>(url.toString(), {
             retry: 0,
             retryDelay: 0,
+            timeout: 10000,
         })
 
         const rawQuestions = asQuestionArray(payload)

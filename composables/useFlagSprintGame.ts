@@ -46,8 +46,13 @@ export const useFlagSprintGame = () => {
     let timerId: ReturnType<typeof setInterval> | null = null
     let autoAdvanceId: ReturnType<typeof setTimeout> | null = null
 
+    const prefersReducedMotion = () => {
+        if (typeof window === 'undefined') return false
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    }
+
     const playIfEnabled = (kind: 'click' | 'success' | 'error') => {
-        if (!playSounds.value) return
+        if (!playSounds.value || prefersReducedMotion()) return
         if (kind === 'click') playClick()
         if (kind === 'success') playSuccess()
         if (kind === 'error') playError()

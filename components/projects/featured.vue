@@ -5,7 +5,7 @@ const projects = [
         title: 'Kairos',
         link: 'https://kairos.michaelnji.codes',
         type: 'open source',
-        description: 'A Desktop +  Vscode extension for code time metrics and insights',
+        description: 'A Desktop + VS Code extension for code time metrics and insights',
         duration: 'March 2026 - April 2026',
         status: "wip" as const
     },

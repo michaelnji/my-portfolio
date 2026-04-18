@@ -1,3 +1,4 @@
+import { sql } from 'kysely'
 import type { Kysely } from 'kysely'
 import type { Database } from '../types/index.types'
 
@@ -8,6 +9,12 @@ export async function tryRateLimit(
     type: 'like' | 'view',
     field = ''
 ): Promise<boolean> {
+    // Keep rate_limits table bounded to recent windows only.
+    await db
+        .deleteFrom('rate_limits')
+        .where(sql<boolean>`date < CURRENT_DATE - INTERVAL '30 days'`)
+        .execute()
+
     const result = await db
         .insertInto('rate_limits')
         .values({

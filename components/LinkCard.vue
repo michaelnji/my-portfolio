@@ -14,7 +14,7 @@ defineEmits<{
   <div
     :class="{
       'py-3 px-4 rounded-box bg-base-200 shadow-md border border-base-300 transition-all duration-200 ease-out hover:border-primary hover:shadow-lg': true,
-  'bg-base-200  border-primary shadow-lg': highlight,
+      'border-primary shadow-lg': highlight,
       'md:col-span-2': full
     }">
     <h3
@@ -26,4 +26,3 @@ defineEmits<{
     </p>
   </div>
 </template>
-

@@ -12,12 +12,15 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
-        const body = await readBody<{ id: string }>(event)
-
-        if (!body.id) throw new Error('Post ID is required')
+        const body = await readBody<{ id?: string } | null>(event)
+        if (!body?.id || !body.id.trim()) {
+            setResponseStatus(event, 400)
+            return sendServerResponse(400, 'Post ID is required')
+        }
+        const postId = body.id.trim()
 
         const userHash = getUserFingerprint(event)
-        const limited = await tryRateLimit(db, body.id, userHash, 'view')
+        const limited = await tryRateLimit(db, postId, userHash, 'view')
         if (limited) {
             // silent — no UX disruption
             return sendServerResponse(200, 'success', null)
@@ -26,7 +29,7 @@ export default defineEventHandler(async (event) => {
         const resp = await db
             .updateTable("stats")
             .set(() => ({ views: sql`views + 1` }))
-            .where("postId", "=", body.id)
+            .where("postId", "=", postId)
             .returningAll()
             .executeTakeFirstOrThrow();
         

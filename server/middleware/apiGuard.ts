@@ -1,8 +1,11 @@
 import { timingSafeEqual } from 'node:crypto'
 
+const PROTECTED_PREFIXES = ['/api/neondb/'] as const
+
 export default defineEventHandler((event) => {
     const url = getRequestURL(event)
-    if (!url.pathname.startsWith('/api/neondb/')) return
+    const needsGuard = PROTECTED_PREFIXES.some((prefix) => url.pathname.startsWith(prefix))
+    if (!needsGuard) return
 
     const config = useRuntimeConfig()
     if (!config.apiKey) {

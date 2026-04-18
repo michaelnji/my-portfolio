@@ -30,8 +30,13 @@ useSeoMeta({
 const playSounds = usePlaySound()
 const { play } = useSound(click, { volume: 0.7 })
 
+const prefersReducedMotion = () => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 const playSound = () => {
-    if (playSounds.value) play()
+    if (playSounds.value && !prefersReducedMotion()) play()
 }
 
 const gameCards = [
