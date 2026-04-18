@@ -36,6 +36,8 @@ function toNormalizedQuestion(raw: RawQuestion): CountryQuizQuestion | null {
     if (typeof raw.flag !== 'string') return null
     if (typeof raw.answer !== 'string') return null
     if (!Array.isArray(raw.variants)) return null
+    const flag = raw.flag.trim()
+    if (!flag) return null
 
     const variants = raw.variants
         .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
@@ -48,7 +50,7 @@ function toNormalizedQuestion(raw: RawQuestion): CountryQuizQuestion | null {
     if (answerCount !== 1) return null
 
     return {
-        flag: raw.flag.trim(),
+        flag,
         variants,
         answer,
     }

@@ -133,6 +133,9 @@ export const useFlagSprintGame = () => {
     }
 
     const goToNextQuestion = () => {
+        if (status.value !== 'feedback') return
+        clearTimers()
+
         if (currentIndex.value >= questions.value.length - 1) {
             finishGame()
             return
@@ -178,6 +181,8 @@ export const useFlagSprintGame = () => {
     }
 
     const startGame = async () => {
+        if (status.value === 'loading') return
+
         clearTimers()
         status.value = 'loading'
         errorMessage.value = ''

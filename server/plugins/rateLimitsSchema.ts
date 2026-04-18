@@ -18,11 +18,16 @@ export default defineNitroPlugin(async () => {
                 post_id VARCHAR NOT NULL,
                 user_hash VARCHAR(64) NOT NULL,
                 field VARCHAR(10) NOT NULL DEFAULT '',
-                date DATE NOT NULL DEFAULT CURRENT_DATE,
-                UNIQUE (resource_type, post_id, user_hash, field, date)
+                date DATE NOT NULL DEFAULT CURRENT_DATE
             )
+        `.execute(db)
+
+        await sql`
+            CREATE UNIQUE INDEX IF NOT EXISTS rate_limits_daily_unique_idx
+            ON rate_limits (resource_type, post_id, user_hash, field, date)
         `.execute(db)
     } catch (error) {
         console.error('Failed to ensure rate_limits schema:', error)
+        throw error
     }
 })

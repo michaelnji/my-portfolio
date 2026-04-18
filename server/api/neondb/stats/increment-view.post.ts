@@ -19,6 +19,17 @@ export default defineEventHandler(async (event) => {
         }
         const postId = body.id.trim()
 
+        const existingPost = await db
+            .selectFrom("stats")
+            .select("postId")
+            .where("postId", "=", postId)
+            .executeTakeFirst()
+
+        if (!existingPost) {
+            setResponseStatus(event, 404)
+            return sendServerResponse(404, 'Post not found')
+        }
+
         const userHash = getUserFingerprint(event)
         const limited = await tryRateLimit(db, postId, userHash, 'view')
         if (limited) {
@@ -36,7 +47,10 @@ export default defineEventHandler(async (event) => {
         return sendServerResponse(200, 'success', resp)
     } catch (error) {
         if (error instanceof Error) {
-            const msg = error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message
+            console.error('Failed to increment post view:', error)
+            const msg = error.message.includes('fetch') || error.message.includes('getaddrinfo')
+                ? 'Fetch failed'
+                : 'Failed to increment post view'
             setResponseStatus(event, 500, msg)
             return sendServerResponse(500, msg)
         }

@@ -10,8 +10,8 @@
 @theme {
     --font-mono: "Operator Mono Lig";
         --font-display: "Formula Condensed";
-        --font-body: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-body: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
+            --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
 }
 
 /* Replace with your theme generated from https: //daisyui.com/theme-generator/ */
