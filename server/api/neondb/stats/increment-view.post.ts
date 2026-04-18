@@ -12,28 +12,47 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
-        const body = await readBody<{
-            id: string
-        }>(event)
+        const body = await readBody<{ id?: string } | null>(event)
+        if (!body?.id || !body.id.trim()) {
+            setResponseStatus(event, 400)
+            return sendServerResponse(400, 'Post ID is required')
+        }
+        const postId = body.id.trim()
 
-        if (!body.id) {
-            throw new Error('Post ID is required')
+        const existingPost = await db
+            .selectFrom("stats")
+            .select("postId")
+            .where("postId", "=", postId)
+            .executeTakeFirst()
+
+        if (!existingPost) {
+            setResponseStatus(event, 404)
+            return sendServerResponse(404, 'Post not found')
+        }
+
+        const userHash = getUserFingerprint(event)
+        const limited = await tryRateLimit(db, postId, userHash, 'view')
+        if (limited) {
+            // silent — no UX disruption
+            return sendServerResponse(200, 'success', null)
         }
 
         const resp = await db
             .updateTable("stats")
-            .set((eb) => ({
-                views: sql`views + 1`
-            }))
-            .where("postId", "=", body.id)
+            .set(() => ({ views: sql`views + 1` }))
+            .where("postId", "=", postId)
             .returningAll()
             .executeTakeFirstOrThrow();
         
         return sendServerResponse(200, 'success', resp)
     } catch (error) {
         if (error instanceof Error) {
-            setResponseStatus(event, 500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
-            return sendServerResponse(500, error.message.includes('fetch') || error.message.includes('getaddrinfo') ? 'Fetch failed' : error.message)
+            console.error('Failed to increment post view:', error)
+            const msg = error.message.includes('fetch') || error.message.includes('getaddrinfo')
+                ? 'Fetch failed'
+                : 'Failed to increment post view'
+            setResponseStatus(event, 500, msg)
+            return sendServerResponse(500, msg)
         }
     }
 })

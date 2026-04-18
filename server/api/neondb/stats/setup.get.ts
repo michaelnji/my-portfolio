@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
         const db = createKysely<Database>({
             connectionString: config.postgresUrl,
         });
+
         const query = `*[_type == "post"]{
         _id
         }`

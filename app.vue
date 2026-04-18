@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import '~/assets/css/custom.css';
-import { Analytics } from '@vercel/analytics/nuxt'
 import { useHead } from '#imports';
 import '@catppuccin/highlightjs/css/catppuccin-mocha.css';
+import { Analytics } from '@vercel/analytics/nuxt';
 import { generateHumanMessage } from 'nexus-req';
 import { Toaster, toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
+import '~/assets/css/custom.css';
 
 useHead({
   link: [
@@ -27,7 +27,7 @@ const categoriesStore = useCategoriesStore()
 async function retry() {
   try {
     await Promise.all([await postsStore.fetchPosts(),
-    await $fetch('/api/neondb/stats/setup')])
+    await $fetch('/api/public/stats/setup')])
   } catch (error) {
     reloadNuxtApp()
   }
@@ -36,7 +36,7 @@ onMounted(async () => {
   await callOnce(async () => {
     try {
       await Promise.all([await postsStore.fetchPosts(),
-      await $fetch('/api/neondb/stats/setup')])
+      await $fetch('/api/public/stats/setup')])
 
     } catch (error) {
       toast.error(generateHumanMessage(`${error}`), {

@@ -53,7 +53,7 @@ const technologies = [
     { name: 'nuxt.js', icon: 'logos:nuxt-icon' },
     { name: 'claude code', icon: 'logos:claude-icon' },
     { name: 'bash', icon: 'logos:bash-icon' },
-    { name: 'Copilot', icon: 'logos:github-copilot' },
+    { name: 'Copilot', icon: 'logos:github-copilot', theme: 'light' },
     { name: 'Gemini-cli', icon: 'logos:google-gemini' },
     { name: 'Typescript', icon: 'logos:typescript-icon' },
     { name: 'Supabase', icon: 'logos:supabase-icon' },
@@ -62,6 +62,8 @@ const technologies = [
     { name: 'DaisyUI', icon: 'logos:daisyui-icon' },
     { name: 'bunjs', icon: 'logos:bun' },
     { name: 'nodejs', icon: 'logos:nodejs-icon-alt' },
+    { name: 'go', icon: 'logos:go' },
+    { name: 'dart', icon: 'logos:dart' },
     { name: 'git', icon: 'logos:git-icon' }
 ]
 </script>
@@ -82,10 +84,10 @@ const technologies = [
                             alt="A portrait of Michael Nji" :custom="true" class="rounded-box border border-base-300"
                             v-slot="{ src, isLoaded, imgAttrs }">
 
-                            <!-- Show the actual image when loaded -->
+                          
                             <img v-if="isLoaded" v-bind="imgAttrs" :src="src" class="w-full object-contain">
 
-                            <!-- Show a placeholder while loading -->
+                        <!-- Placeholder -->
                             <div class="skeleton  bg-base-300 lg:bg-base-200 w-full lg:size-48 size-36"
                                 v-if="!isLoaded">
                             </div>
@@ -118,59 +120,61 @@ const technologies = [
                     class="text-primary underline font-medium ">Michael</span>
             </h1>
             <p class="text-lg md:text-xl leading-relaxed mt-4 font-medium text-base-content">
-                I build beautiful web experiences backed by solid engineering.
+                I love building cool stuff with programming.
             </p>
 
 
 
-            <p class="text-lg leading-8 mt-6 font-normal-weight text-content-secondary">I design user interfaces people
-                actually enjoy using, then build them with clean code and accessibility in mind. I create products that
-                feel premium, thoughtfully designed and robustly engineered. Over the past 3+ years, I've contributed to
-                open source and shipped full-stack projects with <b>Vue, React, Next, and Nuxt</b>. Let's work together.
+            <p class="text-lg leading-8 mt-6 font-normal-weight text-content-secondary">I have been coding for well over
+                3 years now, mostly websites, but now venturing into other stuff like backend services, cli tooling and
+                even desktop and mobile apps. I have a passion for learning new technologies and building things that
+                solve real problems.
+            </p>
+            <p class="text-lg leading-8 mt-6 font-normal-weight text-content-secondary">Here are my contact details
             </p>
 
             <div class="mt-6 flex !gap-3">
-                <SocialIcon @click="playSound" href="https://github.com/michaelnji" aria-label="Visit GitHub profile"
+                <SocialIcon @click="playSound" href="https://github.com/michaelnji" ariaLabel="Visit GitHub profile"
                     icon="simple-icons:github" target="_blank" rel="noopener noreferrer" />
 
-                <SocialIcon @click="playSound" href="https://wa.link/j63c5d" aria-label="Contact via WhatsApp"
+                <SocialIcon @click="playSound" href="https://wa.link/j63c5d" ariaLabel="Contact via WhatsApp"
                     icon="simple-icons:whatsapp" target="_blank" rel="noopener noreferrer" />
 
-                <SocialIcon href="#" aria-label="Join Discord community" icon="simple-icons:discord" disabled />
+                <SocialIcon href="#" ariaLabel="Join Discord community" icon="simple-icons:discord" disabled />
 
                 <SocialIcon @click="playSound" href="mailto:hello@michaelnji.codes"
-                    aria-label="Send email to hello@michaelnji.codes" icon="simple-icons:gmail" />
+                    ariaLabel="Send email to hello@michaelnji.codes" icon="simple-icons:gmail" />
             </div>
 
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
-                    <h2 ref='tech' data-section="2" class=" font-medium text-2xl">I use modern tools to <span
+                    <h2 ref='tech' data-section="2" class=" font-medium text-2xl">I like using tools that help me <span
                             class="font-bold text-primary">ship quickly</span></h2>
                 </div>
-                <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">Here's my toolkit. I pick
-                    the right technology for each project, whether that's building fast frontends, full-stack
-                    applications, or developer tools. Every decision prioritizes user experience and code quality.</p>
+                <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">It's not just about writing
+                    code, to me it is about building scalable and beautiful software. I love trying out new technologies, especially now with the advent of AI. Here are some tools
+                    I work with:</p>
 
                 <div class="mt-2 flex flex-wrap gap-3">
-                    <TechBadge v-for="tech in technologies" :key="tech.name" :name="tech.name" :icon="tech.icon" />
+                    <TechBadge v-for="tech in technologies" :key="tech.name" :name="tech.name" :icon="tech.icon"
+                        :theme="tech.theme" />
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I've also contributed to
                     open-source projects like <NuxtLink @click="playSound" to="https://github.com/biomejs/biome"
                         target="_blank" class="underline text-primary">Biome</NuxtLink> and built tools like my
                     <NuxtLink @click="playSound" to="https://github.com/michaelnji/kount-cli" target="_blank"
-                        class="underline text-primary">kount-cli</NuxtLink>.
+                        class="underline text-primary">kount-cli</NuxtLink> which is used for getting code metrics.
                 </p>
             </div>
             <div class="mt-16">
                 <div class="flex gap-x-2 items-center">
                     <h2 ref='project' data-section="3" class=" font-medium text-2xl">I'm currently working on <span
-                            class="font-bold text-primary">Ranked Choices</span></h2>
+                            class="font-bold text-primary">Kairos</span></h2>
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I'm currently building
-                    <NuxtLink @click="playSound" to="https://ranked-choices.vercel.app" target="_blank"
-                        class="underline text-primary font-semibold">Ranked Choices</NuxtLink>, a decision-making tool
-                    with a beautiful interface and smooth interactions. It scratches my own itch and showcases how I
-                    approach full-stack development.
+                    <NuxtLink @click="playSound" to="https://kairos.michaelnji.codes" target="_blank"
+                        class="underline text-primary font-semibold">Kairos</NuxtLink>, a macOS/Linux app + VS Code
+                    extension to help developers see coding time metrics and see what part of programming they spend the most of their time on. Totally open source and works offline too.
                 </p>
             </div>
             <div class="mt-16">

@@ -33,8 +33,18 @@ export interface StatTable {
 
 }
 
+export interface RateLimitTable {
+    id: Generated<number>;
+    resource_type: string;
+    post_id: string;
+    user_hash: string;
+    field: string;
+    date: Generated<string>;
+}
+
 export interface Database {
     stats: StatTable;
+    rate_limits: RateLimitTable;
 }
 
 export type PostStat = Selectable<StatTable>;

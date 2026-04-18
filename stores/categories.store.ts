@@ -7,10 +7,7 @@ export const useCategoriesStore = defineStore('Categories', () => {
 
     const categories = ref<{ title: string }[] | null>(null)
 
-
-
     const fetchCategories = async () => {
-
 
         const response = await $fetch<ServerResponse<StatusCodes, { title: string }[]>>('/api/sanity/categories/', {
             retry: 0, retryDelay: 0
@@ -24,14 +21,11 @@ export const useCategoriesStore = defineStore('Categories', () => {
 
         }
 
-
     }
 
 
     return {
-
         categories,
-
         fetchCategories,
 
     };

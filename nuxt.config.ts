@@ -74,6 +74,16 @@ export default defineNuxtConfig({
         'logos:bun',
         'logos:nodejs-icon-alt',
         'logos:git-icon',
+        'logos:go',
+        'logos:dart',
+        'logos:react',
+        'logos:nextjs-icon',
+        'logos:claude-icon',
+        'logos:bash-icon',
+        'logos:google-gemini',
+        'logos:sanity',
+        'logos:daisyui-icon',
+        'logos:github-copilot',
         'simple-icons:git',
         'ph:book-bookmark-duotone',
         'simple-icons:gitbook',
@@ -108,6 +118,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     sanityToken: '',
     postgresUrl: '',
+    apiKey: '',
     public: {
       sanityProjectId: process.env.NUXT_SANITY_ID
     }

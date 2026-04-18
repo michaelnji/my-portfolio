@@ -36,7 +36,7 @@ const updateStats = async (data: unknown) => {
         target.value = ''
         playSound()
         isLoading2.value = true
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/neondb/stats/update-by-id', {
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/public/stats/update-by-id', {
             method: "POST",
             body: {
                 id: props.id,
@@ -52,17 +52,23 @@ const updateStats = async (data: unknown) => {
             stats.value = resp.data
         }
     } catch (error) {
-        setTimeout(() => {
-            playErrorSound()
+        const status = (error as { response?: { status?: number } })?.response?.status
+        if (status === 429) {
             isLoading2.value = false
-            console.error('Failed to update stats:', error)
-        }, 1000)
+            playErrorSound()
+        } else {
+            setTimeout(() => {
+                playErrorSound()
+                isLoading2.value = false
+                console.error('Failed to update stats:', error)
+            }, 1000)
+        }
     }
 
 }
 onMounted(async () => {
     try {
-        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/neondb/stats/fetch-by-id', {
+        const resp = await $fetch<ServerResponse<StatusCodes, StatTable>>('/api/public/stats/fetch-by-id', {
             method: "POST",
             body: {
                 id: props.id
@@ -70,10 +76,12 @@ onMounted(async () => {
         })
         if (resp.ok && resp.data) {
             stats.value = resp.data
-            isLoading.value = false
         }
     } catch (error) {
-        console.log(error)
+        console.error('Failed to fetch stats:', error)
+        stats.value = null
+    } finally {
+        isLoading.value = false
     }
 })
 </script>
