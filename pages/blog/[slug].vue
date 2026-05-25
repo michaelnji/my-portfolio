@@ -128,7 +128,7 @@ onUnmounted(() => {
                                     {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
                                 </span>
                             </p>
-                            <h1 class="font-bold mt-4  font-display text-5xl md:text-6xl  lg:text-7xl">
+                            <h1 class="font-extrabold mt-4  font-display text-5xl md:text-6xl  lg:text-9xl leading-37">
                                 {{ selectedPost?.title }}
                             </h1>
 
@@ -141,7 +141,7 @@ onUnmounted(() => {
                             </p>
                         </div>
                         <div v-if="selectedPost"
-                            class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30 md:border border-base-300 rounded-t-2xl md:rounded-3xl">
+                            class="mt-8 p-6 md:p-8 lg:p-6 bg-base-300/30  rounded-t-2xl md:rounded-3xl">
                             <div
                                 class="!min-w-full !opacity-100   prose-p:!min-w-full  prose prose-lg md:!prose-xl font-normal-weight prose-img:!my-0  prose-invert prose-headings:font-extrabold  prose-pre:!p-0 prose-pre:whitespace-pre-wrap prose-p:text-pretty prose-pre:!bg-inherit prose-pre:!text-base prose-pre:!rounded-box md:prose-pre:!text-lg lg:prose-pre:!text-xl">
                                 <PortableText v-if="selectedPost && selectedPost.body"

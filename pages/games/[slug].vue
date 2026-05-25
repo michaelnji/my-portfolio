@@ -232,7 +232,7 @@ useSeoMeta(computed(() => ({
                         <Icon name="solar:verified-check-bold-duotone" size="34" />
                     </div>
                     <h2 class="mt-4 text-4xl md:text-5xl font-display font-semibold">
-                        Run complete
+                        Session complete
                     </h2>
                     <p class="mt-3 text-content-secondary font-normal-weight text-lg">
                         Score: <span class="font-semibold text-base-content">{{ score }}</span>/{{ TOTAL_QUESTIONS }}
