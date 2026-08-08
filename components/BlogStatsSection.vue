@@ -95,7 +95,7 @@ const loadingCards = [1, 2, 3, 4, 5]
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Total Stats -->
             <div
-                class="p-5 md:col-span-2 lg:col-span-3 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary">
+                class="p-5 md:col-span-2 lg:col-span-3 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-secondary/10 text-secondary">
                     <Icon name="solar:chart-square-bold" size="24" />
@@ -114,7 +114,7 @@ const loadingCards = [1, 2, 3, 4, 5]
             </div>
             <!-- Most Popular -->
             <NuxtLink v-if="mostPopular?.post" :to="`/blog/${mostPopular.post.slug}`"
-                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary hover:bg-base-100 group">
+                class="p-5 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary  group">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-primary/10 text-primary group-hover:scale-105">
                     <Icon name="solar:eye-bold" size="24" />
@@ -131,7 +131,7 @@ const loadingCards = [1, 2, 3, 4, 5]
 
              <!-- Most Liked -->
             <NuxtLink v-if="mostLiked?.post" :to="`/blog/${mostLiked.post.slug}`"
-                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
+                class="p-5 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-error/10 text-error group-hover:scale-105">
                     <Icon name="solar:heart-bold" size="24" />
@@ -148,7 +148,7 @@ const loadingCards = [1, 2, 3, 4, 5]
 
             <!-- Most Disliked -->
             <NuxtLink v-if="mostDisliked?.post" :to="`/blog/${mostDisliked.post.slug}`"
-                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
+                class="p-5 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-base-content/10 text-base-content/70 group-hover:scale-105">
                     <Icon name="solar:like-bold" class="transform rotate-180" size="24" />
@@ -165,7 +165,7 @@ const loadingCards = [1, 2, 3, 4, 5]
 
             <!-- Oldest Post -->
             <NuxtLink v-if="oldestPost?.post" :to="`/blog/${oldestPost.post.slug}`"
-                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
+                class="p-5 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-warning/10 text-warning group-hover:scale-105">
                     <Icon name="solar:history-bold" size="24" />
@@ -187,7 +187,7 @@ const loadingCards = [1, 2, 3, 4, 5]
 
             <!-- Youngest Post -->
             <NuxtLink v-if="youngestPost?.post" :to="`/blog/${youngestPost.post.slug}`"
-                class="p-5 rounded-2xl bg-base-200 border border-base-300 flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
+                class="p-5 rounded-2xl bg-base-200  flex flex-col justify-between transition-all duration-200 ease-out hover:shadow-lg hover:border-primary group">
                 <div
                     class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-200 flex-shrink-0 bg-success/10 text-success group-hover:scale-105">
                     <Icon name="solar:calendar-add-bold" size="24" />

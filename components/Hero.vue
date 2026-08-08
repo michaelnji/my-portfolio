@@ -142,8 +142,8 @@ const technologies = [
 
                 <SocialIcon href="#" ariaLabel="Join Discord community" icon="simple-icons:discord" disabled />
 
-                <SocialIcon @click="playSound" href="mailto:hello@michaelnji.codes"
-                    ariaLabel="Send email to hello@michaelnji.codes" icon="simple-icons:gmail" />
+                <SocialIcon @click="playSound" href="mailto:michaelnji34@gmail.com"
+                    ariaLabel="Send email to michaelnji34@gmail.com" icon="simple-icons:gmail" />
             </div>
 
             <div class="mt-16">
@@ -217,14 +217,14 @@ const technologies = [
                             </template>
                         </LinkCard>
                     </NuxtLink>
-                    <NuxtLink @click="playSound" to="mailto:hello@michaelnji.codes">
+                    <NuxtLink @click="playSound" to="mailto:michaelnji34@gmail.com">
                         <LinkCard highlight full>
                             <template #title>
                                 Get in Touch
                                 <Icon name="simple-icons:gmail" />
                             </template>
                             <template #description>
-                                Ready to work together? Reach out at hello@michaelnji.codes
+                                Ready to work together? Reach out at michaelnji34@gmail.com
                             </template>
                         </LinkCard>
                     </NuxtLink>

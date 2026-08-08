@@ -1,7 +1,7 @@
 import type { ServerResponse, StatusCodes } from 'nexus-req';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Post } from '../server/types/index.types';
+
 
 export const useCategoriesStore = defineStore('Categories', () => {
 

@@ -15,7 +15,7 @@ export const usePostsStore = defineStore('Posts', () => {
         const response = await $fetch<ServerResponse<StatusCodes, Post[]>>('/api/sanity/posts/', {
             retry: 0, retryDelay: 0,
             onResponseError({ response }) {
-
+                // Perform custom error handling here, such as logging or displaying a notification
             }
         });
 
