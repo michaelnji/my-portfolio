@@ -128,7 +128,8 @@ onUnmounted(() => {
                                     {{ formatDate(selectedPost?.publishedAt ?? '', 'EEEE, do MMMM yyyy') }}
                                 </span>
                             </p>
-                            <h1 class="font-extrabold mt-4  font-display text-5xl md:text-6xl  lg:text-9xl leading-37">
+                            <h1
+                                class="font-extrabold mt-4  font-display text-5xl md:text-6xl  lg:text-9xl lg:leading-37">
                                 {{ selectedPost?.title }}
                             </h1>
 
