@@ -9,5 +9,6 @@ export default defineEventHandler(async (event) => {
     return await fetchInternalNeondb(event, 'increment-view', {
         method: 'POST',
         body: { id: body.id.trim() },
+        headers: { 'x-anon-id': getOrSetAnonId(event) },
     })
 })

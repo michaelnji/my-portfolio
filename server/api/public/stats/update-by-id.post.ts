@@ -12,5 +12,6 @@ export default defineEventHandler(async (event) => {
     return await fetchInternalNeondb(event, 'update-by-id', {
         method: 'POST',
         body: { id: body.id.trim(), data: body.data },
+        headers: { 'x-anon-id': getOrSetAnonId(event) },
     })
 })
