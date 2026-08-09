@@ -254,7 +254,7 @@ const gamesSeries = [
                     <Icon name="solar:chart-square-bold" size="24" />
                 </div>
                 <div class="mt-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-widest text-content-secondary">All posts, all time</h3>
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-content-secondary">All posts, this range</h3>
                     <div class="text-2xl font-bold mt-2">{{ fmt(totals.views) }} total views</div>
                     <div class="mt-3 flex items-center gap-2">
                         <Icon name="solar:star-bold-duotone" class="text-warning" size="20" />
@@ -381,7 +381,7 @@ const gamesSeries = [
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
-                    <h2 class="card-title text-base">Views by post <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
+                    <h2 class="card-title text-base">Views by post <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
                     <div v-if="loading" class="skeleton w-full h-[260px]" />
                     <AdminSimpleBarChart v-else-if="viewsChartData.length" :data="viewsChartData" x-key="title" :series="viewsSeries" :height="260" hide-legend />
                     <p v-else class="text-content-secondary text-sm">No posts tracked yet.</p>
@@ -390,7 +390,7 @@ const gamesSeries = [
 
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
-                    <h2 class="card-title text-base">Reaction mix <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
+                    <h2 class="card-title text-base">Reaction mix <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
                     <div v-if="loading" class="skeleton w-full h-[260px]" />
                     <div v-else-if="totalReactions > 0" class="flex justify-center">
                         <AdminSimpleDonutChart :data="reactionMixData" data-key="value" name-key="name" :colors="reactionColors" :height="240" />
@@ -401,7 +401,7 @@ const gamesSeries = [
 
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
-                    <h2 class="card-title text-base">Views by topic <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
+                    <h2 class="card-title text-base">Views by topic <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
                     <div v-if="loading" class="skeleton w-full h-[260px]" />
                     <AdminSimpleBarChart v-else-if="tagChartData.length" :data="tagChartData" x-key="tag" :series="tagSeries" :height="260" hide-legend />
                     <p v-else class="text-content-secondary text-sm">No tagged posts yet.</p>
@@ -460,7 +460,7 @@ const gamesSeries = [
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">All posts <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
+                <h2 class="card-title text-base">All posts <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead>
