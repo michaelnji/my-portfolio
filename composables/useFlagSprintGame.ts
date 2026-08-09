@@ -21,8 +21,11 @@ const QUESTION_SECONDS = 15
 const AUTO_ADVANCE_DELAY_MS = 1200
 const FLAG_SPRINT_BEST_SCORE_KEY = 'games.flagSprint.bestScore'
 
+const FLAG_SPRINT_GAME_ID = 'flag-sprint'
+
 export const useFlagSprintGame = () => {
     const playSounds = usePlaySound()
+    const trackEvent = useTrackEvent()
     const { play: playClick } = useSound(clickSound, { volume: 0.65 })
     const { play: playSuccess } = useSound(successSound, { volume: 0.65 })
     const { play: playError } = useSound(errorSound, { volume: 0.65 })
@@ -130,6 +133,7 @@ export const useFlagSprintGame = () => {
             bestScore.value = score.value
             persistBestScore()
         }
+        trackEvent('game_complete', { gameId: FLAG_SPRINT_GAME_ID, score: score.value, total: TOTAL_QUESTIONS })
     }
 
     const goToNextQuestion = () => {
@@ -196,6 +200,7 @@ export const useFlagSprintGame = () => {
             await fetchQuestions()
             status.value = 'playing'
             startTimer()
+            trackEvent('game_play', { gameId: FLAG_SPRINT_GAME_ID })
         } catch (error) {
             status.value = 'error'
             errorMessage.value = error instanceof Error ? error.message : 'Unable to load game right now.'
