@@ -54,6 +54,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'events', range.value, typeFilter.value, eventsPage.value]),
     queryFn: () =>
@@ -91,7 +92,7 @@ function fmtPayload(payload: unknown) {
             <h1 class="text-2xl font-semibold">Events</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">By type.</p>

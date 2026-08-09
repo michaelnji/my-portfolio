@@ -21,6 +21,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'sources', range.value]),
     queryFn: () =>
@@ -58,7 +59,7 @@ const utmCampaignLeaderboard = computed(() =>
             <h1 class="text-2xl font-semibold">Sources</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <div class="card bg-base-200 border border-base-300">

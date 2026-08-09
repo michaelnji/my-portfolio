@@ -45,6 +45,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'health', range.value]),
     queryFn: () =>
@@ -118,7 +119,7 @@ const apiErrorsLeaderboard = computed(() =>
             <h1 class="text-2xl font-semibold">Health</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">Core Web Vitals (p75) and API error rates.</p>

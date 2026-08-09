@@ -50,6 +50,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'content', range.value]),
     queryFn: () =>
@@ -320,7 +321,7 @@ const topPagesLeaderboard = computed(() =>
             <h1 class="text-2xl font-semibold">Content</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
 

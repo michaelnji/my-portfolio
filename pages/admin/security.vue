@@ -34,6 +34,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'security', loginsPage.value, attemptsPage.value]),
     queryFn: () =>
@@ -66,7 +67,7 @@ function shortHash(hash: string) {
     <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <h1 class="text-2xl font-semibold">Security</h1>
-            <AdminSpinner :fetching="isFetching" />
+            <AdminSpinner :fetching="isFetching" @sync="refetch()" />
         </div>
         <p class="text-content-secondary text-sm -mt-4">Admin login history — no range filter, always recent.</p>
 

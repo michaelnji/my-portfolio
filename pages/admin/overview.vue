@@ -36,6 +36,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'overview', range.value]),
     queryFn: () =>
@@ -48,6 +49,11 @@ const { data: liveData, isPending: liveLoading, refetch: refetchLive } = useQuer
     staleTime: 10_000,
 })
 useIntervalFn(() => refetchLive(), 15000)
+
+function syncNow() {
+    refetch()
+    refetchLive()
+}
 
 watch(error, (e) => {
     if (e) toast.error('Failed to load overview data')
@@ -95,7 +101,7 @@ const topPagesLeaderboard = computed(() =>
             <h1 class="text-2xl font-semibold">Overview</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="syncNow" />
             </div>
         </div>
 
