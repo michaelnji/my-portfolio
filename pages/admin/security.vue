@@ -18,9 +18,14 @@ interface DailyCountRow {
 }
 interface SecurityData {
     recentLogins: LoginRow[]
+    recentLoginsHasMore: boolean
     failedAttempts: FailedAttemptRow[]
+    failedAttemptsHasMore: boolean
     failedByDay: DailyCountRow[]
 }
+
+const loginsPage = ref(1)
+const attemptsPage = ref(1)
 
 // No range filter — this is a fixed-window audit log, not a range-based
 // metric (same precedent as Overview's fixed stat cards).
@@ -30,8 +35,11 @@ const {
     isFetching,
     error,
 } = useQuery({
-    queryKey: ['admin', 'security'],
-    queryFn: () => $fetch<{ data: SecurityData }>('/api/admin/security').then((r) => r.data),
+    queryKey: computed(() => ['admin', 'security', loginsPage.value, attemptsPage.value]),
+    queryFn: () =>
+        $fetch<{ data: SecurityData }>('/api/admin/security', {
+            query: { loginsPage: loginsPage.value, attemptsPage: attemptsPage.value },
+        }).then((r) => r.data),
 })
 
 watch(error, (e) => {
@@ -100,6 +108,12 @@ function shortHash(hash: string) {
                         </table>
                         <p v-if="!loading && !data?.recentLogins?.length" class="text-content-secondary text-sm py-4">No logins yet.</p>
                     </div>
+                    <AdminPagination
+                        v-if="data?.recentLogins?.length || loginsPage > 1"
+                        v-model:page="loginsPage"
+                        :has-more="!!data?.recentLoginsHasMore"
+                        :disabled="isFetching"
+                    />
                 </div>
             </div>
             <div class="card bg-base-200 border border-base-300">
@@ -123,6 +137,12 @@ function shortHash(hash: string) {
                         </table>
                         <p v-if="!loading && !data?.failedAttempts?.length" class="text-content-secondary text-sm py-4">No failed attempts. 🎉</p>
                     </div>
+                    <AdminPagination
+                        v-if="data?.failedAttempts?.length || attemptsPage > 1"
+                        v-model:page="attemptsPage"
+                        :has-more="!!data?.failedAttemptsHasMore"
+                        :disabled="isFetching"
+                    />
                 </div>
             </div>
         </div>

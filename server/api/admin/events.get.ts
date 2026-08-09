@@ -1,22 +1,27 @@
 import { sql } from 'kysely'
 import { sendServerResponse } from 'nexus-req'
 
+const PAGE_SIZE = 20
+
 export default defineEventHandler(async (event) => {
     try {
         const query = getQuery(event)
         const type = typeof query.type === 'string' ? query.type : undefined
-        const limit = Math.min(Number(query.limit) || 50, 200)
+        const page = Math.max(1, Number(query.page) || 1)
         const { interval } = rangeConfig(parseRange(query.range))
         const window = sql.raw(`interval '${interval}'`)
 
         const db = getDb()
 
+        // One extra row per page — cheap way to know whether a next page
+        // exists without a separate COUNT(*) query.
         let rowsQuery = db
             .selectFrom('events')
             .selectAll()
             .where(sql<boolean>`created_at >= now() - ${window}`)
             .orderBy('created_at', 'desc')
-            .limit(limit)
+            .limit(PAGE_SIZE + 1)
+            .offset((page - 1) * PAGE_SIZE)
         if (type) rowsQuery = rowsQuery.where('type', '=', type)
 
         const [rows, counts, clicksByKind] = await Promise.all([
@@ -37,8 +42,11 @@ export default defineEventHandler(async (event) => {
             `.execute(db),
         ])
 
+        const eventsHasMore = rows.length > PAGE_SIZE
+
         return sendServerResponse(200, 'success', {
-            events: rows,
+            events: eventsHasMore ? rows.slice(0, PAGE_SIZE) : rows,
+            eventsHasMore,
             countsByType: counts.rows,
             clicksByKind: clicksByKind.rows,
         })
