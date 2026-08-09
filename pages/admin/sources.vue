@@ -40,8 +40,9 @@ function fmt(n: string | number | undefined) {
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Top referrers</h2>
+                <div v-if="loading" class="skeleton w-full h-[260px]" />
                 <BarChart
-                    v-if="referrerChartData.length"
+                    v-else-if="referrerChartData.length"
                     :data="referrerChartData"
                     :categories="categories"
                     x-axis="key"
@@ -50,7 +51,7 @@ function fmt(n: string | number | undefined) {
                     :x-formatter="xFormatter"
                     :hide-legend="true"
                 />
-                <p v-else class="text-content-secondary text-sm">{{ loading ? 'Loading…' : 'No data yet.' }}</p>
+                <p v-else class="text-content-secondary text-sm">No data yet.</p>
             </div>
         </div>
 
@@ -61,7 +62,13 @@ function fmt(n: string | number | undefined) {
                     <div class="overflow-x-auto">
                         <table class="table table-sm">
                             <thead><tr><th>Source</th><th class="text-right">Visits</th></tr></thead>
-                            <tbody>
+                            <tbody v-if="loading">
+                                <tr v-for="i in 5" :key="i">
+                                    <td><AdminSkel w="w-20" h="h-3" /></td>
+                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
                                 <tr v-for="row in data?.utmSource ?? []" :key="row.key ?? ''">
                                     <td>{{ row.key }}</td>
                                     <td class="text-right">{{ fmt(row.count) }}</td>
@@ -78,7 +85,13 @@ function fmt(n: string | number | undefined) {
                     <div class="overflow-x-auto">
                         <table class="table table-sm">
                             <thead><tr><th>Campaign</th><th class="text-right">Visits</th></tr></thead>
-                            <tbody>
+                            <tbody v-if="loading">
+                                <tr v-for="i in 5" :key="i">
+                                    <td><AdminSkel w="w-20" h="h-3" /></td>
+                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
                                 <tr v-for="row in data?.utmCampaign ?? []" :key="row.key ?? ''">
                                     <td>{{ row.key }}</td>
                                     <td class="text-right">{{ fmt(row.count) }}</td>

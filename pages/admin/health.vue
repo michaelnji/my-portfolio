@@ -65,7 +65,11 @@ function displayValue(metric: string, value: number) {
                 class="card bg-base-200 border border-base-300">
                 <div class="card-body items-center text-center p-4">
                     <div class="text-content-secondary text-xs uppercase tracking-wide">{{ metric }}</div>
-                    <template v-if="vitalFor(metric)">
+                    <template v-if="loading">
+                        <AdminSkel w="w-14" h="h-7" />
+                        <AdminSkel w="w-16" h="h-3" />
+                    </template>
+                    <template v-else-if="vitalFor(metric)">
                         <div class="text-2xl font-semibold"
                             :class="{
                                 'text-success': statusFor(metric, Number(vitalFor(metric)?.p75)) === 'success',
@@ -76,7 +80,7 @@ function displayValue(metric: string, value: number) {
                         </div>
                         <div class="text-content-secondary text-xs">{{ vitalFor(metric)?.samples }} samples</div>
                     </template>
-                    <div v-else class="text-content-secondary text-sm">{{ loading ? '…' : 'No data' }}</div>
+                    <div v-else class="text-content-secondary text-sm">No data</div>
                 </div>
             </div>
         </div>
@@ -85,7 +89,8 @@ function displayValue(metric: string, value: number) {
             <div class="stat">
                 <div class="stat-title">API errors today</div>
                 <div class="stat-value" :class="data && data.errorsToday > 0 ? 'text-error' : ''">
-                    {{ data?.errorsToday ?? '—' }}
+                    <AdminSkel v-if="loading" w="w-10" h="h-9" />
+                    <template v-else>{{ data?.errorsToday ?? 0 }}</template>
                 </div>
             </div>
         </div>
@@ -96,7 +101,14 @@ function displayValue(metric: string, value: number) {
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th>Status</th><th class="text-right">Count</th></tr></thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 6" :key="i">
+                                <td><AdminSkel w="w-32" h="h-3" /></td>
+                                <td><AdminSkel w="w-10" h="h-4" /></td>
+                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="(row, i) in data?.errors ?? []" :key="i">
                                 <td class="font-mono text-xs">{{ row.path }}</td>
                                 <td><span class="badge badge-error badge-sm">{{ row.status }}</span></td>

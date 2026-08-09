@@ -70,36 +70,49 @@ function fmtDuration(seconds: string | null | undefined) {
         <div class="stats stats-vertical sm:stats-horizontal shadow bg-base-200 border border-base-300 w-full">
             <div class="stat">
                 <div class="stat-title">Live now</div>
-                <div class="stat-value text-primary">{{ data?.liveNow ?? '—' }}</div>
+                <div class="stat-value text-primary">
+                    <AdminSkel v-if="loading" w="w-10" h="h-9" />
+                    <template v-else>{{ data?.liveNow ?? 0 }}</template>
+                </div>
             </div>
             <div class="stat">
                 <div class="stat-title">Today</div>
-                <div class="stat-value">{{ fmt(data?.today.pageviews) }}</div>
-                <div class="stat-desc">{{ fmt(data?.today.visitors) }} visitors · avg {{ fmtDuration(data?.today.avg_duration) }}</div>
+                <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.today.pageviews) }}</template></div>
+                <div class="stat-desc">
+                    <AdminSkel v-if="loading" w="w-36" h="h-3" />
+                    <template v-else>{{ fmt(data?.today.visitors) }} visitors · avg {{ fmtDuration(data?.today.avg_duration) }}</template>
+                </div>
             </div>
             <div class="stat">
                 <div class="stat-title">Last 7 days</div>
-                <div class="stat-value">{{ fmt(data?.last7d.pageviews) }}</div>
-                <div class="stat-desc">{{ fmt(data?.last7d.visitors) }} visitors · avg {{ fmtDuration(data?.last7d.avg_duration) }}</div>
+                <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.last7d.pageviews) }}</template></div>
+                <div class="stat-desc">
+                    <AdminSkel v-if="loading" w="w-36" h="h-3" />
+                    <template v-else>{{ fmt(data?.last7d.visitors) }} visitors · avg {{ fmtDuration(data?.last7d.avg_duration) }}</template>
+                </div>
             </div>
             <div class="stat">
                 <div class="stat-title">Last 30 days</div>
-                <div class="stat-value">{{ fmt(data?.last30d.pageviews) }}</div>
-                <div class="stat-desc">{{ fmt(data?.last30d.visitors) }} visitors · avg {{ fmtDuration(data?.last30d.avg_duration) }}</div>
+                <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.last30d.pageviews) }}</template></div>
+                <div class="stat-desc">
+                    <AdminSkel v-if="loading" w="w-36" h="h-3" />
+                    <template v-else>{{ fmt(data?.last30d.visitors) }} visitors · avg {{ fmtDuration(data?.last30d.avg_duration) }}</template>
+                </div>
             </div>
         </div>
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Traffic — last 30 days</h2>
+                <div v-if="loading" class="skeleton w-full h-[260px]" />
                 <LineChart
-                    v-if="chartData.length"
+                    v-else-if="chartData.length"
                     :data="chartData"
                     :categories="categories"
                     :height="260"
                     :x-formatter="xFormatter"
                 />
-                <p v-else class="text-content-secondary text-sm">{{ loading ? 'Loading…' : 'No data yet.' }}</p>
+                <p v-else class="text-content-secondary text-sm">No data yet.</p>
             </div>
         </div>
 
@@ -109,7 +122,13 @@ function fmtDuration(seconds: string | null | undefined) {
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 10" :key="i">
+                                <td><AdminSkel w="w-48" h="h-3" /></td>
+                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="row in data?.topPages ?? []" :key="row.path">
                                 <td class="font-mono text-xs">{{ row.path }}</td>
                                 <td class="text-right">{{ fmt(row.views) }}</td>

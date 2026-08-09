@@ -59,7 +59,16 @@ function completionRate(row: GameRow) {
                         <thead>
                             <tr><th>Post</th><th class="text-right">Views</th><th class="text-right">Hearts</th><th class="text-right">Claps</th><th class="text-right">Stars</th></tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 8" :key="i">
+                                <td><AdminSkel w="w-40" h="h-3" /></td>
+                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
+                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
+                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="post in data?.posts ?? []" :key="post.postId">
                                 <td class="max-w-xs truncate">{{ postTitle(post.postId) }}</td>
                                 <td class="text-right">{{ fmt(post.views) }}</td>
@@ -80,7 +89,15 @@ function completionRate(row: GameRow) {
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Game</th><th class="text-right">Plays</th><th class="text-right">Completions</th><th class="text-right">Completion rate</th></tr></thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 3" :key="i">
+                                <td><AdminSkel w="w-24" h="h-3" /></td>
+                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                <td class="text-right"><AdminSkel w="w-10" h="h-3" class="ml-auto" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="row in data?.games ?? []" :key="row.game_id">
                                 <td>{{ row.game_id }}</td>
                                 <td class="text-right">{{ fmt(row.plays) }}</td>
@@ -100,7 +117,13 @@ function completionRate(row: GameRow) {
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 8" :key="i">
+                                <td><AdminSkel w="w-48" h="h-3" /></td>
+                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="row in data?.topPages ?? []" :key="row.path">
                                 <td class="font-mono text-xs">{{ row.path }}</td>
                                 <td class="text-right">{{ fmt(row.views) }}</td>

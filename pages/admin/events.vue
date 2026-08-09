@@ -64,8 +64,9 @@ function fmtPayload(payload: unknown) {
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">By type</h2>
+                <div v-if="loading" class="skeleton w-full h-[220px]" />
                 <BarChart
-                    v-if="chartData.length"
+                    v-else-if="chartData.length"
                     :data="chartData"
                     :categories="categories"
                     x-axis="type"
@@ -74,7 +75,7 @@ function fmtPayload(payload: unknown) {
                     :x-formatter="xFormatter"
                     :hide-legend="true"
                 />
-                <p v-else class="text-content-secondary text-sm">{{ loading ? 'Loading…' : 'No events yet.' }}</p>
+                <p v-else class="text-content-secondary text-sm">No events yet.</p>
             </div>
         </div>
 
@@ -90,7 +91,15 @@ function fmtPayload(payload: unknown) {
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Time</th><th>Type</th><th>Path</th><th>Payload</th></tr></thead>
-                        <tbody>
+                        <tbody v-if="loading">
+                            <tr v-for="i in 8" :key="i">
+                                <td><AdminSkel w="w-28" h="h-3" /></td>
+                                <td><AdminSkel w="w-20" h="h-4" /></td>
+                                <td><AdminSkel w="w-32" h="h-3" /></td>
+                                <td><AdminSkel w="w-40" h="h-3" /></td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
                             <tr v-for="ev in data?.events ?? []" :key="ev.id">
                                 <td class="whitespace-nowrap text-xs">{{ fmtTime(ev.created_at) }}</td>
                                 <td><span class="badge badge-sm">{{ ev.type }}</span></td>

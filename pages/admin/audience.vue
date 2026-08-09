@@ -41,8 +41,9 @@ const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartD
             <div v-for="dim in (['device', 'browser', 'os', 'country'] as const)" :key="dim" class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base capitalize">{{ dim }}</h2>
+                    <div v-if="loading" class="skeleton w-full h-[240px]" />
                     <BarChart
-                        v-if="toChartData(data?.[dim]).length"
+                        v-else-if="toChartData(data?.[dim]).length"
                         :data="toChartData(data?.[dim])"
                         :categories="categories"
                         x-axis="key"
@@ -51,7 +52,7 @@ const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartD
                         :x-formatter="xFormatterFor(data?.[dim])"
                         :hide-legend="true"
                     />
-                    <p v-else class="text-content-secondary text-sm">{{ loading ? 'Loading…' : 'No data yet.' }}</p>
+                    <p v-else class="text-content-secondary text-sm">No data yet.</p>
                 </div>
             </div>
         </div>
