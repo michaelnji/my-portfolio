@@ -13,14 +13,17 @@ const links = [
 
 <template>
     <div class="w-full min-h-screen flex flex-col md:flex-row">
-        <aside class="md:w-56 shrink-0 border-b md:border-b-0 md:border-r border-base-300 bg-base-200">
+        <aside class="md:w-56 shrink-0 border-b md:border-b-0 md:border-r border-base-300 bg-base-200 sticky top-16 z-30 md:static">
             <div class="p-4 flex md:flex-col gap-1 md:sticky md:top-16 overflow-x-auto">
                 <NuxtLink v-for="link in links" :key="link.to"
                     :to="{ path: link.to, query: route.query.range ? { range: route.query.range } : undefined }"
-                    class="btn btn-ghost justify-start gap-2 shrink-0"
+                    class="btn btn-ghost justify-start gap-2 shrink-0 overflow-hidden"
                     :class="{ 'btn-active': route.path === link.to }">
-                    <Icon :name="link.icon" size="18" />
-                    {{ link.label }}
+                    <Icon :name="link.icon" size="18" class="shrink-0" />
+                    <span
+                        class="overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-300 ease-out md:max-w-24 md:opacity-100"
+                        :class="route.path === link.to ? 'max-w-24 opacity-100' : 'max-w-0 opacity-0'"
+                    >{{ link.label }}</span>
                 </NuxtLink>
             </div>
         </aside>
