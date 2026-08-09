@@ -22,12 +22,19 @@ interface KindRow {
 }
 interface EventsData {
     events: EventRow[]
+    eventsHasMore: boolean
     countsByType: CountRow[]
     clicksByKind: KindRow[]
 }
 
 const typeFilter = ref('')
+const eventsPage = ref(1)
 const { range } = useAdminRange()
+
+// Range/type changes invalidate the page's meaning — back to page 1.
+watch([range, typeFilter], () => {
+    eventsPage.value = 1
+})
 
 const TYPES = [
     'outbound_click',
@@ -47,11 +54,12 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
-    queryKey: computed(() => ['admin', 'events', range.value, typeFilter.value]),
+    queryKey: computed(() => ['admin', 'events', range.value, typeFilter.value, eventsPage.value]),
     queryFn: () =>
         $fetch<{ data: EventsData }>('/api/admin/events', {
-            query: { range: range.value, ...(typeFilter.value ? { type: typeFilter.value } : {}) },
+            query: { range: range.value, page: eventsPage.value, ...(typeFilter.value ? { type: typeFilter.value } : {}) },
         }).then((r) => r.data),
 })
 
@@ -84,7 +92,7 @@ function fmtPayload(payload: unknown) {
             <h1 class="text-2xl font-semibold">Events</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">By type.</p>
@@ -149,6 +157,12 @@ function fmtPayload(payload: unknown) {
                     </table>
                     <p v-if="!loading && !data?.events?.length" class="text-content-secondary text-sm py-4">No events yet.</p>
                 </div>
+                <AdminPagination
+                    v-if="data?.events?.length || eventsPage > 1"
+                    v-model:page="eventsPage"
+                    :has-more="!!data?.eventsHasMore"
+                    :disabled="isFetching"
+                />
             </div>
         </div>
     </div>

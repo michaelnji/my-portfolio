@@ -84,6 +84,26 @@ export default defineNitroPlugin(async () => {
             CREATE INDEX IF NOT EXISTS events_type_created_at_idx ON events (type, created_at)
         `.execute(db)
 
+        // One row per post view/reaction, timestamped — lets admin charts
+        // filter to a range. The `stats` table (cumulative counters shown on
+        // the public blog page) has no timestamp and stays lifetime-only.
+        await sql`
+            CREATE TABLE IF NOT EXISTS post_stat_events (
+                id SERIAL PRIMARY KEY,
+                post_id VARCHAR(200) NOT NULL,
+                type VARCHAR(10) NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+            )
+        `.execute(db)
+        await sql`
+            CREATE INDEX IF NOT EXISTS post_stat_events_type_created_at_idx
+            ON post_stat_events (type, created_at)
+        `.execute(db)
+        await sql`
+            CREATE INDEX IF NOT EXISTS post_stat_events_post_id_created_at_idx
+            ON post_stat_events (post_id, created_at)
+        `.execute(db)
+
         await sql`
             CREATE TABLE IF NOT EXISTS web_vitals (
                 id SERIAL PRIMARY KEY,

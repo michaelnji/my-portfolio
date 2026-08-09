@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = false
                 GROUP BY key
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 20
             `.execute(db),
             sql<BucketRow>`
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = false AND utm_source IS NOT NULL
                 GROUP BY key
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 20
             `.execute(db),
             sql<BucketRow>`
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = false AND utm_campaign IS NOT NULL
                 GROUP BY key
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 20
             `.execute(db),
         ])

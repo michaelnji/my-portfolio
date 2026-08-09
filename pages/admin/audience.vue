@@ -23,6 +23,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'audience', range.value]),
     queryFn: () =>
@@ -66,7 +67,7 @@ const mapPins = computed(() => {
             <h1 class="text-2xl font-semibold">Audience</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">By pageview.</p>
@@ -75,14 +76,15 @@ const mapPins = computed(() => {
             <div class="card-body">
                 <h2 class="card-title text-base">Visitor map</h2>
                 <div v-if="loading" class="skeleton w-full h-[300px]" />
-                <DottedMap
-                    v-else-if="mapPins.length"
-                    :pins="mapPins"
-                    :map-height="60"
-                    color="#3a3a3d"
-                    background-color="transparent"
-                    :dot-size="0.4"
-                />
+                <div v-else-if="mapPins.length" @wheel.capture.stop>
+                    <DottedMap
+                        :pins="mapPins"
+                        :map-height="60"
+                        color="#3a3a3d"
+                        background-color="transparent"
+                        :dot-size="0.4"
+                    />
+                </div>
                 <p v-else class="text-content-secondary text-sm">No geo data yet.</p>
             </div>
         </div>

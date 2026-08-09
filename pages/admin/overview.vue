@@ -36,6 +36,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'overview', range.value]),
     queryFn: () =>
@@ -48,6 +49,11 @@ const { data: liveData, isPending: liveLoading, refetch: refetchLive } = useQuer
     staleTime: 10_000,
 })
 useIntervalFn(() => refetchLive(), 15000)
+
+function syncNow() {
+    refetch()
+    refetchLive()
+}
 
 watch(error, (e) => {
     if (e) toast.error('Failed to load overview data')
@@ -77,6 +83,16 @@ function fmtDuration(seconds: string | null | undefined) {
     if (!s) return '—'
     return `${Math.round(s)}s`
 }
+
+const topPagesLeaderboard = computed(() =>
+    (data.value?.topPages ?? []).map((row) => ({
+        key: row.path,
+        label: row.path,
+        value: Number(row.views),
+        icon: 'solar:document-bold',
+        mono: true,
+    }))
+)
 </script>
 
 <template>
@@ -85,7 +101,7 @@ function fmtDuration(seconds: string | null | undefined) {
             <h1 class="text-2xl font-semibold">Overview</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="syncNow" />
             </div>
         </div>
 
@@ -135,24 +151,7 @@ function fmtDuration(seconds: string | null | undefined) {
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Top pages</h2>
-                <div class="overflow-x-auto">
-                    <table class="table table-sm">
-                        <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>
-                        <tbody v-if="loading">
-                            <tr v-for="i in 10" :key="i">
-                                <td><AdminSkel w="w-48" h="h-3" /></td>
-                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                            </tr>
-                        </tbody>
-                        <tbody v-else>
-                            <tr v-for="row in data?.topPages ?? []" :key="row.path">
-                                <td class="font-mono text-xs">{{ row.path }}</td>
-                                <td class="text-right">{{ fmt(row.views) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p v-if="!loading && !data?.topPages?.length" class="text-content-secondary text-sm py-4">No data yet.</p>
-                </div>
+                <AdminLeaderboard :items="topPagesLeaderboard" :loading="loading" :skeleton-count="10" value-label="views" empty-text="No data yet." />
             </div>
         </div>
     </div>

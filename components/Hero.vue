@@ -52,8 +52,10 @@ const technologies = [
     { name: 'next.js', icon: 'logos:nextjs-icon' },
     { name: 'nuxt.js', icon: 'logos:nuxt-icon' },
     { name: 'claude code', icon: 'logos:claude-icon' },
+    { name: 'kotlin', icon: 'logos:kotlin-icon' },
     { name: 'bash', icon: 'logos:bash-icon' },
-    { name: 'Copilot', icon: 'logos:github-copilot', theme: 'light' },
+    { name: 'jetpack compose', icon: 'logos:compose-multiplatform' },
+    { name: 'Copilot', icon: 'simple-icons:github' },
     { name: 'Gemini-cli', icon: 'logos:google-gemini' },
     { name: 'Typescript', icon: 'logos:typescript-icon' },
     { name: 'Supabase', icon: 'logos:supabase-icon' },
@@ -64,7 +66,8 @@ const technologies = [
     { name: 'nodejs', icon: 'logos:nodejs-icon-alt' },
     { name: 'go', icon: 'logos:go' },
     { name: 'dart', icon: 'logos:dart' },
-    { name: 'git', icon: 'logos:git-icon' }
+    { name: 'git', icon: 'logos:git-icon' },
+    { name: 'github', icon: 'simple-icons:github' },
 ]
 </script>
 <template>
@@ -157,7 +160,7 @@ const technologies = [
 
                 <div class="mt-2 flex flex-wrap gap-3">
                     <TechBadge v-for="tech in technologies" :key="tech.name" :name="tech.name" :icon="tech.icon"
-                        :theme="tech.theme" />
+/>
                 </div>
                 <p class="text-lg font-normal-weight leading-8 mt-6 text-content-secondary">I've also contributed to
                     open-source projects like <NuxtLink @click="playSound" to="https://github.com/biomejs/biome"

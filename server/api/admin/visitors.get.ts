@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
                 SELECT entry_path AS path, COUNT(*)::text AS count
                 FROM sessions
                 GROUP BY entry_path
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 10
             `.execute(db),
             sql<PageCountRow>`
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
                 SELECT exit_path AS path, COUNT(*)::text AS count
                 FROM sessions
                 GROUP BY exit_path
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 10
             `.execute(db),
             sql<NewVsReturningRow>`

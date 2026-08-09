@@ -33,6 +33,15 @@ export interface StatTable {
 
 }
 
+export type PostStatEventType = 'view' | 'hearts' | 'claps' | 'stars' | 'dislikes';
+
+export interface PostStatEventTable {
+    id: Generated<number>;
+    post_id: string;
+    type: PostStatEventType;
+    created_at: Generated<string>;
+}
+
 export interface RateLimitTable {
     id: Generated<number>;
     resource_type: string;
@@ -129,6 +138,7 @@ export interface ApiRequestTable {
 
 export interface Database {
     stats: StatTable;
+    post_stat_events: PostStatEventTable;
     rate_limits: RateLimitTable;
     admin_sessions: AdminSessionTable;
     login_attempts: LoginAttemptTable;

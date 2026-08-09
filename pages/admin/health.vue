@@ -45,6 +45,7 @@ const {
     isPending: loading,
     isFetching,
     error,
+    refetch,
 } = useQuery({
     queryKey: computed(() => ['admin', 'health', range.value]),
     queryFn: () =>
@@ -79,6 +80,37 @@ function displayValue(metric: string, value: number) {
     if (metric === 'CLS') return value.toFixed(3)
     return Math.round(value).toLocaleString()
 }
+
+const slowestPathsLeaderboard = computed(() =>
+    (data.value?.slowestPaths ?? []).map((row, i) => ({
+        key: row.path ?? i,
+        label: row.path ?? '(unknown)',
+        sublabel: `${row.samples} samples`,
+        value: row.p95 ? Math.round(Number(row.p95)) : 0,
+        valueSuffix: 'ms',
+        icon: 'solar:speedometer-bold',
+        mono: true,
+    }))
+)
+const botPathsLeaderboard = computed(() =>
+    (data.value?.botPaths ?? []).map((row) => ({
+        key: row.path,
+        label: row.path,
+        value: Number(row.count),
+        icon: 'solar:radar-2-bold',
+        mono: true,
+    }))
+)
+const apiErrorsLeaderboard = computed(() =>
+    (data.value?.errors ?? []).map((row, i) => ({
+        key: `${row.path}-${row.status}-${i}`,
+        label: row.path ?? '(unknown)',
+        value: Number(row.count),
+        icon: 'solar:danger-triangle-bold',
+        mono: true,
+        badge: row.status ? { text: row.status, class: 'badge-error' } : undefined,
+    }))
+)
 </script>
 
 <template>
@@ -87,7 +119,7 @@ function displayValue(metric: string, value: number) {
             <h1 class="text-2xl font-semibold">Health</h1>
             <div class="flex items-center gap-3">
                 <AdminRangeFilter />
-                <AdminSpinner :fetching="isFetching" />
+                <AdminSpinner :fetching="isFetching" @sync="refetch()" />
             </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">Core Web Vitals (p75) and API error rates.</p>
@@ -156,49 +188,13 @@ function displayValue(metric: string, value: number) {
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">Slowest routes (p95)</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Path</th><th class="text-right">p95</th><th class="text-right">Samples</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 6" :key="i">
-                                    <td><AdminSkel w="w-32" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-10" h="h-3" class="ml-auto" /></td>
-                                    <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="(row, i) in data?.slowestPaths ?? []" :key="i">
-                                    <td class="font-mono text-xs">{{ row.path }}</td>
-                                    <td class="text-right">{{ row.p95 ? `${Math.round(Number(row.p95))}ms` : '—' }}</td>
-                                    <td class="text-right">{{ row.samples }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.slowestPaths?.length" class="text-content-secondary text-sm py-4">No data yet.</p>
-                    </div>
+                    <AdminLeaderboard :items="slowestPathsLeaderboard" :loading="loading" :skeleton-count="6" empty-text="No data yet." />
                 </div>
             </div>
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">Top bot paths</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Path</th><th class="text-right">Hits</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 6" :key="i">
-                                    <td><AdminSkel w="w-32" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="row in data?.botPaths ?? []" :key="row.path">
-                                    <td class="font-mono text-xs">{{ row.path }}</td>
-                                    <td class="text-right">{{ row.count }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.botPaths?.length" class="text-content-secondary text-sm py-4">No bot traffic recorded.</p>
-                    </div>
+                    <AdminLeaderboard :items="botPathsLeaderboard" :loading="loading" :skeleton-count="6" value-label="hits" empty-text="No bot traffic recorded." />
                 </div>
             </div>
         </div>
@@ -206,26 +202,7 @@ function displayValue(metric: string, value: number) {
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Top API errors</h2>
-                <div class="overflow-x-auto">
-                    <table class="table table-sm">
-                        <thead><tr><th>Path</th><th>Status</th><th class="text-right">Count</th></tr></thead>
-                        <tbody v-if="loading">
-                            <tr v-for="i in 6" :key="i">
-                                <td><AdminSkel w="w-32" h="h-3" /></td>
-                                <td><AdminSkel w="w-10" h="h-4" /></td>
-                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                            </tr>
-                        </tbody>
-                        <tbody v-else>
-                            <tr v-for="(row, i) in data?.errors ?? []" :key="i">
-                                <td class="font-mono text-xs">{{ row.path }}</td>
-                                <td><span class="badge badge-error badge-sm">{{ row.status }}</span></td>
-                                <td class="text-right">{{ row.count }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p v-if="!loading && !data?.errors?.length" class="text-content-secondary text-sm py-4">No API errors 🎉</p>
-                </div>
+                <AdminLeaderboard :items="apiErrorsLeaderboard" :loading="loading" :skeleton-count="6" value-label="occurrences" empty-text="No API errors 🎉" />
             </div>
         </div>
     </div>
