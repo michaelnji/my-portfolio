@@ -93,10 +93,7 @@ function fmtPayload(payload: unknown) {
             <div class="card-body">
                 <div class="flex items-center justify-between gap-4 flex-wrap">
                     <h2 class="card-title text-base">Recent events</h2>
-                    <select v-model="typeFilter" class="select select-sm select-bordered w-auto">
-                        <option value="">All types</option>
-                        <option v-for="t in TYPES" :key="t" :value="t">{{ t }}</option>
-                    </select>
+                    <AdminTypeFilter v-model="typeFilter" :options="TYPES" placeholder="All types" />
                 </div>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
