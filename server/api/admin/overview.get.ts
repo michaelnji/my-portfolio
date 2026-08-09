@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)} AND is_bot = false
                 GROUP BY path
-                ORDER BY views DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 10
             `.execute(db),
         ])

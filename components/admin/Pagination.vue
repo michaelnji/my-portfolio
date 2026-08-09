@@ -4,7 +4,7 @@ const emit = defineEmits<{ 'update:page': [number] }>()
 </script>
 
 <template>
-    <div class="flex items-center justify-end gap-3 mt-2">
+    <div class="flex items-center justify-end gap-3 mt-auto pt-2">
         <span class="text-xs text-content-secondary">Page {{ page }}</span>
         <div class="join">
             <button

@@ -42,6 +42,25 @@ function fmtPercent(n: number | undefined) {
     return `${Math.round((n ?? 0) * 100)}%`
 }
 const totalVisitors = computed(() => (data.value?.newVisitors ?? 0) + (data.value?.returningVisitors ?? 0))
+
+const entryPagesLeaderboard = computed(() =>
+    (data.value?.entryPages ?? []).map((row) => ({
+        key: row.path,
+        label: row.path,
+        value: Number(row.count),
+        icon: 'solar:login-3-bold',
+        mono: true,
+    }))
+)
+const exitPagesLeaderboard = computed(() =>
+    (data.value?.exitPages ?? []).map((row) => ({
+        key: row.path,
+        label: row.path,
+        value: Number(row.count),
+        icon: 'solar:logout-3-bold',
+        mono: true,
+    }))
+)
 </script>
 
 <template>
@@ -89,47 +108,13 @@ const totalVisitors = computed(() => (data.value?.newVisitors ?? 0) + (data.valu
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">Entry pages</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Path</th><th class="text-right">Sessions</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 8" :key="i">
-                                    <td><AdminSkel w="w-48" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="row in data?.entryPages ?? []" :key="row.path">
-                                    <td class="font-mono text-xs">{{ row.path }}</td>
-                                    <td class="text-right">{{ fmt(Number(row.count)) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.entryPages?.length" class="text-content-secondary text-sm py-4">No data yet.</p>
-                    </div>
+                    <AdminLeaderboard :items="entryPagesLeaderboard" :loading="loading" :skeleton-count="8" value-label="sessions" empty-text="No data yet." />
                 </div>
             </div>
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">Exit pages</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Path</th><th class="text-right">Sessions</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 8" :key="i">
-                                    <td><AdminSkel w="w-48" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="row in data?.exitPages ?? []" :key="row.path">
-                                    <td class="font-mono text-xs">{{ row.path }}</td>
-                                    <td class="text-right">{{ fmt(Number(row.count)) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.exitPages?.length" class="text-content-secondary text-sm py-4">No data yet.</p>
-                    </div>
+                    <AdminLeaderboard :items="exitPagesLeaderboard" :loading="loading" :skeleton-count="8" value-label="sessions" empty-text="No data yet." />
                 </div>
             </div>
         </div>

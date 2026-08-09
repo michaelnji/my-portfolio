@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = false
                 GROUP BY ${sql.raw(column)}
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 15
             `.execute(db)
 

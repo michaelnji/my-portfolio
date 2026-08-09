@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
                 FROM post_stat_events
                 WHERE created_at >= now() - ${window}
                 GROUP BY post_id
-                ORDER BY views DESC
+                ORDER BY COUNT(*) FILTER (WHERE type = 'view') DESC
             `.execute(db),
             sql<GameRow>`
                 SELECT
@@ -70,14 +70,14 @@ export default defineEventHandler(async (event) => {
                     AND payload->>'gameId' IS NOT NULL
                     AND created_at >= now() - ${window}
                 GROUP BY game_id
-                ORDER BY plays DESC
+                ORDER BY COUNT(*) FILTER (WHERE type = 'game_play') DESC
             `.execute(db),
             sql<TopPageRow>`
                 SELECT path, COUNT(*)::text AS views
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = false
                 GROUP BY path
-                ORDER BY views DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 30
             `.execute(db),
             // Blog traffic quality for the selected range — path is the raw

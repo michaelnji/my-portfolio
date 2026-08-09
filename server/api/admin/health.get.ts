@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
                 FROM api_errors
                 WHERE created_at >= now() - ${window}
                 GROUP BY path, status
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 20
             `.execute(db),
             // Always "today" regardless of the selected range — a pulse
@@ -77,7 +77,7 @@ export default defineEventHandler(async (event) => {
                 FROM api_requests
                 WHERE created_at >= now() - ${window} AND duration_ms IS NOT NULL
                 GROUP BY path
-                ORDER BY p95 DESC
+                ORDER BY percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms) DESC
                 LIMIT 10
             `.execute(db),
             sql<{ count: string }>`
@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
                 FROM page_views
                 WHERE created_at >= now() - ${window} AND is_bot = true
                 GROUP BY path
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
                 LIMIT 10
             `.execute(db),
         ])

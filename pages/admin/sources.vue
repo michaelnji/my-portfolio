@@ -34,9 +34,22 @@ watch(error, (e) => {
 const referrerChartData = computed(() => (data.value?.referrers ?? []).map((r) => ({ key: r.key ?? 'Direct', count: Number(r.count) })))
 const referrerSeries = [{ key: 'count', name: 'Visits', color: '#3987e5' }]
 
-function fmt(n: string | number | undefined) {
-    return Number(n ?? 0).toLocaleString()
-}
+const utmSourceLeaderboard = computed(() =>
+    (data.value?.utmSource ?? []).map((row) => ({
+        key: row.key ?? '(none)',
+        label: row.key ?? '(none)',
+        value: Number(row.count),
+        icon: 'solar:link-bold',
+    }))
+)
+const utmCampaignLeaderboard = computed(() =>
+    (data.value?.utmCampaign ?? []).map((row) => ({
+        key: row.key ?? '(none)',
+        label: row.key ?? '(none)',
+        value: Number(row.count),
+        icon: 'solar:megaphone-bold',
+    }))
+)
 </script>
 
 <template>
@@ -68,47 +81,13 @@ function fmt(n: string | number | undefined) {
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">UTM source</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Source</th><th class="text-right">Visits</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 5" :key="i">
-                                    <td><AdminSkel w="w-20" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="row in data?.utmSource ?? []" :key="row.key ?? ''">
-                                    <td>{{ row.key }}</td>
-                                    <td class="text-right">{{ fmt(row.count) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.utmSource?.length" class="text-content-secondary text-sm py-4">No campaign traffic yet.</p>
-                    </div>
+                    <AdminLeaderboard :items="utmSourceLeaderboard" :loading="loading" :skeleton-count="5" value-label="visits" empty-text="No campaign traffic yet." />
                 </div>
             </div>
             <div class="card bg-base-200 border border-base-300">
                 <div class="card-body">
                     <h2 class="card-title text-base">UTM campaign</h2>
-                    <div class="overflow-x-auto">
-                        <table class="table table-sm">
-                            <thead><tr><th>Campaign</th><th class="text-right">Visits</th></tr></thead>
-                            <tbody v-if="loading">
-                                <tr v-for="i in 5" :key="i">
-                                    <td><AdminSkel w="w-20" h="h-3" /></td>
-                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr v-for="row in data?.utmCampaign ?? []" :key="row.key ?? ''">
-                                    <td>{{ row.key }}</td>
-                                    <td class="text-right">{{ fmt(row.count) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="!loading && !data?.utmCampaign?.length" class="text-content-secondary text-sm py-4">No campaign traffic yet.</p>
-                    </div>
+                    <AdminLeaderboard :items="utmCampaignLeaderboard" :loading="loading" :skeleton-count="5" value-label="visits" empty-text="No campaign traffic yet." />
                 </div>
             </div>
         </div>

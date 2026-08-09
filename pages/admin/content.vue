@@ -290,6 +290,28 @@ const gamesSeries = [
     { key: 'plays', name: 'Plays', color: '#3987e5' },
     { key: 'completions', name: 'Completions', color: '#199e70' },
 ]
+
+const gamesLeaderboard = computed(() =>
+    [...(data.value?.games ?? [])]
+        .sort((a, b) => Number(b.plays) - Number(a.plays))
+        .map((g) => ({
+            key: g.game_id,
+            label: g.game_id,
+            sublabel: `${fmt(g.completions)} completions · ${completionRate(g)} rate`,
+            value: Number(g.plays),
+            icon: 'solar:gamepad-bold',
+        }))
+)
+
+const topPagesLeaderboard = computed(() =>
+    (data.value?.topPages ?? []).map((row) => ({
+        key: row.path,
+        label: row.path,
+        value: Number(row.views),
+        icon: 'solar:document-bold',
+        mono: true,
+    }))
+)
 </script>
 
 <template>
@@ -501,19 +523,7 @@ const gamesSeries = [
                 <div v-if="loading" class="skeleton w-full h-[220px]" />
                 <AdminSimpleBarChart v-else-if="gamesChartData.length" :data="gamesChartData" x-key="game" :series="gamesSeries" :height="220" />
                 <p v-else class="text-content-secondary text-sm">No game plays tracked yet.</p>
-                <div v-if="data?.games?.length" class="overflow-x-auto mt-2">
-                    <table class="table table-sm">
-                        <thead><tr><th>Game</th><th class="text-right">Plays</th><th class="text-right">Completions</th><th class="text-right">Completion rate</th></tr></thead>
-                        <tbody>
-                            <tr v-for="row in data.games" :key="row.game_id">
-                                <td>{{ row.game_id }}</td>
-                                <td class="text-right">{{ fmt(row.plays) }}</td>
-                                <td class="text-right">{{ fmt(row.completions) }}</td>
-                                <td class="text-right">{{ completionRate(row) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <AdminLeaderboard v-if="data?.games?.length" :items="gamesLeaderboard" value-label="plays" class="mt-2" />
             </div>
         </div>
 
@@ -597,23 +607,7 @@ const gamesSeries = [
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Top pages</h2>
-                <div class="overflow-x-auto">
-                    <table class="table table-sm">
-                        <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>
-                        <tbody v-if="loading">
-                            <tr v-for="i in 8" :key="i">
-                                <td><AdminSkel w="w-48" h="h-3" /></td>
-                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                            </tr>
-                        </tbody>
-                        <tbody v-else>
-                            <tr v-for="row in data?.topPages ?? []" :key="row.path">
-                                <td class="font-mono text-xs">{{ row.path }}</td>
-                                <td class="text-right">{{ fmt(row.views) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <AdminLeaderboard :items="topPagesLeaderboard" :loading="loading" value-label="views" empty-text="No data yet." />
             </div>
         </div>
     </div>

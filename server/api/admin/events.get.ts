@@ -31,14 +31,14 @@ export default defineEventHandler(async (event) => {
                 FROM events
                 WHERE created_at >= now() - ${window}
                 GROUP BY type
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
             `.execute(db),
             sql<{ kind: string; count: string }>`
                 SELECT COALESCE(payload->>'kind', 'other') AS kind, COUNT(*)::text AS count
                 FROM events
                 WHERE type = 'outbound_click' AND created_at >= now() - ${window}
                 GROUP BY kind
-                ORDER BY count DESC
+                ORDER BY COUNT(*) DESC
             `.execute(db),
         ])
 
