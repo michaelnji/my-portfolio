@@ -78,7 +78,7 @@ function fmtDuration(seconds: string | null | undefined) {
             <div class="stat">
                 <div class="stat-title">Today</div>
                 <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.today.pageviews) }}</template></div>
-                <div class="stat-desc">
+                <div class="stat-desc mt-2">
                     <AdminSkel v-if="loading" w="w-36" h="h-3" />
                     <template v-else>{{ fmt(data?.today.visitors) }} visitors · avg {{ fmtDuration(data?.today.avg_duration) }}</template>
                 </div>
@@ -86,7 +86,7 @@ function fmtDuration(seconds: string | null | undefined) {
             <div class="stat">
                 <div class="stat-title">Last 7 days</div>
                 <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.last7d.pageviews) }}</template></div>
-                <div class="stat-desc">
+                <div class="stat-desc mt-2">
                     <AdminSkel v-if="loading" w="w-36" h="h-3" />
                     <template v-else>{{ fmt(data?.last7d.visitors) }} visitors · avg {{ fmtDuration(data?.last7d.avg_duration) }}</template>
                 </div>
@@ -94,7 +94,7 @@ function fmtDuration(seconds: string | null | undefined) {
             <div class="stat">
                 <div class="stat-title">Last 30 days</div>
                 <div class="stat-value"><AdminSkel v-if="loading" w="w-20" h="h-9" /><template v-else>{{ fmt(data?.last30d.pageviews) }}</template></div>
-                <div class="stat-desc">
+                <div class="stat-desc mt-2">
                     <AdminSkel v-if="loading" w="w-36" h="h-3" />
                     <template v-else>{{ fmt(data?.last30d.visitors) }} visitors · avg {{ fmtDuration(data?.last30d.avg_duration) }}</template>
                 </div>
