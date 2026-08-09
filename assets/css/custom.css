@@ -86,3 +86,37 @@
 .font-normal-weight {
     font-weight: 300 !important;
 }
+
+/* vue-charts (vccs) dark-theme overrides — the library ships light-mode-ish
+   defaults (dark axis/legend text, opaque light tooltip), which reads badly
+   against this site's single dark theme. Class names confirmed against the
+   actual compiled output (prefix is "v-charts-", not upstream Recharts'
+   "recharts-"). */
+.v-charts-text,
+.v-charts-cartesian-axis-tick-value,
+.v-charts-legend-item-text,
+.v-charts-label {
+    fill: color-mix(in oklch, var(--color-base-content) 60%, transparent) !important;
+}
+
+.v-charts-cartesian-axis-line,
+.v-charts-cartesian-axis-tick-line {
+    stroke: var(--color-base-300) !important;
+}
+
+.v-charts-cartesian-grid-horizontal line,
+.v-charts-cartesian-grid-vertical line {
+    stroke: var(--color-base-300) !important;
+    opacity: 0.6;
+}
+
+.v-charts-tooltip-content {
+    background-color: var(--color-base-200) !important;
+    border-color: var(--color-base-300) !important;
+    border-radius: var(--radius-field) !important;
+}
+
+.v-charts-tooltip-label,
+.v-charts-tooltip-item {
+    color: var(--color-base-content) !important;
+}

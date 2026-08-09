@@ -53,22 +53,21 @@ watch(error, (e) => {
     if (e) toast.error('Failed to load overview data')
 })
 
-const categories = {
-    views: { name: 'Views', color: '#3987e5' },
-    visitors: { name: 'Visitors', color: '#d95926' },
-}
+const trafficSeries = [
+    { key: 'views', name: 'Views', color: '#3987e5' },
+    { key: 'visitors', name: 'Visitors', color: '#d95926' },
+]
 
 const chartData = computed(
-    () => data.value?.daily.map((d) => ({ ...d, views: Number(d.views), visitors: Number(d.visitors) })) ?? []
+    () =>
+        data.value?.daily.map((d) => {
+            const date = new Date(d.day)
+            const label = isHourlyRange(range.value)
+                ? date.toLocaleTimeString(undefined, { hour: 'numeric' })
+                : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+            return { label, views: Number(d.views), visitors: Number(d.visitors) }
+        }) ?? []
 )
-const xFormatter = (i: number) => {
-    const row = chartData.value[i]
-    if (!row) return ''
-    const date = new Date(row.day)
-    return isHourlyRange(range.value)
-        ? date.toLocaleTimeString(undefined, { hour: 'numeric' })
-        : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
-}
 
 function fmt(n: string | number | undefined) {
     return Number(n ?? 0).toLocaleString()
@@ -128,13 +127,7 @@ function fmtDuration(seconds: string | null | undefined) {
             <div class="card-body">
                 <h2 class="card-title text-base">Traffic</h2>
                 <div v-if="loading" class="skeleton w-full h-[260px]" />
-                <LineChart
-                    v-else-if="chartData.length"
-                    :data="chartData"
-                    :categories="categories"
-                    :height="260"
-                    :x-formatter="xFormatter"
-                />
+                <AdminSimpleLineChart v-else-if="chartData.length" :data="chartData" x-key="label" :series="trafficSeries" :height="260" />
                 <p v-else class="text-content-secondary text-sm">No data yet.</p>
             </div>
         </div>

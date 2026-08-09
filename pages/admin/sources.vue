@@ -32,8 +32,7 @@ watch(error, (e) => {
 })
 
 const referrerChartData = computed(() => (data.value?.referrers ?? []).map((r) => ({ key: r.key ?? 'Direct', count: Number(r.count) })))
-const categories = { count: { name: 'Visits', color: '#3987e5' } }
-const xFormatter = (i: number) => referrerChartData.value[i]?.key ?? ''
+const referrerSeries = [{ key: 'count', name: 'Visits', color: '#3987e5' }]
 
 function fmt(n: string | number | undefined) {
     return Number(n ?? 0).toLocaleString()
@@ -53,15 +52,13 @@ function fmt(n: string | number | undefined) {
             <div class="card-body">
                 <h2 class="card-title text-base">Top referrers</h2>
                 <div v-if="loading" class="skeleton w-full h-[260px]" />
-                <BarChart
+                <AdminSimpleBarChart
                     v-else-if="referrerChartData.length"
                     :data="referrerChartData"
-                    :categories="categories"
-                    x-axis="key"
-                    :y-axis="['count']"
+                    x-key="key"
+                    :series="referrerSeries"
                     :height="260"
-                    :x-formatter="xFormatter"
-                    :hide-legend="true"
+                    hide-legend
                 />
                 <p v-else class="text-content-secondary text-sm">No data yet.</p>
             </div>

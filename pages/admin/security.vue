@@ -38,13 +38,13 @@ watch(error, (e) => {
     if (e) toast.error('Failed to load security data')
 })
 
-const chartData = computed(() => (data.value?.failedByDay ?? []).map((d) => ({ day: d.day, count: Number(d.count) })))
-const categories = { count: { name: 'Failed attempts', color: '#e34948' } }
-const xFormatter = (i: number) => {
-    const row = chartData.value[i]
-    if (!row) return ''
-    return new Date(row.day).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
-}
+const chartData = computed(() =>
+    (data.value?.failedByDay ?? []).map((d) => ({
+        day: new Date(d.day).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+        count: Number(d.count),
+    }))
+)
+const failedSeries = [{ key: 'count', name: 'Failed attempts', color: '#e34948' }]
 
 function fmtTime(iso: string) {
     return formatAdminDateTime(iso)
@@ -66,15 +66,13 @@ function shortHash(hash: string) {
             <div class="card-body">
                 <h2 class="card-title text-base">Failed attempts — last 14 days</h2>
                 <div v-if="loading" class="skeleton w-full h-[180px]" />
-                <BarChart
+                <AdminSimpleBarChart
                     v-else-if="chartData.length"
                     :data="chartData"
-                    :categories="categories"
-                    x-axis="day"
-                    :y-axis="['count']"
+                    x-key="day"
+                    :series="failedSeries"
                     :height="180"
-                    :x-formatter="xFormatter"
-                    :hide-legend="true"
+                    hide-legend
                 />
                 <p v-else class="text-content-secondary text-sm">No failed attempts. 🎉</p>
             </div>

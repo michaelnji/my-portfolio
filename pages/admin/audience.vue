@@ -33,12 +33,11 @@ watch(error, (e) => {
     if (e) toast.error('Failed to load audience data')
 })
 
-const categories = { count: { name: 'Views', color: '#3987e5' } }
+const audienceSeries = [{ key: 'count', name: 'Views', color: '#3987e5' }]
 
 function toChartData(rows: BucketRow[] | undefined) {
     return (rows ?? []).map((r) => ({ key: r.key ?? 'Unknown', count: Number(r.count) }))
 }
-const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartData(rows)[i]?.key ?? ''
 
 const mapPins = computed(() => {
     const rows = (data.value?.country ?? []).filter((r) => r.key && COUNTRY_CENTROIDS[r.key])
@@ -93,15 +92,13 @@ const mapPins = computed(() => {
                 <div class="card-body">
                     <h2 class="card-title text-base capitalize">{{ dim }}</h2>
                     <div v-if="loading" class="skeleton w-full h-[240px]" />
-                    <BarChart
+                    <AdminSimpleBarChart
                         v-else-if="toChartData(data?.[dim]).length"
                         :data="toChartData(data?.[dim])"
-                        :categories="categories"
-                        x-axis="key"
-                        :y-axis="['count']"
+                        x-key="key"
+                        :series="audienceSeries"
                         :height="240"
-                        :x-formatter="xFormatterFor(data?.[dim])"
-                        :hide-legend="true"
+                        hide-legend
                     />
                     <p v-else class="text-content-secondary text-sm">No data yet.</p>
                 </div>

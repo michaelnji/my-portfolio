@@ -60,12 +60,10 @@ watch(error, (e) => {
 })
 
 const chartData = computed(() => (data.value?.countsByType ?? []).map((c) => ({ type: c.type, count: Number(c.count) })))
-const categories = { count: { name: 'Events', color: '#3987e5' } }
-const xFormatter = (i: number) => chartData.value[i]?.type ?? ''
+const eventSeries = [{ key: 'count', name: 'Events', color: '#3987e5' }]
 
 const kindChartData = computed(() => (data.value?.clicksByKind ?? []).map((c) => ({ kind: c.kind, count: Number(c.count) })))
-const kindCategories = { count: { name: 'Clicks', color: '#d95926' } }
-const kindXFormatter = (i: number) => kindChartData.value[i]?.kind ?? ''
+const kindSeries = [{ key: 'count', name: 'Clicks', color: '#d95926' }]
 
 function fmtTime(iso: string) {
     return formatAdminDateTime(iso)
@@ -95,15 +93,13 @@ function fmtPayload(payload: unknown) {
             <div class="card-body">
                 <h2 class="card-title text-base">By type</h2>
                 <div v-if="loading" class="skeleton w-full h-[220px]" />
-                <BarChart
+                <AdminSimpleBarChart
                     v-else-if="chartData.length"
                     :data="chartData"
-                    :categories="categories"
-                    x-axis="type"
-                    :y-axis="['count']"
+                    x-key="type"
+                    :series="eventSeries"
                     :height="220"
-                    :x-formatter="xFormatter"
-                    :hide-legend="true"
+                    hide-legend
                 />
                 <p v-else class="text-content-secondary text-sm">No events yet.</p>
             </div>
@@ -113,15 +109,13 @@ function fmtPayload(payload: unknown) {
             <div class="card-body">
                 <h2 class="card-title text-base">Outbound clicks by kind</h2>
                 <div v-if="loading" class="skeleton w-full h-[180px]" />
-                <BarChart
+                <AdminSimpleBarChart
                     v-else-if="kindChartData.length"
                     :data="kindChartData"
-                    :categories="kindCategories"
-                    x-axis="kind"
-                    :y-axis="['count']"
+                    x-key="kind"
+                    :series="kindSeries"
                     :height="180"
-                    :x-formatter="kindXFormatter"
-                    :hide-legend="true"
+                    hide-legend
                 />
                 <p v-else class="text-content-secondary text-sm">No outbound clicks yet.</p>
             </div>
