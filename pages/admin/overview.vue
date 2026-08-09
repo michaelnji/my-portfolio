@@ -26,10 +26,11 @@ interface OverviewData {
 
 const data = ref<OverviewData | null>(null)
 const loading = ref(true)
+const { range } = useAdminRange()
 
 async function load() {
     try {
-        const res = await $fetch<{ data: OverviewData }>('/api/admin/overview')
+        const res = await $fetch<{ data: OverviewData }>('/api/admin/overview', { query: { range: range.value } })
         data.value = res.data
     } finally {
         loading.value = false
@@ -38,6 +39,10 @@ async function load() {
 
 onMounted(load)
 useIntervalFn(load, 15000)
+watch(range, () => {
+    loading.value = true
+    load()
+})
 
 const categories = {
     views: { name: 'Views', color: '#3987e5' },
@@ -50,7 +55,10 @@ const chartData = computed(
 const xFormatter = (i: number) => {
     const row = chartData.value[i]
     if (!row) return ''
-    return new Date(row.day).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+    const date = new Date(row.day)
+    return isHourlyRange(range.value)
+        ? date.toLocaleTimeString(undefined, { hour: 'numeric' })
+        : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
 }
 
 function fmt(n: string | number | undefined) {
@@ -65,7 +73,10 @@ function fmtDuration(seconds: string | null | undefined) {
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Overview</h1>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Overview</h1>
+            <AdminRangeFilter />
+        </div>
 
         <div class="stats stats-vertical sm:stats-horizontal shadow bg-base-200 border border-base-300 w-full">
             <div class="stat">
@@ -103,7 +114,7 @@ function fmtDuration(seconds: string | null | undefined) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Traffic — last 30 days</h2>
+                <h2 class="card-title text-base capitalize">Traffic — {{ rangeLabelLong(range) }}</h2>
                 <div v-if="loading" class="skeleton w-full h-[260px]" />
                 <LineChart
                     v-else-if="chartData.length"
@@ -118,7 +129,7 @@ function fmtDuration(seconds: string | null | undefined) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Top pages — last 7 days</h2>
+                <h2 class="card-title text-base capitalize">Top pages — {{ rangeLabelLong(range) }}</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>

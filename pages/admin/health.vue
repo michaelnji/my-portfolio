@@ -19,14 +19,21 @@ interface HealthData {
 
 const data = ref<HealthData | null>(null)
 const loading = ref(true)
+const { range } = useAdminRange()
 
-onMounted(async () => {
+async function load() {
     try {
-        const res = await $fetch<{ data: HealthData }>('/api/admin/health')
+        const res = await $fetch<{ data: HealthData }>('/api/admin/health', { query: { range: range.value } })
         data.value = res.data
     } finally {
         loading.value = false
     }
+}
+
+onMounted(load)
+watch(range, () => {
+    loading.value = true
+    load()
 })
 
 // web.dev Core Web Vitals thresholds — good / needs-improvement / poor.
@@ -57,8 +64,11 @@ function displayValue(metric: string, value: number) {
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Health</h1>
-        <p class="text-content-secondary text-sm -mt-4">Core Web Vitals (p75, last 7 days) and API error rates.</p>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Health</h1>
+            <AdminRangeFilter />
+        </div>
+        <p class="text-content-secondary text-sm -mt-4 capitalize">Core Web Vitals (p75, {{ rangeLabelLong(range) }}) and API error rates.</p>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div v-for="metric in ['LCP', 'CLS', 'INP', 'FCP', 'TTFB']" :key="metric"
@@ -97,7 +107,7 @@ function displayValue(metric: string, value: number) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Top API errors — last 7 days</h2>
+                <h2 class="card-title text-base capitalize">Top API errors — {{ rangeLabelLong(range) }}</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th>Status</th><th class="text-right">Count</th></tr></thead>

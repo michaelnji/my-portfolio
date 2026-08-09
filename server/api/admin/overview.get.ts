@@ -20,16 +20,21 @@ interface TopPageRow {
 
 export default defineEventHandler(async (event) => {
     try {
+        const range = parseRange(getQuery(event).range)
+        const { interval, bucket } = rangeConfig(range)
         const db = getDb()
 
-        const totalsFor = (interval: string) =>
+        // Live now / Today / 7d / 30d are fixed reference points, independent
+        // of the selected range — only the chart and top-pages list below
+        // follow it.
+        const totalsFor = (fixedInterval: string) =>
             sql<PeriodTotals>`
                 SELECT
                     COUNT(*)::text AS pageviews,
                     COUNT(DISTINCT anon_id)::text AS visitors,
                     AVG(duration_seconds)::text AS avg_duration
                 FROM page_views
-                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
+                WHERE created_at >= now() - ${sql.raw(`interval '${fixedInterval}'`)}
             `.execute(db)
 
         const [today, last7d, last30d, live, daily, topPages] = await Promise.all([
@@ -43,18 +48,18 @@ export default defineEventHandler(async (event) => {
             `.execute(db),
             sql<DailyRow>`
                 SELECT
-                    date_trunc('day', created_at) AS day,
+                    date_trunc(${sql.raw(`'${bucket}'`)}, created_at) AS day,
                     COUNT(*)::text AS views,
                     COUNT(DISTINCT anon_id)::text AS visitors
                 FROM page_views
-                WHERE created_at >= now() - interval '30 days'
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
                 GROUP BY day
                 ORDER BY day ASC
             `.execute(db),
             sql<TopPageRow>`
                 SELECT path, COUNT(*)::text AS views
                 FROM page_views
-                WHERE created_at >= now() - interval '7 days'
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
                 GROUP BY path
                 ORDER BY views DESC
                 LIMIT 10

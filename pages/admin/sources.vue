@@ -13,14 +13,21 @@ interface SourcesData {
 
 const data = ref<SourcesData | null>(null)
 const loading = ref(true)
+const { range } = useAdminRange()
 
-onMounted(async () => {
+async function load() {
     try {
-        const res = await $fetch<{ data: SourcesData }>('/api/admin/sources')
+        const res = await $fetch<{ data: SourcesData }>('/api/admin/sources', { query: { range: range.value } })
         data.value = res.data
     } finally {
         loading.value = false
     }
+}
+
+onMounted(load)
+watch(range, () => {
+    loading.value = true
+    load()
 })
 
 const referrerChartData = computed(() => (data.value?.referrers ?? []).map((r) => ({ key: r.key ?? 'Direct', count: Number(r.count) })))
@@ -34,8 +41,11 @@ function fmt(n: string | number | undefined) {
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Sources</h1>
-        <p class="text-content-secondary text-sm -mt-4">Last 30 days.</p>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Sources</h1>
+            <AdminRangeFilter />
+        </div>
+        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}.</p>
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">

@@ -15,6 +15,8 @@ interface ErrorRow {
 
 export default defineEventHandler(async (event) => {
     try {
+        const { interval } = rangeConfig(parseRange(getQuery(event).range))
+        const window = sql.raw(`interval '${interval}'`)
         const db = getDb()
 
         const [vitals, errors, errorsToday] = await Promise.all([
@@ -24,17 +26,19 @@ export default defineEventHandler(async (event) => {
                     percentile_cont(0.75) WITHIN GROUP (ORDER BY value)::text AS p75,
                     COUNT(*)::text AS samples
                 FROM web_vitals
-                WHERE created_at >= now() - interval '7 days'
+                WHERE created_at >= now() - ${window}
                 GROUP BY metric
             `.execute(db),
             sql<ErrorRow>`
                 SELECT path, status, COUNT(*)::text AS count
                 FROM api_errors
-                WHERE created_at >= now() - interval '7 days'
+                WHERE created_at >= now() - ${window}
                 GROUP BY path, status
                 ORDER BY count DESC
                 LIMIT 20
             `.execute(db),
+            // Always "today" regardless of the selected range — a pulse
+            // indicator, not a historical figure.
             sql<{ count: string }>`
                 SELECT COUNT(*)::text AS count
                 FROM api_errors

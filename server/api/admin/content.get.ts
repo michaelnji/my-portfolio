@@ -14,8 +14,12 @@ interface TopPageRow {
 
 export default defineEventHandler(async (event) => {
     try {
+        const { interval } = rangeConfig(parseRange(getQuery(event).range))
         const db = getDb()
 
+        // Blog posts stay lifetime totals — the stats table has no
+        // per-reaction timestamp to filter by. Games and top-pages come from
+        // timestamped tables and do follow the selected range.
         const [posts, games, topPages] = await Promise.all([
             db.selectFrom('stats').selectAll().orderBy('views', 'desc').execute(),
             sql<GameRow>`
@@ -24,14 +28,16 @@ export default defineEventHandler(async (event) => {
                     COUNT(*) FILTER (WHERE type = 'game_play')::text AS plays,
                     COUNT(*) FILTER (WHERE type = 'game_complete')::text AS completions
                 FROM events
-                WHERE type IN ('game_play', 'game_complete') AND payload->>'gameId' IS NOT NULL
+                WHERE type IN ('game_play', 'game_complete')
+                    AND payload->>'gameId' IS NOT NULL
+                    AND created_at >= now() - ${sql.raw(`interval '${interval}'`)}
                 GROUP BY game_id
                 ORDER BY plays DESC
             `.execute(db),
             sql<TopPageRow>`
                 SELECT path, COUNT(*)::text AS views
                 FROM page_views
-                WHERE created_at >= now() - interval '30 days'
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
                 GROUP BY path
                 ORDER BY views DESC
                 LIMIT 30

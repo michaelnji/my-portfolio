@@ -21,6 +21,7 @@ interface EventsData {
 const data = ref<EventsData | null>(null)
 const loading = ref(true)
 const typeFilter = ref('')
+const { range } = useAdminRange()
 
 const TYPES = ['outbound_click', 'game_play', 'game_complete', 'form_submit', 'not_found', 'js_error']
 
@@ -28,7 +29,7 @@ async function load() {
     loading.value = true
     try {
         const res = await $fetch<{ data: EventsData }>('/api/admin/events', {
-            query: typeFilter.value ? { type: typeFilter.value } : {},
+            query: { range: range.value, ...(typeFilter.value ? { type: typeFilter.value } : {}) },
         })
         data.value = res.data
     } finally {
@@ -37,7 +38,7 @@ async function load() {
 }
 
 onMounted(load)
-watch(typeFilter, load)
+watch([typeFilter, range], load)
 
 const chartData = computed(() => (data.value?.countsByType ?? []).map((c) => ({ type: c.type, count: Number(c.count) })))
 const categories = { count: { name: 'Events', color: '#3987e5' } }
@@ -58,8 +59,11 @@ function fmtPayload(payload: unknown) {
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Events</h1>
-        <p class="text-content-secondary text-sm -mt-4">Last 30 days, by type.</p>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Events</h1>
+            <AdminRangeFilter />
+        </div>
+        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}, by type.</p>
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">

@@ -9,6 +9,8 @@ interface BucketRow {
 export default defineEventHandler(async (event) => {
     try {
         const db = getDb()
+        const { interval } = rangeConfig(parseRange(getQuery(event).range))
+        const window = sql.raw(`interval '${interval}'`)
 
         const [referrers, utmSource, utmCampaign] = await Promise.all([
             sql<BucketRow>`
@@ -19,7 +21,7 @@ export default defineEventHandler(async (event) => {
                     END AS key,
                     COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - interval '30 days'
+                WHERE created_at >= now() - ${window}
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20
@@ -27,7 +29,7 @@ export default defineEventHandler(async (event) => {
             sql<BucketRow>`
                 SELECT utm_source AS key, COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - interval '30 days' AND utm_source IS NOT NULL
+                WHERE created_at >= now() - ${window} AND utm_source IS NOT NULL
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20
@@ -35,7 +37,7 @@ export default defineEventHandler(async (event) => {
             sql<BucketRow>`
                 SELECT utm_campaign AS key, COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - interval '30 days' AND utm_campaign IS NOT NULL
+                WHERE created_at >= now() - ${window} AND utm_campaign IS NOT NULL
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20

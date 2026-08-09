@@ -21,17 +21,24 @@ interface ContentData {
 const data = ref<ContentData | null>(null)
 const loading = ref(true)
 const postsStore = usePostsStore()
+const { range } = useAdminRange()
 
-onMounted(async () => {
+async function load() {
     try {
         const [res] = await Promise.all([
-            $fetch<{ data: ContentData }>('/api/admin/content'),
+            $fetch<{ data: ContentData }>('/api/admin/content', { query: { range: range.value } }),
             postsStore.posts?.length ? Promise.resolve() : postsStore.fetchPosts().catch(() => {}),
         ])
         data.value = res.data
     } finally {
         loading.value = false
     }
+}
+
+onMounted(load)
+watch(range, () => {
+    loading.value = true
+    load()
 })
 
 function postTitle(postId: string) {
@@ -49,11 +56,14 @@ function completionRate(row: GameRow) {
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Content</h1>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Content</h1>
+            <AdminRangeFilter />
+        </div>
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Blog posts</h2>
+                <h2 class="card-title text-base">Blog posts <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead>
@@ -85,7 +95,7 @@ function completionRate(row: GameRow) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Games</h2>
+                <h2 class="card-title text-base capitalize">Games — {{ rangeLabelLong(range) }}</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Game</th><th class="text-right">Plays</th><th class="text-right">Completions</th><th class="text-right">Completion rate</th></tr></thead>
@@ -113,7 +123,7 @@ function completionRate(row: GameRow) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">Top pages — last 30 days</h2>
+                <h2 class="card-title text-base capitalize">Top pages — {{ rangeLabelLong(range) }}</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>

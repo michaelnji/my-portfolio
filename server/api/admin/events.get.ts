@@ -6,10 +6,17 @@ export default defineEventHandler(async (event) => {
         const query = getQuery(event)
         const type = typeof query.type === 'string' ? query.type : undefined
         const limit = Math.min(Number(query.limit) || 50, 200)
+        const { interval } = rangeConfig(parseRange(query.range))
+        const window = sql.raw(`interval '${interval}'`)
 
         const db = getDb()
 
-        let rowsQuery = db.selectFrom('events').selectAll().orderBy('created_at', 'desc').limit(limit)
+        let rowsQuery = db
+            .selectFrom('events')
+            .selectAll()
+            .where(sql<boolean>`created_at >= now() - ${window}`)
+            .orderBy('created_at', 'desc')
+            .limit(limit)
         if (type) rowsQuery = rowsQuery.where('type', '=', type)
 
         const [rows, counts] = await Promise.all([
@@ -17,7 +24,7 @@ export default defineEventHandler(async (event) => {
             sql<{ type: string; count: string }>`
                 SELECT type, COUNT(*)::text AS count
                 FROM events
-                WHERE created_at >= now() - interval '30 days'
+                WHERE created_at >= now() - ${window}
                 GROUP BY type
                 ORDER BY count DESC
             `.execute(db),

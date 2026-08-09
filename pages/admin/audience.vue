@@ -14,14 +14,21 @@ interface AudienceData {
 
 const data = ref<AudienceData | null>(null)
 const loading = ref(true)
+const { range } = useAdminRange()
 
-onMounted(async () => {
+async function load() {
     try {
-        const res = await $fetch<{ data: AudienceData }>('/api/admin/audience')
+        const res = await $fetch<{ data: AudienceData }>('/api/admin/audience', { query: { range: range.value } })
         data.value = res.data
     } finally {
         loading.value = false
     }
+}
+
+onMounted(load)
+watch(range, () => {
+    loading.value = true
+    load()
 })
 
 const categories = { count: { name: 'Views', color: '#3987e5' } }
@@ -34,8 +41,11 @@ const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartD
 
 <template>
     <div class="flex flex-col gap-6">
-        <h1 class="text-2xl font-semibold">Audience</h1>
-        <p class="text-content-secondary text-sm -mt-4">Last 30 days, by pageview.</p>
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <h1 class="text-2xl font-semibold">Audience</h1>
+            <AdminRangeFilter />
+        </div>
+        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}, by pageview.</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div v-for="dim in (['device', 'browser', 'os', 'country'] as const)" :key="dim" class="card bg-base-200 border border-base-300">

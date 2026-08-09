@@ -9,7 +9,8 @@ interface BucketRow {
 export default defineEventHandler(async (event) => {
     try {
         const db = getDb()
-        const window = sql.raw(`interval '30 days'`)
+        const { interval } = rangeConfig(parseRange(getQuery(event).range))
+        const window = sql.raw(`interval '${interval}'`)
 
         const byDimension = (column: 'device' | 'browser' | 'os' | 'country') =>
             sql<BucketRow>`
