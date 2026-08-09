@@ -24,6 +24,21 @@ useHead({
 const online = useOnline()
 const postsStore = usePostsStore()
 const categoriesStore = useCategoriesStore()
+
+const route = useRoute()
+const isAdminRoute = computed(() => route.path.startsWith('/admin') && route.path !== '/admin/login')
+const loggingOut = ref(false)
+async function logout() {
+  loggingOut.value = true
+  try {
+    await $fetch('/api/admin/logout', { method: 'POST' })
+    await navigateTo('/admin/login')
+  } catch {
+    toast.error('Failed to log out')
+  } finally {
+    loggingOut.value = false
+  }
+}
 async function retry() {
   try {
     await Promise.all([await postsStore.fetchPosts(),
@@ -86,6 +101,9 @@ onMounted(async () => {
           <Icon name="simple-icons:github" size="18" />
         </NuxtLink>
         <Sound />
+        <button v-if="isAdminRoute" @click="logout" :disabled="loggingOut" class="cursor-pointer text-error" title="Log out">
+          <Icon name="ph:sign-out-duotone" size="19" />
+        </button>
 
       </div>
     </div>
@@ -95,6 +113,6 @@ onMounted(async () => {
 
       </div>
     </NuxtLayout>
-    <BottomBar />
+    <BottomBar v-if="!isAdminRoute" />
   </div>
 </template>

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { toast } from 'vue-sonner';
-
 const route = useRoute()
 
 const links = [
@@ -11,19 +9,6 @@ const links = [
     { to: '/admin/events', label: 'Events', icon: 'ph:cursor-click-duotone' },
     { to: '/admin/health', label: 'Health', icon: 'ph:heartbeat-duotone' },
 ]
-
-const loggingOut = ref(false)
-async function logout() {
-    loggingOut.value = true
-    try {
-        await $fetch('/api/admin/logout', { method: 'POST' })
-        await navigateTo('/admin/login')
-    } catch {
-        toast.error('Failed to log out')
-    } finally {
-        loggingOut.value = false
-    }
-}
 </script>
 
 <template>
@@ -35,10 +20,6 @@ async function logout() {
                     <Icon :name="link.icon" size="18" />
                     {{ link.label }}
                 </NuxtLink>
-                <button class="btn btn-ghost justify-start gap-2 text-error shrink-0" :disabled="loggingOut" @click="logout">
-                    <Icon name="ph:sign-out-duotone" size="18" />
-                    Log out
-                </button>
             </div>
         </aside>
         <main class="flex-1 p-4 md:p-6 max-w-6xl">
