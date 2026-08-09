@@ -75,14 +75,15 @@ const mapPins = computed(() => {
             <div class="card-body">
                 <h2 class="card-title text-base">Visitor map</h2>
                 <div v-if="loading" class="skeleton w-full h-[300px]" />
-                <DottedMap
-                    v-else-if="mapPins.length"
-                    :pins="mapPins"
-                    :map-height="60"
-                    color="#3a3a3d"
-                    background-color="transparent"
-                    :dot-size="0.4"
-                />
+                <div v-else-if="mapPins.length" @wheel.capture.stop>
+                    <DottedMap
+                        :pins="mapPins"
+                        :map-height="60"
+                        color="#3a3a3d"
+                        background-color="transparent"
+                        :dot-size="0.4"
+                    />
+                </div>
                 <p v-else class="text-content-secondary text-sm">No geo data yet.</p>
             </div>
         </div>
