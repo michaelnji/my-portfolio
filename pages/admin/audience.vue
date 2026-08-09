@@ -20,6 +20,7 @@ const { range } = useAdminRange()
 const {
     data,
     isPending: loading,
+    isFetching,
     error,
 } = useQuery({
     queryKey: computed(() => ['admin', 'audience', range.value]),
@@ -43,7 +44,10 @@ const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartD
     <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <h1 class="text-2xl font-semibold">Audience</h1>
-            <AdminRangeFilter />
+            <div class="flex items-center gap-3">
+                <AdminRangeFilter />
+                <AdminSpinner :fetching="isFetching" />
+            </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">By pageview.</p>
 

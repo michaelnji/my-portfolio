@@ -25,6 +25,7 @@ const { range } = useAdminRange()
 const {
     data,
     isPending: loading,
+    isFetching,
     error,
 } = useQuery({
     queryKey: computed(() => ['admin', 'health', range.value]),
@@ -66,7 +67,10 @@ function displayValue(metric: string, value: number) {
     <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <h1 class="text-2xl font-semibold">Health</h1>
-            <AdminRangeFilter />
+            <div class="flex items-center gap-3">
+                <AdminRangeFilter />
+                <AdminSpinner :fetching="isFetching" />
+            </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">Core Web Vitals (p75) and API error rates.</p>
 

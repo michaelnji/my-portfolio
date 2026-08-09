@@ -34,6 +34,7 @@ const { range } = useAdminRange()
 const {
     data,
     isPending: loading,
+    isFetching,
     error,
 } = useQuery({
     queryKey: computed(() => ['admin', 'overview', range.value]),
@@ -83,7 +84,10 @@ function fmtDuration(seconds: string | null | undefined) {
     <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <h1 class="text-2xl font-semibold">Overview</h1>
-            <AdminRangeFilter />
+            <div class="flex items-center gap-3">
+                <AdminRangeFilter />
+                <AdminSpinner :fetching="isFetching" />
+            </div>
         </div>
 
         <div class="stats stats-vertical sm:stats-horizontal shadow bg-base-200 border border-base-300 w-full">

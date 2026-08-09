@@ -29,6 +29,7 @@ const TYPES = ['outbound_click', 'game_play', 'game_complete', 'form_submit', 'n
 const {
     data,
     isPending: loading,
+    isFetching,
     error,
 } = useQuery({
     queryKey: computed(() => ['admin', 'events', range.value, typeFilter.value]),
@@ -63,7 +64,10 @@ function fmtPayload(payload: unknown) {
     <div class="flex flex-col gap-6">
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <h1 class="text-2xl font-semibold">Events</h1>
-            <AdminRangeFilter />
+            <div class="flex items-center gap-3">
+                <AdminRangeFilter />
+                <AdminSpinner :fetching="isFetching" />
+            </div>
         </div>
         <p class="text-content-secondary text-sm -mt-4">By type.</p>
 
