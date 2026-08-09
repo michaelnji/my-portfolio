@@ -122,7 +122,7 @@ function fmtDuration(seconds: string | null | undefined) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base capitalize">Traffic — {{ rangeLabelLong(range) }}</h2>
+                <h2 class="card-title text-base">Traffic</h2>
                 <div v-if="loading" class="skeleton w-full h-[260px]" />
                 <LineChart
                     v-else-if="chartData.length"
@@ -137,7 +137,7 @@ function fmtDuration(seconds: string | null | undefined) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base capitalize">Top pages — {{ rangeLabelLong(range) }}</h2>
+                <h2 class="card-title text-base">Top pages</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>

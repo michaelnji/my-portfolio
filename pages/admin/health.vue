@@ -68,7 +68,7 @@ function displayValue(metric: string, value: number) {
             <h1 class="text-2xl font-semibold">Health</h1>
             <AdminRangeFilter />
         </div>
-        <p class="text-content-secondary text-sm -mt-4 capitalize">Core Web Vitals (p75, {{ rangeLabelLong(range) }}) and API error rates.</p>
+        <p class="text-content-secondary text-sm -mt-4">Core Web Vitals (p75) and API error rates.</p>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div v-for="metric in ['LCP', 'CLS', 'INP', 'FCP', 'TTFB']" :key="metric"
@@ -107,7 +107,7 @@ function displayValue(metric: string, value: number) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base capitalize">Top API errors — {{ rangeLabelLong(range) }}</h2>
+                <h2 class="card-title text-base">Top API errors</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th>Status</th><th class="text-right">Count</th></tr></thead>

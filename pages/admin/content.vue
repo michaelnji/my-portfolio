@@ -95,7 +95,7 @@ function completionRate(row: GameRow) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base capitalize">Games — {{ rangeLabelLong(range) }}</h2>
+                <h2 class="card-title text-base">Games</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Game</th><th class="text-right">Plays</th><th class="text-right">Completions</th><th class="text-right">Completion rate</th></tr></thead>
@@ -123,7 +123,7 @@ function completionRate(row: GameRow) {
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base capitalize">Top pages — {{ rangeLabelLong(range) }}</h2>
+                <h2 class="card-title text-base">Top pages</h2>
                 <div class="overflow-x-auto">
                     <table class="table table-sm">
                         <thead><tr><th>Path</th><th class="text-right">Views</th></tr></thead>

@@ -35,15 +35,3 @@ export function useAdminRange() {
 export function isHourlyRange(range: AdminRangeValue): boolean {
     return range === '24h' || range === '3d'
 }
-
-const LONG_LABELS: Record<AdminRangeValue, string> = {
-    '24h': 'last 24 hours',
-    '3d': 'last 3 days',
-    '7d': 'last 7 days',
-    '30d': 'last 30 days',
-    '90d': 'last 90 days',
-}
-
-export function rangeLabelLong(range: AdminRangeValue): string {
-    return LONG_LABELS[range]
-}

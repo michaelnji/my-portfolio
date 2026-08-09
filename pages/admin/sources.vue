@@ -45,8 +45,6 @@ function fmt(n: string | number | undefined) {
             <h1 class="text-2xl font-semibold">Sources</h1>
             <AdminRangeFilter />
         </div>
-        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}.</p>
-
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
                 <h2 class="card-title text-base">Top referrers</h2>

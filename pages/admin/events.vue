@@ -65,7 +65,7 @@ function fmtPayload(payload: unknown) {
             <h1 class="text-2xl font-semibold">Events</h1>
             <AdminRangeFilter />
         </div>
-        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}, by type.</p>
+        <p class="text-content-secondary text-sm -mt-4">By type.</p>
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">

@@ -45,7 +45,7 @@ const xFormatterFor = (rows: BucketRow[] | undefined) => (i: number) => toChartD
             <h1 class="text-2xl font-semibold">Audience</h1>
             <AdminRangeFilter />
         </div>
-        <p class="text-content-secondary text-sm -mt-4 capitalize">{{ rangeLabelLong(range) }}, by pageview.</p>
+        <p class="text-content-secondary text-sm -mt-4">By pageview.</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div v-for="dim in (['device', 'browser', 'os', 'country'] as const)" :key="dim" class="card bg-base-200 border border-base-300">
