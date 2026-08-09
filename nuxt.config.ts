@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     // '@unocss/nuxt',
     '@formkit/auto-animate/nuxt',
     '@nuxtjs/sanity',
-    // '@pinia/colada-nuxt',
     'nuxt-charts',
   ],
   app: {

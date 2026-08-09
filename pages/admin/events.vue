@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useQuery } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 interface EventRow {
@@ -18,27 +21,26 @@ interface EventsData {
     countsByType: CountRow[]
 }
 
-const data = ref<EventsData | null>(null)
-const loading = ref(true)
 const typeFilter = ref('')
 const { range } = useAdminRange()
 
 const TYPES = ['outbound_click', 'game_play', 'game_complete', 'form_submit', 'not_found', 'js_error']
 
-async function load() {
-    loading.value = true
-    try {
-        const res = await $fetch<{ data: EventsData }>('/api/admin/events', {
+const {
+    data,
+    isPending: loading,
+    error,
+} = useQuery({
+    queryKey: computed(() => ['admin', 'events', range.value, typeFilter.value]),
+    queryFn: () =>
+        $fetch<{ data: EventsData }>('/api/admin/events', {
             query: { range: range.value, ...(typeFilter.value ? { type: typeFilter.value } : {}) },
-        })
-        data.value = res.data
-    } finally {
-        loading.value = false
-    }
-}
+        }).then((r) => r.data),
+})
 
-onMounted(load)
-watch([typeFilter, range], load)
+watch(error, (e) => {
+    if (e) toast.error('Failed to load events')
+})
 
 const chartData = computed(() => (data.value?.countsByType ?? []).map((c) => ({ type: c.type, count: Number(c.count) })))
 const categories = { count: { name: 'Events', color: '#3987e5' } }

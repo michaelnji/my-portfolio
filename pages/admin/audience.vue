@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useQuery } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 interface BucketRow {
@@ -12,23 +15,20 @@ interface AudienceData {
     country: BucketRow[]
 }
 
-const data = ref<AudienceData | null>(null)
-const loading = ref(true)
 const { range } = useAdminRange()
 
-async function load() {
-    try {
-        const res = await $fetch<{ data: AudienceData }>('/api/admin/audience', { query: { range: range.value } })
-        data.value = res.data
-    } finally {
-        loading.value = false
-    }
-}
+const {
+    data,
+    isPending: loading,
+    error,
+} = useQuery({
+    queryKey: computed(() => ['admin', 'audience', range.value]),
+    queryFn: () =>
+        $fetch<{ data: AudienceData }>('/api/admin/audience', { query: { range: range.value } }).then((r) => r.data),
+})
 
-onMounted(load)
-watch(range, () => {
-    loading.value = true
-    load()
+watch(error, (e) => {
+    if (e) toast.error('Failed to load audience data')
 })
 
 const categories = { count: { name: 'Views', color: '#3987e5' } }

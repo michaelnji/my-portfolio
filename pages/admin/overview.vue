@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useQuery } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 interface Totals {
@@ -19,29 +22,34 @@ interface OverviewData {
     today: Totals
     last7d: Totals
     last30d: Totals
-    liveNow: number
     daily: DailyRow[]
     topPages: TopPageRow[]
 }
-
-const data = ref<OverviewData | null>(null)
-const loading = ref(true)
-const { range } = useAdminRange()
-
-async function load() {
-    try {
-        const res = await $fetch<{ data: OverviewData }>('/api/admin/overview', { query: { range: range.value } })
-        data.value = res.data
-    } finally {
-        loading.value = false
-    }
+interface LiveData {
+    liveNow: number
 }
 
-onMounted(load)
-useIntervalFn(load, 15000)
-watch(range, () => {
-    loading.value = true
-    load()
+const { range } = useAdminRange()
+
+const {
+    data,
+    isPending: loading,
+    error,
+} = useQuery({
+    queryKey: computed(() => ['admin', 'overview', range.value]),
+    queryFn: () =>
+        $fetch<{ data: OverviewData }>('/api/admin/overview', { query: { range: range.value } }).then((r) => r.data),
+})
+
+const { data: liveData, isPending: liveLoading, refetch: refetchLive } = useQuery({
+    queryKey: ['admin', 'live'],
+    queryFn: () => $fetch<{ data: LiveData }>('/api/admin/live').then((r) => r.data),
+    staleTime: 10_000,
+})
+useIntervalFn(() => refetchLive(), 15000)
+
+watch(error, (e) => {
+    if (e) toast.error('Failed to load overview data')
 })
 
 const categories = {
@@ -82,8 +90,8 @@ function fmtDuration(seconds: string | null | undefined) {
             <div class="stat">
                 <div class="stat-title">Live now</div>
                 <div class="stat-value text-primary">
-                    <AdminSkel v-if="loading" w="w-10" h="h-9" />
-                    <template v-else>{{ data?.liveNow ?? 0 }}</template>
+                    <AdminSkel v-if="liveLoading" w="w-10" h="h-9" />
+                    <template v-else>{{ liveData?.liveNow ?? 0 }}</template>
                 </div>
             </div>
             <div class="stat">

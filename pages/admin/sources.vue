@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useQuery } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 interface BucketRow {
@@ -11,23 +14,20 @@ interface SourcesData {
     utmCampaign: BucketRow[]
 }
 
-const data = ref<SourcesData | null>(null)
-const loading = ref(true)
 const { range } = useAdminRange()
 
-async function load() {
-    try {
-        const res = await $fetch<{ data: SourcesData }>('/api/admin/sources', { query: { range: range.value } })
-        data.value = res.data
-    } finally {
-        loading.value = false
-    }
-}
+const {
+    data,
+    isPending: loading,
+    error,
+} = useQuery({
+    queryKey: computed(() => ['admin', 'sources', range.value]),
+    queryFn: () =>
+        $fetch<{ data: SourcesData }>('/api/admin/sources', { query: { range: range.value } }).then((r) => r.data),
+})
 
-onMounted(load)
-watch(range, () => {
-    loading.value = true
-    load()
+watch(error, (e) => {
+    if (e) toast.error('Failed to load source data')
 })
 
 const referrerChartData = computed(() => (data.value?.referrers ?? []).map((r) => ({ key: r.key ?? 'Direct', count: Number(r.count) })))

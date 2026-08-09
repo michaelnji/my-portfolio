@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useQuery } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
 import type { PostStat } from '~/server/types/index.types'
 
 definePageMeta({ layout: 'admin', middleware: 'admin' })
@@ -18,27 +20,25 @@ interface ContentData {
     topPages: TopPageRow[]
 }
 
-const data = ref<ContentData | null>(null)
-const loading = ref(true)
 const postsStore = usePostsStore()
 const { range } = useAdminRange()
 
-async function load() {
-    try {
-        const [res] = await Promise.all([
-            $fetch<{ data: ContentData }>('/api/admin/content', { query: { range: range.value } }),
-            postsStore.posts?.length ? Promise.resolve() : postsStore.fetchPosts().catch(() => {}),
-        ])
-        data.value = res.data
-    } finally {
-        loading.value = false
-    }
-}
+onMounted(() => {
+    if (!postsStore.posts?.length) postsStore.fetchPosts().catch(() => {})
+})
 
-onMounted(load)
-watch(range, () => {
-    loading.value = true
-    load()
+const {
+    data,
+    isPending: loading,
+    error,
+} = useQuery({
+    queryKey: computed(() => ['admin', 'content', range.value]),
+    queryFn: () =>
+        $fetch<{ data: ContentData }>('/api/admin/content', { query: { range: range.value } }).then((r) => r.data),
+})
+
+watch(error, (e) => {
+    if (e) toast.error('Failed to load content data')
 })
 
 function postTitle(postId: string) {

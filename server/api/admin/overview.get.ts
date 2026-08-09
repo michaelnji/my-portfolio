@@ -24,9 +24,9 @@ export default defineEventHandler(async (event) => {
         const { interval, bucket } = rangeConfig(range)
         const db = getDb()
 
-        // Live now / Today / 7d / 30d are fixed reference points, independent
-        // of the selected range — only the chart and top-pages list below
-        // follow it.
+        // Today / 7d / 30d are fixed reference points, independent of the
+        // selected range — only the chart and top-pages list below follow
+        // it. Live now moved to a dedicated /api/admin/live endpoint.
         const totalsFor = (fixedInterval: string) =>
             sql<PeriodTotals>`
                 SELECT
@@ -37,15 +37,10 @@ export default defineEventHandler(async (event) => {
                 WHERE created_at >= now() - ${sql.raw(`interval '${fixedInterval}'`)}
             `.execute(db)
 
-        const [today, last7d, last30d, live, daily, topPages] = await Promise.all([
+        const [today, last7d, last30d, daily, topPages] = await Promise.all([
             totalsFor('1 day'),
             totalsFor('7 days'),
             totalsFor('30 days'),
-            sql<{ count: string }>`
-                SELECT COUNT(DISTINCT anon_id)::text AS count
-                FROM page_views
-                WHERE created_at >= now() - interval '5 minutes'
-            `.execute(db),
             sql<DailyRow>`
                 SELECT
                     date_trunc(${sql.raw(`'${bucket}'`)}, created_at) AS day,
@@ -70,7 +65,6 @@ export default defineEventHandler(async (event) => {
             today: today.rows[0],
             last7d: last7d.rows[0],
             last30d: last30d.rows[0],
-            liveNow: Number(live.rows[0]?.count ?? 0),
             daily: daily.rows,
             topPages: topPages.rows,
         })
