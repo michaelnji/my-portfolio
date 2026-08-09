@@ -47,7 +47,7 @@ const xFormatter = (i: number) => {
 }
 
 function fmtTime(iso: string) {
-    return new Date(iso).toLocaleString()
+    return formatAdminDateTime(iso)
 }
 function shortHash(hash: string) {
     return `${hash.slice(0, 12)}…`

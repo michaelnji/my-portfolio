@@ -68,7 +68,7 @@ const kindCategories = { count: { name: 'Clicks', color: '#d95926' } }
 const kindXFormatter = (i: number) => kindChartData.value[i]?.kind ?? ''
 
 function fmtTime(iso: string) {
-    return new Date(iso).toLocaleString()
+    return formatAdminDateTime(iso)
 }
 function fmtPayload(payload: unknown) {
     if (!payload) return ''
