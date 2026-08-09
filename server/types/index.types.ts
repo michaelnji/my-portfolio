@@ -74,6 +74,7 @@ export interface PageViewTable {
     timezone: string | null;
     duration_seconds: number | null;
     scroll_depth: number | null;
+    is_bot: Generated<boolean>;
     created_at: Generated<string>;
 }
 
@@ -83,7 +84,11 @@ export type EventType =
     | 'game_complete'
     | 'form_submit'
     | 'not_found'
-    | 'js_error';
+    | 'js_error'
+    | 'project_tab'
+    | 'sound_toggle'
+    | 'copy_code'
+    | 'rate_limited';
 
 export interface EventTable {
     id: Generated<number>;
@@ -113,6 +118,15 @@ export interface ApiErrorTable {
     created_at: Generated<string>;
 }
 
+export interface ApiRequestTable {
+    id: Generated<number>;
+    path: string | null;
+    method: string | null;
+    status: number | null;
+    duration_ms: number | null;
+    created_at: Generated<string>;
+}
+
 export interface Database {
     stats: StatTable;
     rate_limits: RateLimitTable;
@@ -122,6 +136,7 @@ export interface Database {
     events: EventTable;
     web_vitals: WebVitalTable;
     api_errors: ApiErrorTable;
+    api_requests: ApiRequestTable;
 }
 
 export type PostStat = Selectable<StatTable>;

@@ -106,7 +106,15 @@ export default defineNuxtPlugin(() => {
         if (document.visibilityState === 'hidden') flushCurrentPageview()
     })
 
-    // Outbound link clicks.
+    // Outbound link clicks, classified so contact-intent clicks (email,
+    // socials) are distinguishable from arbitrary outbound links.
+    function classifyOutboundKind(href: string, hostname: string): string {
+        if (href.startsWith('mailto:')) return 'email'
+        if (hostname.includes('github.com')) return 'github'
+        if (hostname.includes('wa.link') || hostname.includes('whatsapp')) return 'whatsapp'
+        if (hostname.includes('discord')) return 'discord'
+        return 'other'
+    }
     document.addEventListener(
         'click',
         (e) => {
@@ -119,7 +127,10 @@ export default defineNuxtPlugin(() => {
                 return
             }
             if (target.hostname === window.location.hostname) return
-            trackEvent('outbound_click', { href: target.href })
+            trackEvent('outbound_click', {
+                href: target.href,
+                kind: classifyOutboundKind(target.href, target.hostname),
+            })
         },
         true
     )

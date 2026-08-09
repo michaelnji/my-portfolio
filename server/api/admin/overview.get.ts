@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
                     COUNT(DISTINCT anon_id)::text AS visitors,
                     AVG(duration_seconds)::text AS avg_duration
                 FROM page_views
-                WHERE created_at >= now() - ${sql.raw(`interval '${fixedInterval}'`)}
+                WHERE created_at >= now() - ${sql.raw(`interval '${fixedInterval}'`)} AND is_bot = false
             `.execute(db)
 
         const [today, last7d, last30d, daily, topPages] = await Promise.all([
@@ -47,14 +47,14 @@ export default defineEventHandler(async (event) => {
                     COUNT(*)::text AS views,
                     COUNT(DISTINCT anon_id)::text AS visitors
                 FROM page_views
-                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)} AND is_bot = false
                 GROUP BY day
                 ORDER BY day ASC
             `.execute(db),
             sql<TopPageRow>`
                 SELECT path, COUNT(*)::text AS views
                 FROM page_views
-                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)} AND is_bot = false
                 GROUP BY path
                 ORDER BY views DESC
                 LIMIT 10

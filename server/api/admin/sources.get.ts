@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
                     END AS key,
                     COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - ${window}
+                WHERE created_at >= now() - ${window} AND is_bot = false
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
             sql<BucketRow>`
                 SELECT utm_source AS key, COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - ${window} AND utm_source IS NOT NULL
+                WHERE created_at >= now() - ${window} AND is_bot = false AND utm_source IS NOT NULL
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
             sql<BucketRow>`
                 SELECT utm_campaign AS key, COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - ${window} AND utm_campaign IS NOT NULL
+                WHERE created_at >= now() - ${window} AND is_bot = false AND utm_campaign IS NOT NULL
                 GROUP BY key
                 ORDER BY count DESC
                 LIMIT 20

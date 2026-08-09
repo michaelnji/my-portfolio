@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
             sql<BucketRow>`
                 SELECT ${sql.raw(column)} AS key, COUNT(*)::text AS count
                 FROM page_views
-                WHERE created_at >= now() - ${window}
+                WHERE created_at >= now() - ${window} AND is_bot = false
                 GROUP BY ${sql.raw(column)}
                 ORDER BY count DESC
                 LIMIT 15

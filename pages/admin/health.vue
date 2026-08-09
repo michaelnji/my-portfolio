@@ -14,10 +14,28 @@ interface ErrorRow {
     status: number | null
     count: string
 }
+interface LatencyStats {
+    p50: string | null
+    p95: string | null
+    samples: string
+}
+interface SlowPathRow {
+    path: string | null
+    p95: string | null
+    samples: string
+}
+interface BotPathRow {
+    path: string
+    count: string
+}
 interface HealthData {
     vitals: VitalRow[]
     errors: ErrorRow[]
     errorsToday: number
+    latency: LatencyStats
+    slowestPaths: SlowPathRow[]
+    botCount: number
+    botPaths: BotPathRow[]
 }
 
 const { range } = useAdminRange()
@@ -99,12 +117,88 @@ function displayValue(metric: string, value: number) {
             </div>
         </div>
 
-        <div class="stats shadow bg-base-200 border border-base-300 w-full">
+        <div class="stats stats-vertical sm:stats-horizontal shadow bg-base-200 border border-base-300 w-full">
             <div class="stat">
                 <div class="stat-title">API errors today</div>
                 <div class="stat-value" :class="data && data.errorsToday > 0 ? 'text-error' : ''">
                     <AdminSkel v-if="loading" w="w-10" h="h-9" />
                     <template v-else>{{ data?.errorsToday ?? 0 }}</template>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-title">API latency p50</div>
+                <div class="stat-value">
+                    <AdminSkel v-if="loading" w="w-16" h="h-9" />
+                    <template v-else>{{ data?.latency.p50 ? `${Math.round(Number(data.latency.p50))}ms` : '—' }}</template>
+                </div>
+                <div class="stat-desc mt-2">
+                    <AdminSkel v-if="loading" w="w-20" h="h-3" />
+                    <template v-else>{{ data?.latency.samples ?? 0 }} requests</template>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-title">API latency p95</div>
+                <div class="stat-value">
+                    <AdminSkel v-if="loading" w="w-16" h="h-9" />
+                    <template v-else>{{ data?.latency.p95 ? `${Math.round(Number(data.latency.p95))}ms` : '—' }}</template>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-title">Bot traffic</div>
+                <div class="stat-value">
+                    <AdminSkel v-if="loading" w="w-14" h="h-9" />
+                    <template v-else>{{ data?.botCount ?? 0 }}</template>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="card bg-base-200 border border-base-300">
+                <div class="card-body">
+                    <h2 class="card-title text-base">Slowest routes (p95)</h2>
+                    <div class="overflow-x-auto">
+                        <table class="table table-sm">
+                            <thead><tr><th>Path</th><th class="text-right">p95</th><th class="text-right">Samples</th></tr></thead>
+                            <tbody v-if="loading">
+                                <tr v-for="i in 6" :key="i">
+                                    <td><AdminSkel w="w-32" h="h-3" /></td>
+                                    <td class="text-right"><AdminSkel w="w-10" h="h-3" class="ml-auto" /></td>
+                                    <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
+                                <tr v-for="(row, i) in data?.slowestPaths ?? []" :key="i">
+                                    <td class="font-mono text-xs">{{ row.path }}</td>
+                                    <td class="text-right">{{ row.p95 ? `${Math.round(Number(row.p95))}ms` : '—' }}</td>
+                                    <td class="text-right">{{ row.samples }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-if="!loading && !data?.slowestPaths?.length" class="text-content-secondary text-sm py-4">No data yet.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-200 border border-base-300">
+                <div class="card-body">
+                    <h2 class="card-title text-base">Top bot paths</h2>
+                    <div class="overflow-x-auto">
+                        <table class="table table-sm">
+                            <thead><tr><th>Path</th><th class="text-right">Hits</th></tr></thead>
+                            <tbody v-if="loading">
+                                <tr v-for="i in 6" :key="i">
+                                    <td><AdminSkel w="w-32" h="h-3" /></td>
+                                    <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
+                                <tr v-for="row in data?.botPaths ?? []" :key="row.path">
+                                    <td class="font-mono text-xs">{{ row.path }}</td>
+                                    <td class="text-right">{{ row.count }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-if="!loading && !data?.botPaths?.length" class="text-content-secondary text-sm py-4">No bot traffic recorded.</p>
+                    </div>
                 </div>
             </div>
         </div>

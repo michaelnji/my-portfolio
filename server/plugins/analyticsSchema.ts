@@ -64,6 +64,11 @@ export default defineNitroPlugin(async () => {
         await sql`
             CREATE INDEX IF NOT EXISTS page_views_anon_id_idx ON page_views (anon_id)
         `.execute(db)
+        // Table predates bot tracking — ALTER (not CREATE TABLE IF NOT EXISTS,
+        // which no-ops on an existing table) so it lands on production data too.
+        await sql`
+            ALTER TABLE page_views ADD COLUMN IF NOT EXISTS is_bot BOOLEAN NOT NULL DEFAULT false
+        `.execute(db)
 
         await sql`
             CREATE TABLE IF NOT EXISTS events (
@@ -105,6 +110,25 @@ export default defineNitroPlugin(async () => {
         `.execute(db)
         await sql`
             CREATE INDEX IF NOT EXISTS api_errors_created_at_idx ON api_errors (created_at)
+        `.execute(db)
+
+        // Superset of api_errors — every /api/** call, not just 5xx ones, so
+        // the Health page can show latency percentiles, not just error rates.
+        await sql`
+            CREATE TABLE IF NOT EXISTS api_requests (
+                id SERIAL PRIMARY KEY,
+                path VARCHAR(500),
+                method VARCHAR(10),
+                status INTEGER,
+                duration_ms INTEGER,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+            )
+        `.execute(db)
+        await sql`
+            CREATE INDEX IF NOT EXISTS api_requests_created_at_idx ON api_requests (created_at)
+        `.execute(db)
+        await sql`
+            CREATE INDEX IF NOT EXISTS api_requests_path_created_at_idx ON api_requests (path, created_at)
         `.execute(db)
     } catch (error) {
         console.error('Failed to ensure analytics schema:', error)

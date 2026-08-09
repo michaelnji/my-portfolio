@@ -7,6 +7,10 @@ const ALLOWED_TYPES = new Set([
     'form_submit',
     'not_found',
     'js_error',
+    'project_tab',
+    'sound_toggle',
+    'copy_code',
+    'rate_limited',
 ])
 
 interface EventBody {

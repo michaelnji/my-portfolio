@@ -3,11 +3,13 @@ const route = useRoute()
 
 const links = [
     { to: '/admin/overview', label: 'Overview', icon: 'ph:gauge-duotone' },
+    { to: '/admin/visitors', label: 'Visitors', icon: 'ph:path-duotone' },
     { to: '/admin/content', label: 'Content', icon: 'ph:article-duotone' },
     { to: '/admin/audience', label: 'Audience', icon: 'ph:users-three-duotone' },
     { to: '/admin/sources', label: 'Sources', icon: 'ph:arrows-in-line-horizontal' },
     { to: '/admin/events', label: 'Events', icon: 'ph:cursor-click-duotone' },
     { to: '/admin/health', label: 'Health', icon: 'ph:heartbeat-duotone' },
+    { to: '/admin/security', label: 'Security', icon: 'ph:shield-check-duotone' },
 ]
 </script>
 

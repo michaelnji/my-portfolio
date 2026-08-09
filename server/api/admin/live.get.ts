@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
         const live = await sql<{ count: string }>`
             SELECT COUNT(DISTINCT anon_id)::text AS count
             FROM page_views
-            WHERE created_at >= now() - interval '5 minutes'
+            WHERE created_at >= now() - interval '5 minutes' AND is_bot = false
         `.execute(db)
 
         return sendServerResponse(200, 'success', {

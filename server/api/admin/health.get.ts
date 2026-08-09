@@ -13,13 +13,30 @@ interface ErrorRow {
     count: string
 }
 
+interface LatencyRow {
+    p50: string | null
+    p95: string | null
+    samples: string
+}
+
+interface SlowPathRow {
+    path: string | null
+    p95: string | null
+    samples: string
+}
+
+interface BotPathRow {
+    path: string
+    count: string
+}
+
 export default defineEventHandler(async (event) => {
     try {
         const { interval } = rangeConfig(parseRange(getQuery(event).range))
         const window = sql.raw(`interval '${interval}'`)
         const db = getDb()
 
-        const [vitals, errors, errorsToday] = await Promise.all([
+        const [vitals, errors, errorsToday, latency, slowestPaths, botCount, botPaths] = await Promise.all([
             sql<VitalRow>`
                 SELECT
                     metric,
@@ -44,12 +61,48 @@ export default defineEventHandler(async (event) => {
                 FROM api_errors
                 WHERE created_at >= date_trunc('day', now())
             `.execute(db),
+            sql<LatencyRow>`
+                SELECT
+                    percentile_cont(0.5) WITHIN GROUP (ORDER BY duration_ms)::text AS p50,
+                    percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms)::text AS p95,
+                    COUNT(*)::text AS samples
+                FROM api_requests
+                WHERE created_at >= now() - ${window} AND duration_ms IS NOT NULL
+            `.execute(db),
+            sql<SlowPathRow>`
+                SELECT
+                    path,
+                    percentile_cont(0.95) WITHIN GROUP (ORDER BY duration_ms)::text AS p95,
+                    COUNT(*)::text AS samples
+                FROM api_requests
+                WHERE created_at >= now() - ${window} AND duration_ms IS NOT NULL
+                GROUP BY path
+                ORDER BY p95 DESC
+                LIMIT 10
+            `.execute(db),
+            sql<{ count: string }>`
+                SELECT COUNT(*)::text AS count
+                FROM page_views
+                WHERE created_at >= now() - ${window} AND is_bot = true
+            `.execute(db),
+            sql<BotPathRow>`
+                SELECT path, COUNT(*)::text AS count
+                FROM page_views
+                WHERE created_at >= now() - ${window} AND is_bot = true
+                GROUP BY path
+                ORDER BY count DESC
+                LIMIT 10
+            `.execute(db),
         ])
 
         return sendServerResponse(200, 'success', {
             vitals: vitals.rows,
             errors: errors.rows,
             errorsToday: Number(errorsToday.rows[0]?.count ?? 0),
+            latency: latency.rows[0] ?? { p50: null, p95: null, samples: '0' },
+            slowestPaths: slowestPaths.rows,
+            botCount: Number(botCount.rows[0]?.count ?? 0),
+            botPaths: botPaths.rows,
         })
     } catch (error) {
         if (error instanceof Error) {

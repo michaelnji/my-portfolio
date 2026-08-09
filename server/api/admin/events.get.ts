@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
             .limit(limit)
         if (type) rowsQuery = rowsQuery.where('type', '=', type)
 
-        const [rows, counts] = await Promise.all([
+        const [rows, counts, clicksByKind] = await Promise.all([
             rowsQuery.execute(),
             sql<{ type: string; count: string }>`
                 SELECT type, COUNT(*)::text AS count
@@ -28,11 +28,19 @@ export default defineEventHandler(async (event) => {
                 GROUP BY type
                 ORDER BY count DESC
             `.execute(db),
+            sql<{ kind: string; count: string }>`
+                SELECT COALESCE(payload->>'kind', 'other') AS kind, COUNT(*)::text AS count
+                FROM events
+                WHERE type = 'outbound_click' AND created_at >= now() - ${window}
+                GROUP BY kind
+                ORDER BY count DESC
+            `.execute(db),
         ])
 
         return sendServerResponse(200, 'success', {
             events: rows,
             countsByType: counts.rows,
+            clicksByKind: clicksByKind.rows,
         })
     } catch (error) {
         if (error instanceof Error) {

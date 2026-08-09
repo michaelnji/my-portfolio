@@ -49,6 +49,11 @@ definePageMeta({
     layout: 'other'
 })
 const activeTab = ref<"featured" | "personal" | "oss">('featured')
+const trackEvent = useTrackEvent()
+function selectTab(tab: typeof activeTab.value) {
+    activeTab.value = tab
+    trackEvent('project_tab', { tab })
+}
 </script>
 
 <template>
@@ -58,7 +63,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                 <div class="  p-3 rounded-box max-w-xl bg-base-200 w-full  ">
 
                     <div class=" flex gap-4 w-full">
-                        <button @click="activeTab = 'featured'"
+                        <button @click="selectTab('featured')"
                             :class="{ '!bg-base-300 !rounded-box': activeTab === 'featured' }"
                             class="flex w-full cursor-pointer items-center rounded-full justify-center  group transition-all duration-300  p-2 md:p-3 gap-x-2 hover:bg-base-300">
 
@@ -66,7 +71,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                                 :class="{ '!text-primary': activeTab === 'featured' }" />
                             <p class="font-bold text-xs md:text-base">Featured </p>
                         </button>
-                        <button @click="activeTab = 'personal'"
+                        <button @click="selectTab('personal')"
                             :class="{ '!bg-base-300 !rounded-box': activeTab === 'personal' }"
                             class="flex w-full cursor-pointer items-center rounded-full justify-center  group transition-all duration-300  p-2 md:p-3 gap-x-2 hover:bg-base-300">
 
@@ -74,7 +79,7 @@ const activeTab = ref<"featured" | "personal" | "oss">('featured')
                                 :class="{ '!text-primary': activeTab === 'personal' }" />
                             <p class="font-bold text-xs md:text-base">Personal </p>
                         </button>
-                        <button @click="activeTab = 'oss'" :class="{ '!bg-base-300 !rounded-box': activeTab === 'oss' }"
+                        <button @click="selectTab('oss')" :class="{ '!bg-base-300 !rounded-box': activeTab === 'oss' }"
                             class="flex w-full cursor-pointer items-center rounded-full justify-center  group transition-all duration-300  p-2 md:p-3 gap-x-2 hover:bg-base-300">
 
                             <Icon name="ph:git-branch-duotone" size="24"

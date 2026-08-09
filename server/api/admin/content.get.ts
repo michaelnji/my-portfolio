@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
             sql<TopPageRow>`
                 SELECT path, COUNT(*)::text AS views
                 FROM page_views
-                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)}
+                WHERE created_at >= now() - ${sql.raw(`interval '${interval}'`)} AND is_bot = false
                 GROUP BY path
                 ORDER BY views DESC
                 LIMIT 30

@@ -20,15 +20,18 @@ export default defineEventHandler(async (event) => {
             return sendServerResponse(400, 'path is required')
         }
 
-        // Don't track crawlers, the site owner's own authenticated browsing
-        // elsewhere on the site, or any /admin/** page itself — including
-        // pre-login ones like /admin/login, which the session-cookie check
-        // alone can't catch since there's no session yet at that point.
-        if (isBotRequest(event) || hasAdminCookie(event) || isAdminPath(body.path)) {
+        // Don't track the site owner's own authenticated browsing elsewhere
+        // on the site, or any /admin/** page itself — including pre-login
+        // ones like /admin/login, which the session-cookie check alone can't
+        // catch since there's no session yet at that point. Bots ARE
+        // recorded now (is_bot flag below) rather than dropped, so crawler
+        // volume is visible instead of invisible.
+        if (hasAdminCookie(event) || isAdminPath(body.path)) {
             return sendServerResponse(200, 'skipped', { id: null })
         }
 
         const anonId = getOrSetAnonId(event)
+        const isBot = isBotRequest(event)
         const { device, browser, os } = parseUserAgent(getRequestHeader(event, 'user-agent'))
         const { country, region } = getGeo(event)
 
@@ -53,6 +56,7 @@ export default defineEventHandler(async (event) => {
                 timezone: body.timezone?.slice(0, 60) ?? null,
                 duration_seconds: null,
                 scroll_depth: null,
+                is_bot: isBot,
             })
             .returning('id')
             .executeTakeFirstOrThrow()

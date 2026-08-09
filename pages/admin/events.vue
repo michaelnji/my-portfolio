@@ -16,15 +16,31 @@ interface CountRow {
     type: string
     count: string
 }
+interface KindRow {
+    kind: string
+    count: string
+}
 interface EventsData {
     events: EventRow[]
     countsByType: CountRow[]
+    clicksByKind: KindRow[]
 }
 
 const typeFilter = ref('')
 const { range } = useAdminRange()
 
-const TYPES = ['outbound_click', 'game_play', 'game_complete', 'form_submit', 'not_found', 'js_error']
+const TYPES = [
+    'outbound_click',
+    'game_play',
+    'game_complete',
+    'form_submit',
+    'not_found',
+    'js_error',
+    'project_tab',
+    'sound_toggle',
+    'copy_code',
+    'rate_limited',
+]
 
 const {
     data,
@@ -46,6 +62,10 @@ watch(error, (e) => {
 const chartData = computed(() => (data.value?.countsByType ?? []).map((c) => ({ type: c.type, count: Number(c.count) })))
 const categories = { count: { name: 'Events', color: '#3987e5' } }
 const xFormatter = (i: number) => chartData.value[i]?.type ?? ''
+
+const kindChartData = computed(() => (data.value?.clicksByKind ?? []).map((c) => ({ kind: c.kind, count: Number(c.count) })))
+const kindCategories = { count: { name: 'Clicks', color: '#d95926' } }
+const kindXFormatter = (i: number) => kindChartData.value[i]?.kind ?? ''
 
 function fmtTime(iso: string) {
     return new Date(iso).toLocaleString()
@@ -86,6 +106,24 @@ function fmtPayload(payload: unknown) {
                     :hide-legend="true"
                 />
                 <p v-else class="text-content-secondary text-sm">No events yet.</p>
+            </div>
+        </div>
+
+        <div class="card bg-base-200 border border-base-300">
+            <div class="card-body">
+                <h2 class="card-title text-base">Outbound clicks by kind</h2>
+                <div v-if="loading" class="skeleton w-full h-[180px]" />
+                <BarChart
+                    v-else-if="kindChartData.length"
+                    :data="kindChartData"
+                    :categories="kindCategories"
+                    x-axis="kind"
+                    :y-axis="['count']"
+                    :height="180"
+                    :x-formatter="kindXFormatter"
+                    :hide-legend="true"
+                />
+                <p v-else class="text-content-secondary text-sm">No outbound clicks yet.</p>
             </div>
         </div>
 
