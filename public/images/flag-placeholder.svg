@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
-  <title id="title">Flag unavailable</title>
-  <desc id="desc">Placeholder shown when a country flag image fails to load.</desc>
-  <rect width="640" height="420" fill="#1f232b" />
-  <rect x="14" y="14" width="612" height="392" fill="none" stroke="#3b4252" stroke-width="2" />
-  <g fill="#b4ff22" opacity="0.85">
-    <path d="M70 308V112h18l72 38 72-38h18v132h-18l-72-38-72 38v64z" />
-  </g>
-  <text x="320" y="335" fill="#d8dee9" font-size="26" font-family="DM Sans, Arial, sans-serif" text-anchor="middle">
-    Flag unavailable
-  </text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" aria-labelledby="title desc" role="img" viewBox="0 0 640 420"><title id="title">Flag unavailable</title><desc id="desc">Placeholder shown when a country flag image fails to load.</desc><rect width="640" height="420" fill="#1f232b"/><rect width="612" height="392" x="14" y="14" fill="none" stroke="#3b4252" stroke-width="2"/><g fill="#b4ff22" opacity=".85"><path d="M70 308V112h18l72 38 72-38h18v132h-18l-72-38-72 38v64z"/></g><text x="320" y="335" fill="#d8dee9" font-family="DM Sans, Arial, sans-serif" font-size="26" text-anchor="middle">Flag unavailable</text></svg>
