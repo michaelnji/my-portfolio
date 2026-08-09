@@ -24,6 +24,21 @@ useHead({
 const online = useOnline()
 const postsStore = usePostsStore()
 const categoriesStore = useCategoriesStore()
+
+const route = useRoute()
+const isAdminRoute = computed(() => route.path.startsWith('/admin') && route.path !== '/admin/login')
+const loggingOut = ref(false)
+async function logout() {
+  loggingOut.value = true
+  try {
+    await $fetch('/api/admin/logout', { method: 'POST' })
+    await navigateTo('/admin/login')
+  } catch {
+    toast.error('Failed to log out')
+  } finally {
+    loggingOut.value = false
+  }
+}
 async function retry() {
   try {
     await Promise.all([await postsStore.fetchPosts(),
@@ -72,7 +87,7 @@ onMounted(async () => {
       <Logo />
 
       <div class="flex items-center gap-x-4">
-        <div class=" gap-x-4 text-xs mr-3 bg-base-300 rounded-box px-3 py-1">
+        <div v-if="!isAdminRoute" class=" gap-x-4 text-xs mr-3 bg-base-300 rounded-box px-3 py-1">
           <div class="inline-grid *:[grid-area:1/1]">
             <div v-if="!online" class="status status-error animate-ping"></div>
             <div v-if="!online" class="status status-error"></div>
@@ -82,10 +97,15 @@ onMounted(async () => {
           {{ online ? "You're online" : "You're offline" }}
         </div>
 
-        <NuxtLink to="https://github.com/michaelnji" target="_blank">
+        <NuxtLink to="https://github.com/michaelnji" target="_blank" :class="{ 'hidden sm:inline-block': isAdminRoute }">
           <Icon name="simple-icons:github" size="18" />
         </NuxtLink>
-        <Sound />
+        <div :class="{ 'hidden sm:block': isAdminRoute }">
+          <Sound />
+        </div>
+        <button v-if="isAdminRoute" @click="logout" :disabled="loggingOut" class="cursor-pointer text-error" title="Log out">
+          <Icon name="ph:sign-out-duotone" size="19" />
+        </button>
 
       </div>
     </div>
@@ -95,6 +115,6 @@ onMounted(async () => {
 
       </div>
     </NuxtLayout>
-    <BottomBar />
+    <BottomBar v-if="!isAdminRoute" />
   </div>
 </template>

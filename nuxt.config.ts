@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     // '@unocss/nuxt',
     '@formkit/auto-animate/nuxt',
     '@nuxtjs/sanity',
-    // '@pinia/colada-nuxt',
+    'nuxt-charts',
   ],
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
@@ -119,6 +119,7 @@ export default defineNuxtConfig({
     sanityToken: '',
     postgresUrl: '',
     apiKey: '',
+    adminPassword: '',
     public: {
       sanityProjectId: process.env.NUXT_SANITY_ID
     }
