@@ -25,17 +25,41 @@ interface BlogSlugViewsRow {
     views: string
 }
 
+interface PostRangeStatRow {
+    postId: string
+    views: string
+    hearts: string
+    claps: string
+    stars: string
+    dislikes: string
+}
+
 export default defineEventHandler(async (event) => {
     try {
         const { interval } = rangeConfig(parseRange(getQuery(event).range))
         const window = sql.raw(`interval '${interval}'`)
         const db = getDb()
 
-        // Blog posts stay lifetime totals — the stats table has no
-        // per-reaction timestamp to filter by. Games and top-pages come from
-        // timestamped tables and do follow the selected range.
-        const [posts, games, topPages, currentBlog, previousBlog] = await Promise.all([
+        // `posts` (the stats table) stays lifetime totals — no per-row
+        // timestamp to filter by, and the public blog page reads it directly
+        // for its always-cumulative counts. `postRangeStats` is the
+        // range-scoped view: same counters, sourced from the timestamped
+        // post_stat_events log instead, so admin charts can honor `range`.
+        const [posts, postRangeStats, games, topPages, currentBlog, previousBlog] = await Promise.all([
             db.selectFrom('stats').selectAll().orderBy('views', 'desc').execute(),
+            sql<PostRangeStatRow>`
+                SELECT
+                    post_id AS "postId",
+                    COUNT(*) FILTER (WHERE type = 'view')::text AS views,
+                    COUNT(*) FILTER (WHERE type = 'hearts')::text AS hearts,
+                    COUNT(*) FILTER (WHERE type = 'claps')::text AS claps,
+                    COUNT(*) FILTER (WHERE type = 'stars')::text AS stars,
+                    COUNT(*) FILTER (WHERE type = 'dislikes')::text AS dislikes
+                FROM post_stat_events
+                WHERE created_at >= now() - ${window}
+                GROUP BY post_id
+                ORDER BY views DESC
+            `.execute(db),
             sql<GameRow>`
                 SELECT
                     payload->>'gameId' AS game_id,
@@ -93,6 +117,7 @@ export default defineEventHandler(async (event) => {
 
         return sendServerResponse(200, 'success', {
             posts,
+            postRangeStats: postRangeStats.rows,
             games: games.rows,
             topPages: topPages.rows,
             blogMetrics,

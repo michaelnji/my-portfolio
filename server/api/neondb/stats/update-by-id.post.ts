@@ -40,6 +40,11 @@ export default defineEventHandler(async (event) => {
             .where("postId", "=", postId)
             .returningAll()
             .executeTakeFirstOrThrow();
+
+        // Timestamped mirror of the bump above — lets admin charts filter by
+        // range. `stats` itself stays a lifetime counter (public page reads it).
+        await db.insertInto("post_stat_events").values({ post_id: postId, type: field }).execute()
+
         return sendServerResponse(200, 'success', resp)
     } catch (error) {
         if (error instanceof Error) {

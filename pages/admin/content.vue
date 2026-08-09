@@ -22,8 +22,17 @@ interface BlogMetric {
     avgScroll: string | null
     previousViews: string
 }
+interface PostRangeStat {
+    postId: string
+    views: string
+    hearts: string
+    claps: string
+    stars: string
+    dislikes: string
+}
 interface ContentData {
     posts: PostStat[]
+    postRangeStats: PostRangeStat[]
     games: GameRow[]
     topPages: TopPageRow[]
     blogMetrics: BlogMetric[]
@@ -51,9 +60,6 @@ watch(error, (e) => {
     if (e) toast.error('Failed to load content data')
 })
 
-function postTitle(postId: string) {
-    return postsStore.posts?.find((p) => p._id === postId)?.title ?? postId
-}
 function slugFor(postId: string) {
     return postsStore.posts?.find((p) => p._id === postId)?.slug ?? ''
 }
@@ -74,6 +80,9 @@ function completionRate(row: GameRow) {
 interface EnrichedPost {
     postId: string
     title: string
+    slug: string
+    imgUrl: string
+    publishedAt: string | null
     views: number
     hearts: number
     claps: number
@@ -102,6 +111,9 @@ const enrichedPosts = computed<EnrichedPost[]>(() => {
         return {
             postId: post.postId,
             title: meta?.title ?? post.postId,
+            slug: meta?.slug ?? '',
+            imgUrl: meta?.imgUrl ?? '',
+            publishedAt: meta?.publishedAt ?? null,
             views,
             hearts: Number(post.hearts),
             claps: Number(post.claps),
@@ -117,6 +129,35 @@ const enrichedPosts = computed<EnrichedPost[]>(() => {
         }
     })
 })
+
+// --- Post rankings scoped to the selected range (post_stat_events log) ----
+
+interface RangeEnrichedPost {
+    postId: string
+    title: string
+    views: number
+    hearts: number
+    claps: number
+    stars: number
+    dislikes: number
+    tags: string[]
+}
+
+const rangeEnrichedPosts = computed<RangeEnrichedPost[]>(() =>
+    (data.value?.postRangeStats ?? []).map((p) => {
+        const meta = postsStore.posts?.find((m) => m._id === p.postId)
+        return {
+            postId: p.postId,
+            title: meta?.title ?? p.postId,
+            views: Number(p.views),
+            hearts: Number(p.hearts),
+            claps: Number(p.claps),
+            stars: Number(p.stars),
+            dislikes: Number(p.dislikes),
+            tags: meta?.tags?.map((t) => t.title) ?? [],
+        }
+    })
+)
 
 // --- Hero callouts (single best post per metric, BlogStatsSection-style) --
 
@@ -165,15 +206,33 @@ const totalReactions = computed(() => totals.value.hearts + totals.value.claps +
 // --- Charts -------------------------------------------------------------
 
 const viewsChartData = computed(() =>
-    sortedByViews.value.slice(0, 8).map((p) => ({ title: truncate(p.title), views: p.views }))
+    [...rangeEnrichedPosts.value]
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 8)
+        .map((p) => ({ title: truncate(p.title), views: p.views }))
 )
 const viewsSeries = [{ key: 'views', name: 'Views', color: '#3987e5' }]
 
+const rangeTotals = computed(() =>
+    rangeEnrichedPosts.value.reduce(
+        (acc, p) => {
+            acc.hearts += p.hearts
+            acc.claps += p.claps
+            acc.stars += p.stars
+            acc.dislikes += p.dislikes
+            return acc
+        },
+        { hearts: 0, claps: 0, stars: 0, dislikes: 0 }
+    )
+)
+const rangeTotalReactions = computed(
+    () => rangeTotals.value.hearts + rangeTotals.value.claps + rangeTotals.value.stars + rangeTotals.value.dislikes
+)
 const reactionMixData = computed(() => [
-    { name: 'Hearts', value: totals.value.hearts },
-    { name: 'Claps', value: totals.value.claps },
-    { name: 'Stars', value: totals.value.stars },
-    { name: 'Dislikes', value: totals.value.dislikes },
+    { name: 'Hearts', value: rangeTotals.value.hearts },
+    { name: 'Claps', value: rangeTotals.value.claps },
+    { name: 'Stars', value: rangeTotals.value.stars },
+    { name: 'Dislikes', value: rangeTotals.value.dislikes },
 ])
 const reactionColors = ['#e66767', '#c98500', '#3987e5', '#9085e9']
 
@@ -184,7 +243,7 @@ interface TagStat {
 }
 const tagPerformance = computed<TagStat[]>(() => {
     const map = new Map<string, TagStat>()
-    for (const post of enrichedPosts.value) {
+    for (const post of rangeEnrichedPosts.value) {
         for (const tag of post.tags) {
             const entry = map.get(tag) ?? { tag, views: 0, hearts: 0 }
             entry.views += post.views
@@ -254,7 +313,7 @@ const gamesSeries = [
                     <Icon name="solar:chart-square-bold" size="24" />
                 </div>
                 <div class="mt-4">
-                    <h3 class="text-xs font-semibold uppercase tracking-widest text-content-secondary">All posts, this range</h3>
+                    <h3 class="text-xs font-semibold uppercase tracking-widest text-content-secondary">All posts, all time</h3>
                     <div class="text-2xl font-bold mt-2">{{ fmt(totals.views) }} total views</div>
                     <div class="mt-3 flex items-center gap-2">
                         <Icon name="solar:star-bold-duotone" class="text-warning" size="20" />
@@ -392,7 +451,7 @@ const gamesSeries = [
                 <div class="card-body">
                     <h2 class="card-title text-base">Reaction mix <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
                     <div v-if="loading" class="skeleton w-full h-[260px]" />
-                    <div v-else-if="totalReactions > 0" class="flex justify-center">
+                    <div v-else-if="rangeTotalReactions > 0" class="flex justify-center">
                         <AdminSimpleDonutChart :data="reactionMixData" data-key="value" name-key="name" :colors="reactionColors" :height="240" />
                     </div>
                     <p v-else class="text-content-secondary text-sm">No reactions yet.</p>
@@ -460,35 +519,78 @@ const gamesSeries = [
 
         <div class="card bg-base-200 border border-base-300">
             <div class="card-body">
-                <h2 class="card-title text-base">All posts <span class="text-content-secondary font-normal text-sm">(this range)</span></h2>
-                <div class="overflow-x-auto">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr><th>Post</th><th class="text-right">Views</th><th class="text-right">Hearts</th><th class="text-right">Claps</th><th class="text-right">Stars</th><th class="text-right">Dislikes</th></tr>
-                        </thead>
-                        <tbody v-if="loading">
-                            <tr v-for="i in 8" :key="i">
-                                <td><AdminSkel w="w-40" h="h-3" /></td>
-                                <td class="text-right"><AdminSkel w="w-8" h="h-3" class="ml-auto" /></td>
-                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                                <td class="text-right"><AdminSkel w="w-6" h="h-3" class="ml-auto" /></td>
-                            </tr>
-                        </tbody>
-                        <tbody v-else>
-                            <tr v-for="post in data?.posts ?? []" :key="post.postId">
-                                <td class="max-w-xs truncate">{{ postTitle(post.postId) }}</td>
-                                <td class="text-right">{{ fmt(post.views) }}</td>
-                                <td class="text-right">{{ fmt(post.hearts) }}</td>
-                                <td class="text-right">{{ fmt(post.claps) }}</td>
-                                <td class="text-right">{{ fmt(post.stars) }}</td>
-                                <td class="text-right">{{ fmt(post.dislikes) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p v-if="!loading && !data?.posts?.length" class="text-content-secondary text-sm py-4">No posts tracked yet.</p>
+                <h2 class="card-title text-base">Posts leaderboard <span class="text-content-secondary font-normal text-sm">(all time)</span></h2>
+
+                <div v-if="loading" class="flex flex-col gap-2 mt-2">
+                    <div v-for="i in 8" :key="i" class="flex items-center gap-4 px-3 py-2">
+                        <div class="skeleton w-12 h-12 rounded-xl flex-shrink-0" />
+                        <div class="flex-1"><AdminSkel w="w-40" h="h-3" /></div>
+                        <AdminSkel w="w-10" h="h-3" />
+                        <AdminSkel w="w-16" h="h-3" />
+                    </div>
                 </div>
+
+                <template v-else-if="sortedByViews.length">
+                    <div class="hidden md:grid grid-cols-[minmax(200px,2fr)_72px_1fr_90px_170px_110px] gap-4 px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-content-secondary border-b border-base-300">
+                        <span>Post</span>
+                        <span class="text-center">Engage</span>
+                        <span>Topic</span>
+                        <span class="text-right">Views</span>
+                        <span>Published</span>
+                        <span class="text-right">Reactions</span>
+                    </div>
+
+                    <div class="divide-y divide-base-300">
+                        <NuxtLink v-for="(post, i) in sortedByViews" :key="post.postId" :to="post.slug ? `/blog/${post.slug}` : '#'"
+                            target="_blank" rel="noopener noreferrer"
+                            class="flex flex-col md:grid md:grid-cols-[minmax(200px,2fr)_72px_1fr_90px_170px_110px] items-start md:items-center gap-3 md:gap-4 px-3 py-3 rounded-xl transition-colors duration-150 hover:bg-base-300/50">
+
+                            <div class="flex items-center gap-3 min-w-0 w-full">
+                                <img v-if="post.imgUrl" :src="post.imgUrl" :alt="post.title" loading="lazy"
+                                    class="w-12 h-12 rounded-xl object-cover flex-shrink-0 bg-base-300" />
+                                <div v-else class="w-12 h-12 rounded-xl flex-shrink-0 bg-base-300 flex items-center justify-center text-content-secondary">
+                                    <Icon name="solar:gallery-bold" size="20" />
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="font-semibold truncate">{{ post.title }}</p>
+                                    <p class="text-xs text-primary font-semibold">#{{ i + 1 }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 md:contents">
+                                <div class="flex md:justify-center">
+                                    <div class="relative w-9 h-9 rounded-full flex-shrink-0"
+                                        :style="{ background: `conic-gradient(var(--color-accent) ${Math.min(100, post.engagementRate * 100) * 3.6}deg, var(--color-base-300) 0deg)` }">
+                                        <span class="absolute inset-[3px] rounded-full bg-base-200 flex items-center justify-center text-[10px] font-bold">
+                                            {{ Math.round(Math.min(100, post.engagementRate * 100)) }}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-1.5 text-sm text-content-secondary truncate">
+                                    <Icon name="solar:hashtag-square-bold" size="16" class="text-secondary flex-shrink-0" />
+                                    <span class="truncate">{{ post.tags[0] ?? '—' }}</span>
+                                </div>
+
+                                <div class="text-sm font-semibold md:text-right">
+                                    {{ fmt(post.views) }} <span class="md:hidden text-content-secondary font-normal">views</span>
+                                </div>
+
+                                <div class="text-sm text-content-secondary">{{ post.publishedAt ? formatAdminDateTime(post.publishedAt) : '—' }}</div>
+
+                                <div class="flex md:flex-col md:items-end gap-3 md:gap-0.5 text-xs">
+                                    <span class="flex items-center gap-1 text-error font-semibold">
+                                        <Icon name="solar:heart-bold" size="14" /> {{ fmt(post.hearts + post.claps + post.stars) }}
+                                    </span>
+                                    <span class="flex items-center gap-1 text-content-secondary">
+                                        <Icon name="solar:like-bold" class="rotate-180" size="14" /> {{ fmt(post.dislikes) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </NuxtLink>
+                    </div>
+                </template>
+                <p v-else class="text-content-secondary text-sm py-4">No posts tracked yet.</p>
             </div>
         </div>
 
